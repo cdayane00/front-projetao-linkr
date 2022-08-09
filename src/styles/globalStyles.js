@@ -28,6 +28,10 @@ export const GlobalStyles = createGlobalStyle`
         color: var(--text-primary);
     }
 
+    p{
+        font-family: 'Lato';
+        font-weight: 400;
+    }
 
     :root {
         --bg: #333333;
