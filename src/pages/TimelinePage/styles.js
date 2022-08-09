@@ -10,10 +10,25 @@ const Main = styled.div`
 
 const Content = styled.div`
   width: 937px;
-  h3 {
-    font-size: 43px;
-    color: var(--text-primary);
-  }
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 232px;
+  position: relative;
 `;
 
-export { Main, Content };
+const Feed = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Sidebar = styled.div`
+  width: 301px;
+  height: 406px;
+  background: var(--bg-timeline-posts);
+  border-radius: 16px;
+  position: fixed;
+  top: 232px;
+  left: calc(var(--width-body) * 0.5 + 166px); ;
+`;
+export { Main, Content, Feed, Sidebar };

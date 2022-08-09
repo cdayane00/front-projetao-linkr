@@ -57,5 +57,7 @@ export const GlobalStyles = createGlobalStyle`
 
         --heart: #AC0000;
         --search-bar: #C6C6C6;
+
+        --width-body: 100%
     }
 `;

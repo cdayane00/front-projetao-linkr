@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { Navbar, Chevron } from "./styles";
+import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
@@ -12,8 +12,13 @@ export default function Header() {
     <>
       <ToastContainer />
       <Navbar>
-        <h3>linkr</h3>
-        <input />
+        <h2>linkr</h2>
+        <form>
+          <input placeholder="Search for people" />
+          <button type="submit">
+            <Search />
+          </button>
+        </form>
         <div className="user">
           <Chevron
             onClick={() => {
