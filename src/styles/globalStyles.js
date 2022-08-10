@@ -28,7 +28,12 @@ export const GlobalStyles = createGlobalStyle`
         color: var(--text-primary);
     }
 
+    p{
+        font-family: 'Lato';
+        font-weight: 400;
+    }
     
+
     :root {
         --bg: #333333;
         --bg-secondary: #151515;
@@ -55,5 +60,7 @@ export const GlobalStyles = createGlobalStyle`
 
         --heart: #AC0000;
         --search-bar: #C6C6C6;
+
+        --width-body: 100%
     }
 `;
