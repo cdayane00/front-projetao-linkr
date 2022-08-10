@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Oswald', sans-serif;
         font-family: 'Passion One', cursive; */
     }
-
+    
     button {
         cursor: pointer;
     }
@@ -28,7 +28,7 @@ export const GlobalStyles = createGlobalStyle`
         color: var(--text-primary);
     }
 
-
+    
     :root {
         --bg: #333333;
         --bg-secondary: #151515;
@@ -37,8 +37,9 @@ export const GlobalStyles = createGlobalStyle`
         --bg-publish-input: #EFEFEF;
         --bg-button: #1877F2;
         --bg-search-bar: #E7E7E7;
-
+        
         --text-primary: #FFFFFF;
+        --text-on-white: #151515;
         --text-placeholder: #9F9F9F;
         --text-publish: #707070;
         --text-blue: #1877F2;
@@ -50,6 +51,7 @@ export const GlobalStyles = createGlobalStyle`
         --link-secondary: #9B9595;
 
         --border: #4D4D4D;
+        --outline-blue: #50A0F7;
 
         --heart: #AC0000;
         --search-bar: #C6C6C6;
