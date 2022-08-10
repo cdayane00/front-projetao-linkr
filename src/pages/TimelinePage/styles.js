@@ -6,6 +6,12 @@ const Main = styled.div`
   background-color: var(--bg);
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const Content = styled.div`
@@ -22,13 +28,4 @@ const Feed = styled.div`
   flex-direction: column;
 `;
 
-const Sidebar = styled.div`
-  width: 301px;
-  height: 406px;
-  background: var(--bg-timeline-posts);
-  border-radius: 16px;
-  position: fixed;
-  top: 232px;
-  left: calc(var(--width-body) * 0.5 + 166px); ;
-`;
-export { Main, Content, Feed, Sidebar };
+export { Main, Content, Feed };

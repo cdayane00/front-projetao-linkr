@@ -4,10 +4,9 @@ import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
-export default function Header() {
+export default function Header({ props }) {
   // const { userData, setUserData } = useContext(UserContext);
   const [toggle, setToggle] = useState(false);
-
   return (
     <>
       <ToastContainer />
@@ -25,10 +24,7 @@ export default function Header() {
               setToggle(!toggle);
             }}
           />
-          <img
-            src="https://trello-members.s3.amazonaws.com/5e401956e0cc5673d1a06355/fead8907bb5f5497f69463bff9d0f015/50.png"
-            alt="Membro bigodudo"
-          />
+          <img src={props.userImage} alt={props.userName} />
         </div>
         <UserToggle toggle={toggle} />
       </Navbar>

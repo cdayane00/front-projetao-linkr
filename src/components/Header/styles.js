@@ -10,7 +10,7 @@ const Navbar = styled.div`
   position: fixed;
   box-sizing: border-box;
   padding: 0 17px 0 20px;
-  z-index: 1;
+  z-index: 2;
   background-color: var(--bg-secondary);
   h2 {
     font-size: 49px;
@@ -40,7 +40,7 @@ const Navbar = styled.div`
     font-size: 19px;
     color: var(--text-search-bar);
     box-sizing: border-box;
-    padding: 11px;
+    padding: 12px;
     outline: 0;
     border-radius: 8px 0 0 8px;
     border: none;
@@ -76,6 +76,7 @@ const Outerbox = styled.div`
   align-items: center;
   top: 72px;
   right: 0px;
+
   p {
     font-weight: 700;
     font-size: 17px;
