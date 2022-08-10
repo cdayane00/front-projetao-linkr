@@ -3,12 +3,20 @@ import { toast } from "react-toastify";
 function setToastMessage(statusCode) {
   let message = "Internal Error. Try again later";
 
+  if (statusCode === 401) {
+    message = "Email or password is incorrect";
+  }
+
   if (statusCode === 409) {
     message = "This email is already registered";
   }
 
   if (statusCode === 422) {
     message = "Fill in all fields correctly";
+  }
+
+  if (statusCode === 200) {
+    message = "Successfully";
   }
 
   if (statusCode === 201) {
