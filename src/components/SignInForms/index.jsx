@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // API
@@ -10,13 +10,24 @@ import AuthInput from "../AuthInput";
 import AuthSubmitButton from "../AuthSubmitButton";
 // Styles
 import { Container, Form } from "./styles";
+import { useLocalStorage } from "../../utils/hooks";
 
 export default function SignInForms() {
+  const [response, setResponse] = useLocalStorage("linkrUserData", "");
   const signInModel = { email: "", password: "" };
   const [signInData, setSignInData] = useState(signInModel);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (response.token) {
+      setIsSubmitting(true);
+      setTimeout(() => {
+        navigate("/timeline");
+        setIsSubmitting(false);
+      }, 1500);
+    }
+  }, []);
   function handleChange(e) {
     const { name, value } = e.target;
     setSignInData({ ...signInData, [name]: value });
@@ -33,8 +44,11 @@ export default function SignInForms() {
     setIsSubmitting(true);
     try {
       const promise = await loginUser(signInData);
+      setResponse(promise.data);
       displaySuccessNotify(promise.status);
-      navigate("/timeline");
+      setTimeout(() => {
+        navigate("/timeline");
+      }, 1500);
     } catch (error) {
       handleError(error);
     }
