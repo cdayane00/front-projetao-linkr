@@ -27,4 +27,8 @@ export const Input = styled.input`
   &:disabled {
     opacity: 0.5;
   }
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
 `;

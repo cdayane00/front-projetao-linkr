@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   flex-basis: 600px;
-  min-width: 414px;
+  min-width: 300px;
 
   padding: 0 54px;
 
@@ -15,8 +15,14 @@ export const Container = styled.section`
   a {
     font-family: "Lato", sans-serif;
     color: var(--text-primary);
+    font-size: 20px;
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-underline-offset: 3px;
+
+    @media (max-width: 768px) {
+      font-size: 17px;
+      text-underline-offset: 2px;
+    }
   }
 `;
 

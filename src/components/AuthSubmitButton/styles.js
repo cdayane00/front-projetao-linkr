@@ -21,4 +21,8 @@ export const Button = styled.button`
   &:disabled {
     opacity: 0.5;
   }
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
