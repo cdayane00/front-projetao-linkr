@@ -41,7 +41,7 @@ export default function Timeline() {
 
   return (
     <>
-      <Header props={user} />
+      <Header props={user} title="timeline" />
       <Main>
         <Content>
           <Feed>

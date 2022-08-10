@@ -4,7 +4,7 @@ import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
-export default function Header({ props }) {
+export default function Header({ props, title }) {
   // const { userData, setUserData } = useContext(UserContext);
   const [toggle, setToggle] = useState(false);
   return (
@@ -28,7 +28,7 @@ export default function Header({ props }) {
         </div>
         <UserToggle toggle={toggle} />
       </Navbar>
-      <PageTitle />
+      <PageTitle title={title} />
     </>
   );
 }

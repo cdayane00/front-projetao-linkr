@@ -8,8 +8,9 @@ export default function Sidebar({ props }) {
         <h3>trending</h3>
       </Title>
       <Content>
-        {props.map((e) => (
-          <h3># {e.hashtag}</h3>
+        {props.map((e, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <h3 key={index + 1}># {e.hashtag}</h3>
         ))}
       </Content>
     </Wrapper>
