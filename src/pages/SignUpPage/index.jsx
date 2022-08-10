@@ -1,14 +1,15 @@
 import React from "react";
-import { Main, Banner, SignUpContainer } from "./styles";
+import Banner from "../../components/Banner";
+import SignUpForms from "../../components/SignUpForms";
+import { Main, Container } from "./styles";
 
 export default function SignUpPage() {
   return (
     <Main>
-      <Banner>
-        <h1>Linkr</h1>
-        <p>save, share and discover the best links on the web</p>
-      </Banner>
-      <SignUpContainer>{/* 4 inputs, 1 button, 1 Link */}</SignUpContainer>
+      <Container>
+        <Banner />
+        <SignUpForms />
+      </Container>
     </Main>
   );
 }
