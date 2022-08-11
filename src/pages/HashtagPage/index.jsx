@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
@@ -7,31 +8,44 @@ import Sidebar from "../../components/Sidebar";
 
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
-import { displayErrorNotify } from "../../utils";
-import { getPostsByHashtag, listHashtags } from "../../services/api";
-import { useLocalStorage } from "../../utils/hooks";
+import { callToast } from "../../utils";
+import { api } from "../../services/api";
+import { useAxios, useLocalStorage } from "../../utils/hooks";
 
 export default function Timeline() {
   const { hashtag } = useParams();
   const [userData] = useLocalStorage("linkrUserData", "");
-  const [hashtagDataAPI, setHashtagDataAPI] = useState(null);
-  const [trendingHashtags, setTrendingHashtags] = useState([]);
+  const [
+    trendingTags,
+    trendingTagsError,
+    trendingTagsIsLoading,
+    axiosGetTrendingTags,
+  ] = useAxios();
+  const [posts, postsError, postsIsLoading, axiosGetPosts] = useAxios();
 
-  async function getHashtagPosts(hashtagName) {
-    try {
-      const hashtagsPromise = await listHashtags();
-      setTrendingHashtags(hashtagsPromise.data);
-      const postsPromise = await getPostsByHashtag(hashtagName);
-      setHashtagDataAPI(postsPromise.data);
-    } catch (error) {
-      console.log(error);
-      displayErrorNotify(error?.response.status);
-    }
-  }
+  const axiosFunctionConstructor = (axiosInstance, url) => ({
+    axiosInstance,
+    method: "GET",
+    url,
+    requestConfig: {
+      headers: {
+        authorization: `Bearer ${userData.token}`,
+      },
+    },
+  });
 
   useEffect(() => {
-    getHashtagPosts(hashtag);
+    axiosGetTrendingTags(axiosFunctionConstructor(api, "/hashtags"));
+    axiosGetPosts(axiosFunctionConstructor(api, `/hashtags/${hashtag}`));
   }, [hashtag]);
+
+  if (
+    !postsIsLoading &&
+    !trendingTagsIsLoading &&
+    (trendingTagsError.length > 0 || postsError.length > 0)
+  ) {
+    callToast("error", postsError || trendingTagsError);
+  }
 
   return (
     <>
@@ -39,11 +53,12 @@ export default function Timeline() {
       <HashtagMain as={Main}>
         <PageContent as={Content}>
           <FeedHashtag as={Feed}>
-            {hashtagDataAPI?.hashtagPosts.map((post) => (
-              <Post userId={post.userId} key={post.postId} props={post} />
-            ))}
+            {!postsIsLoading &&
+              posts.hashtagPosts?.map((post) => (
+                <Post userId={post.userId} key={post.postId} props={post} />
+              ))}
           </FeedHashtag>
-          <Sidebar hashtags={trendingHashtags} />
+          <Sidebar hashtags={trendingTags} />
         </PageContent>
       </HashtagMain>
     </>
