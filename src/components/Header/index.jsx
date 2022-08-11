@@ -1,5 +1,4 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
 import { Popover } from "@headlessui/react";
 import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
