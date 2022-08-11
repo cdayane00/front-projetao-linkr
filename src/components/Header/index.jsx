@@ -4,8 +4,8 @@ import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
 export default function Header({ props, title }) {
-  // const { userData, setUserData } = useContext(UserContext);
   const [toggle, setToggle] = useState(false);
+
   return (
     <>
       <Navbar>

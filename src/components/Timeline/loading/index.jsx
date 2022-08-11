@@ -11,7 +11,7 @@ export default function LoadingCard() {
           width="100%"
           height="276px"
           borderRadius={16}
-          baseColor="#202020"
+          baseColor="#120E0E"
           highlightColor="#444"
         />
       </LoadCard>
@@ -20,7 +20,7 @@ export default function LoadingCard() {
           width="100%"
           height="276px"
           borderRadius={16}
-          baseColor="#202020"
+          baseColor="#120E0E"
           highlightColor="#444"
         />
       </LoadCard>
@@ -29,7 +29,25 @@ export default function LoadingCard() {
           width="100%"
           height="276px"
           borderRadius={16}
-          baseColor="#202020"
+          baseColor="#120E0E"
+          highlightColor="#444"
+        />
+      </LoadCard>
+      <LoadCard>
+        <Skeleton
+          width="100%"
+          height="276px"
+          borderRadius={16}
+          baseColor="#120E0E"
+          highlightColor="#444"
+        />
+      </LoadCard>
+      <LoadCard>
+        <Skeleton
+          width="100%"
+          height="276px"
+          borderRadius={16}
+          baseColor="#120E0E"
           highlightColor="#444"
         />
       </LoadCard>
