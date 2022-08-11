@@ -17,10 +17,10 @@ export default function Timeline() {
 
   async function getHashtagPosts(hashtagName) {
     try {
-      const postsPromise = await getPostsByHashtag(hashtagName);
       const hashtagsPromise = await listHashtags();
-      setHashtagDataAPI(postsPromise.data);
       setTrendingHashtags(hashtagsPromise.data);
+      const postsPromise = await getPostsByHashtag(hashtagName);
+      setHashtagDataAPI(postsPromise.data);
     } catch (error) {
       console.log(error);
       displayErrorNotify(error?.response.status);

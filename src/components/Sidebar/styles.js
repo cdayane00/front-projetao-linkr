@@ -33,16 +33,19 @@ const Content = styled.div`
 
   display: flex;
   flex-direction: column;
+  gap: 5px;
 
   a {
     font-family: "Lato";
     font-size: 19px;
     font-weight: 700;
     color: var(--text-primary);
-    line-height: 27px;
+    line-height: 1.2em;
     letter-spacing: 0.05em;
 
     text-decoration: none;
+
+    width: fit-content;
   }
 `;
 
