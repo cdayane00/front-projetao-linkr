@@ -1,8 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { ReactTagify } from "react-tagify";
 
 import { Card, CardSide, CardDetails, Heart } from "./styles";
 
 export default function Post({ props }) {
+  const navigate = useNavigate();
+  const tagifyProps = {
+    tagStyle: {
+      color: "#FFFFFF",
+      fontWeight: "700",
+      cursor: "pointer",
+    },
+    tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
+  };
+
   return (
     <Card>
       <CardSide>
@@ -15,7 +28,9 @@ export default function Post({ props }) {
           <p>{props.userName}</p>
         </div>
         <div className="description">
-          <p>{props.postText}</p>
+          <ReactTagify {...tagifyProps}>
+            <p>{props.postText}</p>
+          </ReactTagify>
         </div>
         <div className="meta-data">
           <div className="info-wrapper">

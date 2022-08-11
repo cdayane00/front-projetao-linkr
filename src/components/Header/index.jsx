@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
@@ -9,7 +8,6 @@ export default function Header({ props, title }) {
   const [toggle, setToggle] = useState(false);
   return (
     <>
-      <ToastContainer />
       <Navbar>
         <h2>linkr</h2>
         <form>
