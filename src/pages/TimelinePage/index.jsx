@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
@@ -10,6 +11,12 @@ import LoadingCard from "../../components/Timeline/loading";
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [posts, error, loading, axiosFunction] = useAxios();
+  const [
+    trendingHashtags,
+    trendingHashtagsError,
+    trendingHashtagsLoading,
+    axiosSecFunction,
+  ] = useAxios();
   const getData = () => {
     axiosFunction({
       axiosInstance: axios,
@@ -22,25 +29,27 @@ export default function Timeline() {
       },
     });
   };
-  const hashtag = [
-    { hashtag: "javascript" },
-    { hashtag: "react" },
-    { hashtag: "react-native" },
-    { hashtag: "driven" },
-    { hashtag: "css" },
-    { hashtag: "html" },
-    { hashtag: "node" },
-    { hashtag: "sql" },
-    { hashtag: "mongo" },
-    { hashtag: "typescript" },
-  ];
+  const getTrendingHashtags = () => {
+    axiosSecFunction({
+      axiosInstance: axios,
+      method: "GET",
+      url: "/hashtags",
+      requestConfig: {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     getData();
-    // eslint-disable-next-line
-  },[])
+    getTrendingHashtags();
+  }, []);
   return (
     <>
-      <Header props={userData} />
+      <Header props={userData} title="timeline" />
+
       <Main>
         <Content>
           <Feed>
@@ -49,7 +58,7 @@ export default function Timeline() {
               <WithContent userData={userData} posts={posts} />
             )}
           </Feed>
-          <Sidebar props={hashtag} />
+          <Sidebar hashtags={trendingHashtags} />
         </Content>
       </Main>
     </>

@@ -9,4 +9,10 @@ export const api = axios.create({
 });
 
 export const createUser = async (data) => api.post("/sign-up", data);
+
 export const loginUser = async (data) => api.post("/sign-in", data);
+
+export const listHashtags = async () => api.get("/hashtags");
+
+export const getPostsByHashtag = async (hashtag) =>
+  api.get(`/hashtags/${hashtag}`);
