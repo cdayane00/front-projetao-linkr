@@ -17,7 +17,7 @@ export default function PostInput({ props }) {
   return (
     <Card>
       <CardSide>
-        <img src={props.userImage} alt={props.userName} />
+        <img src={props.photo} alt="user" />
       </CardSide>
       <CardDetails>
         <p>What are you going to share today?</p>
