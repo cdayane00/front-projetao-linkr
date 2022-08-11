@@ -9,9 +9,11 @@ import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
 import { displayErrorNotify } from "../../utils";
 import { getPostsByHashtag, listHashtags } from "../../services/api";
+import { useLocalStorage } from "../../utils/hooks";
 
 export default function Timeline() {
   const { hashtag } = useParams();
+  const [userData] = useLocalStorage("linkrUserData", "");
   const [hashtagDataAPI, setHashtagDataAPI] = useState(null);
   const [trendingHashtags, setTrendingHashtags] = useState([]);
 
@@ -31,15 +33,9 @@ export default function Timeline() {
     getHashtagPosts(hashtag);
   }, [hashtag]);
 
-  const user = {
-    userName: "Darlon Gomes",
-    userImage:
-      "https://trello-members.s3.amazonaws.com/5e401956e0cc5673d1a06355/fead8907bb5f5497f69463bff9d0f015/50.png",
-  };
-
   return (
     <>
-      <Header props={user} title={`# ${hashtag}`} />
+      <Header props={userData} title={`# ${hashtag}`} />
       <HashtagMain as={Main}>
         <PageContent as={Content}>
           <FeedHashtag as={Feed}>

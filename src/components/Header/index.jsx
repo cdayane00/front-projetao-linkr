@@ -22,7 +22,7 @@ export default function Header({ props, title }) {
               setToggle(!toggle);
             }}
           />
-          <img src={props.userImage} alt={props.userName} />
+          <img src={props.photo} alt="user" />
         </div>
         <UserToggle toggle={toggle} />
       </Navbar>
