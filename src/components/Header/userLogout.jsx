@@ -1,12 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Outerbox } from "./styles";
 
-export default function UserToggle({ toggle }) {
-  if (toggle) {
-    return (
-      <Outerbox>
-        <p>Logout</p>
-      </Outerbox>
-    );
-  }
+export default function UserToggle() {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("linkrUserData");
+  };
+  return (
+    <Outerbox
+      onClick={() => {
+        logout();
+        navigate("/");
+      }}
+    >
+      <p>Logout</p>
+    </Outerbox>
+  );
 }

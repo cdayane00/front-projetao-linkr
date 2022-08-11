@@ -21,6 +21,11 @@ const Navbar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .popoverButton {
+      background-color: var(--bg-secondary);
+      outline: none;
+    }
   }
 
   .user img {
@@ -81,6 +86,7 @@ const Outerbox = styled.div`
     font-weight: 700;
     font-size: 17px;
     color: var(--text-primary);
+    cursor: pointer;
   }
 `;
 
