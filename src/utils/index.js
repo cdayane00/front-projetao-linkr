@@ -3,6 +3,10 @@ import { toast } from "react-toastify";
 function setToastMessage(statusCode) {
   let message = "Internal Error. Try again later";
 
+  if (statusCode === 404) {
+    message = "Not found!";
+  }
+
   if (statusCode === 401) {
     message = "Email or password is incorrect";
   }

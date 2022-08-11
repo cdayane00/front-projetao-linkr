@@ -31,11 +31,21 @@ const Content = styled.div`
   background: var(--bg-timeline-posts);
   border-radius: 0 0 16px 16px;
 
-  h3 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  a {
     font-family: "Lato";
     font-size: 19px;
-    line-height: 27px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2em;
     letter-spacing: 0.05em;
+
+    text-decoration: none;
+
+    width: fit-content;
   }
 `;
 

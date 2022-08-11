@@ -26,6 +26,7 @@ function useConsole(value) {
   // custom hook para console.log hehehehe
 }
 
+
 function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = (event) => {
@@ -45,3 +46,36 @@ function useOnClickOutside(ref, handler) {
 }
 
 export { useConsole, useLocalStorage, useOnClickOutside };
+
+function useAxios() {
+  const [response, setResponse] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // different!
+  const [controller, setController] = useState();
+
+  const axiosFunction = async (configObj) => {
+    const { axiosInstance, method, url, requestConfig = {} } = configObj;
+
+    try {
+      setLoading(true);
+      const ctrl = new AbortController();
+      setController(ctrl);
+      const res = await axiosInstance[method.toLowerCase()](url, {
+        ...requestConfig,
+        signal: ctrl.signal,
+      });
+      setResponse(res.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
+  useEffect(() => () => controller && controller.abort(), [controller]);
+
+  return [response, error, loading, axiosFunction];
+}
+export { useConsole, useLocalStorage, useAxios };

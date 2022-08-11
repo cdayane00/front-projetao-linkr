@@ -13,6 +13,12 @@ const Card = styled.div`
   margin-bottom: 16px;
 `;
 
+const LoadCard = styled.div`
+  width: 611px;
+  height: auto;
+  border-radius: 16px;
+  margin-bottom: 16px;
+`;
 const CardSide = styled.div`
   width: 50px;
   height: auto;
@@ -41,6 +47,9 @@ const CardDetails = styled.div`
   flex-direction: column;
   gap: 7px;
 
+  a {
+    text-decoration: none;
+  }
   .user {
     width: 100%;
     text-overflow: ellipsis;
@@ -51,7 +60,7 @@ const CardDetails = styled.div`
 
   .description {
     width: 100%;
-    height: 52px;
+    height: auto;
     color: var(--text-post);
     font-size: 17px;
     display: -webkit-box;
@@ -68,6 +77,11 @@ const CardDetails = styled.div`
     border-radius: 12px;
     display: flex;
     align-items: center;
+    :hover {
+      text-decoration: underline;
+      text-decoration-color: var(--link-secondary);
+      offset: 3px;
+    }
   }
 
   .info-wrapper {
@@ -125,4 +139,4 @@ const Heart = styled(IoHeartOutline)`
   color: var(--text-primary);
 `;
 
-export { Card, CardSide, CardDetails, Heart };
+export { Card, LoadCard, CardSide, CardDetails, Heart };

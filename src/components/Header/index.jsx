@@ -5,7 +5,7 @@ import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
-export default function Header({ props }) {
+export default function Header({ props, title }) {
   // const { userData, setUserData } = useContext(UserContext);
   const rotate = {
     transform: "rotate(180deg)",
@@ -17,7 +17,6 @@ export default function Header({ props }) {
 
   return (
     <>
-      <ToastContainer />
       <Navbar>
         <h2>linkr</h2>
         <form>
@@ -42,7 +41,7 @@ export default function Header({ props }) {
           <img src={props.userImage} alt={props.userName} />
         </div>
       </Navbar>
-      <PageTitle />
+      <PageTitle title={title} />
     </>
   );
 }
