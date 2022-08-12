@@ -8,7 +8,7 @@ import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
-// https://back-projetao-linkr.herokuapp.com
+
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [posts, error, loading, axiosFunction] = useAxios();

@@ -37,6 +37,7 @@ export default function Header({ props, title }) {
               </>
             )}
           </Popover>
+
           <img src={props.photo} alt="user" />
         </div>
       </Navbar>
