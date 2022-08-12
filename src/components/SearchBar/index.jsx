@@ -4,7 +4,7 @@ import { SearchForms, SearchInput, SearchButton, SearchIcon } from "./styles";
 export default function SearchBar() {
   return (
     <SearchForms>
-      <SearchInput />
+      <SearchInput placeholder="Search for people and friends" />
       <SearchButton type="submit">
         <SearchIcon />
       </SearchButton>

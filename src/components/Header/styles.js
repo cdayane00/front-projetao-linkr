@@ -113,8 +113,18 @@ const MainTitle = styled.div`
 
 const ContentTitle = styled.div`
   width: 937px;
+
   h3 {
     font-size: 43px;
+
+    @media (max-width: 1000px) {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: 611px;
   }
 `;
 export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle, Search };

@@ -21,6 +21,10 @@ const Content = styled.div`
   justify-content: space-between;
   margin-top: 232px;
   position: relative;
+
+  @media (max-width: 1000px) {
+    width: unset;
+  }
 `;
 
 const Feed = styled.div`

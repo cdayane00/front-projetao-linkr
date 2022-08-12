@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 export const SearchForms = styled.form`
   display: flex;
-  max-width: 520px;
+  max-width: 563px;
   min-width: 300px;
+
+  padding: 0 30px;
 `;
 
 export const SearchInput = styled.input`
@@ -28,9 +30,13 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const SearchButton = styled.button``;
+export const SearchButton = styled.button`
+  border: 1px solid black;
+`;
 
 export const SearchIcon = styled(IoSearchOutline)`
   font-size: 21px;
   color: var(--text-placeholder);
+
+  flex-shrink: 0;
 `;
