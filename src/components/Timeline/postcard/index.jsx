@@ -2,10 +2,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
+import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
-import { Card, CardSide, CardDetails, Heart } from "./styles";
-
-export default function Post({ props }) {
+export default function Post({ props, userId }) {
   const navigate = useNavigate();
   const tagifyProps = {
     tagStyle: {
@@ -27,8 +26,16 @@ export default function Post({ props }) {
         <p>{props.likeCount} likes</p>
       </CardSide>
       <CardDetails>
-        <div className="user">
-          <p>{props.username}</p>
+        <div className="user-wrapper">
+          <div className="user">
+            <p>{props.username}</p>
+          </div>
+          {userId === props.userId && (
+            <div className="edit">
+              <Pencil />
+              <Trash />
+            </div>
+          )}
         </div>
         <div className="description">
           <ReactTagify {...tagifyProps}>

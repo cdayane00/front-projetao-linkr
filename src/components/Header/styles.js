@@ -12,6 +12,10 @@ const Navbar = styled.div`
   padding: 0 17px 0 20px;
   z-index: 2;
   background-color: var(--bg-secondary);
+
+  a {
+    text-decoration: none;
+  }
   h2 {
     font-size: 49px;
   }
