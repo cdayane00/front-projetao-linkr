@@ -18,10 +18,7 @@ export default function Post({ props, userId }) {
   return (
     <Card>
       <CardSide>
-        <img
-          src={props.photo || props.userImage}
-          alt={props.username || props.userName}
-        />
+        <img src={props.photo} alt={props.username} />
         <Heart />
         <p>{props.likeCount} likes</p>
       </CardSide>
