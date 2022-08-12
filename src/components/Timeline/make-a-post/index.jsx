@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 
 import { Card, CardSide, CardDetails } from "./style";
+import ButtonRender from "./button";
 import { useAxios } from "../../../utils/hooks";
 import axios from "../../../services/api";
+import { displayErrorNotify } from "../../../utils";
 
 export default function PostInput({ userData, getData }) {
   const [result, error, loading, axiosFunction] = useAxios();
@@ -12,6 +14,12 @@ export default function PostInput({ userData, getData }) {
   function handleChange(e) {
     const { name, value } = e.target;
     setPostData({ ...postData, [name]: value });
+  }
+  function handleError() {
+    // trocar pela versão 2.0
+    displayErrorNotify(`
+    There was an error publishing your post`);
+    setPostData(postModel);
   }
 
   async function submitPost(e) {
@@ -31,7 +39,11 @@ export default function PostInput({ userData, getData }) {
         },
       },
     });
-    getData();
+    if (error) {
+      handleError();
+    } else {
+      getData();
+    }
   }
   return (
     <Card>
@@ -57,10 +69,9 @@ export default function PostInput({ userData, getData }) {
             value={postData.text}
             onChange={(e) => handleChange(e)}
             placeholder="Awesome article about #javascript"
-            required
             disabled={loading}
           />
-          <button type="submit">Publish</button>
+          <ButtonRender loading={loading} />
         </form>
       </CardDetails>
     </Card>

@@ -36,7 +36,7 @@ export function displayErrorNotify(statusCode, message = undefined) {
   toast.error(errorMessage, {
     toastId: 1,
     position: "top-center",
-    autoClose: 5000,
+    autoClose: 2500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -51,7 +51,7 @@ export function displaySuccessNotify(statusCode) {
   toast.success(successMessage, {
     toastId: 1,
     position: "top-center",
-    autoClose: 5000,
+    autoClose: 2500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

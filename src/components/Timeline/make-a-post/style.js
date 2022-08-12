@@ -53,6 +53,9 @@ const CardDetails = styled.div`
     outline: 0;
     box-sizing: border-box;
     padding: 12px;
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 
   .text {
@@ -74,6 +77,15 @@ const CardDetails = styled.div`
     resize: none;
   }
 
+  p {
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--text-publish);
+    margin-bottom: 10px;
+  }
+`;
+
+const Render = styled.div`
   button {
     width: 112px;
     height: 31px;
@@ -83,12 +95,6 @@ const CardDetails = styled.div`
     border: none;
     cursor: pointer;
   }
-  p {
-    font-weight: 300;
-    font-size: 20px;
-    color: var(--text-publish);
-    margin-bottom: 10px;
-  }
 `;
 
-export { Card, CardSide, CardDetails };
+export { Card, CardSide, CardDetails, Render };
