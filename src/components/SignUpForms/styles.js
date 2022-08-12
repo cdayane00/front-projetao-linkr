@@ -22,6 +22,8 @@ export const Container = styled.section`
     @media (max-width: 768px) {
       font-size: 17px;
       text-underline-offset: 2px;
+
+      text-align: center;
     }
   }
 `;

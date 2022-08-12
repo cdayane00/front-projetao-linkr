@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Popover } from "@headlessui/react";
 import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
+import SearchBar from "../SearchBar";
 
 export default function Header({ props, title }) {
   // const { userData, setUserData } = useContext(UserContext);
@@ -18,12 +20,13 @@ export default function Header({ props, title }) {
     <>
       <Navbar>
         <h2>linkr</h2>
-        <form>
+        {/* <form>
           <input placeholder="Search for people" />
           <button type="submit">
             <Search />
           </button>
-        </form>
+        </form> */}
+        <SearchBar />
         <div className="user">
           <Popover>
             {({ open }) => (

@@ -5,7 +5,11 @@ const Wrapper = styled.div`
   border-radius: 16px;
   position: fixed;
   top: 232px;
-  left: calc(var(--width-body) * 0.5 + 166px); ;
+  left: calc(var(--width-body) * 0.5 + 166px);
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const Title = styled.div`
