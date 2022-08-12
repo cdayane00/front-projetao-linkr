@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { Navbar, Chevron, Search } from "./styles";
+import { Navbar, Chevron } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 import SearchBar from "../SearchBar";

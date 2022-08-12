@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { IoChevronDown, IoSearchOutline } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 
 const Navbar = styled.div`
   width: 100%;
@@ -77,10 +77,6 @@ const Chevron = styled(IoChevronDown)`
   color: var(--bg-white);
 `;
 
-const Search = styled(IoSearchOutline)`
-  font-size: 21px;
-  color: var(--text-placeholder);
-`;
 const MainTitle = styled.div`
   width: 100vw;
   height: 158px;
@@ -118,4 +114,4 @@ const ContentTitle = styled.div`
     width: 611px;
   }
 `;
-export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle, Search };
+export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle };
