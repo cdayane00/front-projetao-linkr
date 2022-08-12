@@ -23,7 +23,7 @@ export default function Header({ props, title }) {
           <h2>linkr</h2>
         </Link>
 
-        <SearchBar />
+        <SearchBar isMobile={false} />
         <div className="user">
           <Popover>
             {({ open }) => (

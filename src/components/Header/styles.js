@@ -40,24 +40,6 @@ const Navbar = styled.div`
     aspect-ratio: 1/1;
   }
 
-  input {
-    width: 520px;
-    height: 45px;
-    background-color: var(--bg-white);
-    font-family: "Lato";
-    font-weight: 400;
-    font-size: 19px;
-    color: var(--text-search-bar);
-    box-sizing: border-box;
-    padding: 12px;
-    outline: 0;
-    border-radius: 8px 0 0 8px;
-    border: none;
-    ::placeholder {
-      color: var(--search-bar);
-    }
-  }
-
   button {
     width: 43px;
     height: 45px;
@@ -67,10 +49,6 @@ const Navbar = styled.div`
     justify-content: center;
     align-items: center;
     background-color: var(--bg-white);
-  }
-
-  form {
-    display: flex;
   }
 `;
 
@@ -124,6 +102,15 @@ const ContentTitle = styled.div`
     @media (max-width: 1000px) {
       display: inline-block;
       width: 100%;
+    }
+
+    @media (max-width: 650px) {
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-left: 15px;
+
+      font-size: 33px;
     }
   }
 

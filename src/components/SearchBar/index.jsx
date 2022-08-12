@@ -1,9 +1,9 @@
 import React from "react";
 import { SearchForms, SearchInput, SearchButton, SearchIcon } from "./styles";
 
-export default function SearchBar() {
+export default function SearchBar({ isMobile }) {
   return (
-    <SearchForms>
+    <SearchForms isMobile={isMobile}>
       <SearchInput placeholder="Search for people and friends" />
       <SearchButton type="submit">
         <SearchIcon />

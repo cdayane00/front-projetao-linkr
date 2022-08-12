@@ -13,6 +13,10 @@ const Card = styled.div`
   border-radius: 16px;
   background-color: var(--bg-timeline-posts);
   margin-bottom: 16px;
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 const LoadCard = styled.div`

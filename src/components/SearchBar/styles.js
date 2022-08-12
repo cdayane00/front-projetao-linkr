@@ -2,15 +2,22 @@ import { IoSearchOutline } from "react-icons/io5";
 import styled from "styled-components";
 
 export const SearchForms = styled.form`
-  display: flex;
-  max-width: 563px;
-  min-width: 300px;
-
+  display: ${(props) => (props.isMobile ? "none" : "flex")};
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   padding: 0 30px;
+
+  @media (max-width: 650px) {
+    display: ${(props) => (props.isMobile ? "flex" : "none")};
+    padding: 0 15px;
+  }
 `;
 
 export const SearchInput = styled.input`
   height: 45px;
+  max-width: 560px;
+  width: 70%;
 
   flex-shrink: 1;
 
@@ -28,15 +35,29 @@ export const SearchInput = styled.input`
   &::placeholder {
     color: var(--search-bar);
   }
+
+  @media (max-width: 650px) {
+    max-width: unset;
+    width: 100%;
+
+    font-size: 17px;
+  }
 `;
 
 export const SearchButton = styled.button`
-  border: 1px solid black;
+  width: 43px;
+  height: 45px;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-white);
 `;
 
 export const SearchIcon = styled(IoSearchOutline)`
   font-size: 21px;
-  color: var(--text-placeholder);
+  color: var(--search-bar);
 
   flex-shrink: 0;
 `;
