@@ -7,7 +7,6 @@ import PageTitle from "./title";
 import SearchBar from "../SearchBar";
 
 export default function Header({ props, title }) {
-  // const { userData, setUserData } = useContext(UserContext);
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 500ms ease-in-out",

@@ -28,4 +28,26 @@ const Feed = styled.div`
   flex-direction: column;
 `;
 
-export { Main, Content, Feed };
+const WarningContent = styled.div`
+  width: 610px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto;
+  }
+  h4 {
+    font-family: "Lato";
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--text-publish);
+  }
+
+  .ghost {
+    width: 550px;
+  }
+`;
+
+export { Main, Content, Feed, WarningContent };

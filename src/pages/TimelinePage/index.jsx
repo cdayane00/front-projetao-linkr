@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
-import { WithContent } from "../../components/Timeline";
+import {
+  WithContent,
+  WithoutContent,
+  WithError,
+} from "../../components/Timeline";
 import Sidebar from "../../components/Sidebar";
 import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
@@ -56,18 +60,37 @@ export default function Timeline() {
           <Feed>
             {loading && (
               <>
-                <PostInput userData={userData} getData={getData} />
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
                 <LoadingCard />
               </>
             )}
+            {!loading && error && <WithError />}
             {!loading && !error && posts?.length && (
               <>
-                <PostInput userData={userData} getData={getData} />
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
                 <WithContent
                   userData={userData}
                   posts={posts}
                   getData={getData}
                 />
+              </>
+            )}
+            {!loading && !error && posts.length === 0 && (
+              <>
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
+                <WithoutContent />
               </>
             )}
           </Feed>
