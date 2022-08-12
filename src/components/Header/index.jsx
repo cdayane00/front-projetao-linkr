@@ -8,7 +8,7 @@ export default function Header({ props, title }) {
   // const { userData, setUserData } = useContext(UserContext);
   const rotate = {
     transform: "rotate(180deg)",
-    transition: "transform 500ms ease-in-out",
+    transition: "transform 300ms ease-in-out",
   };
   const urotate = {
     transition: "transform 300ms ease-in-out",
@@ -37,7 +37,7 @@ export default function Header({ props, title }) {
               </>
             )}
           </Popover>
-          <img src={props.userImage} alt={props.userName} />
+          <img src={props.photo} alt={props.userName} />
         </div>
       </Navbar>
       <PageTitle title={title} />

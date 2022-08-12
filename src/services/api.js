@@ -16,3 +16,5 @@ export const listHashtags = async () => api.get("/hashtags");
 
 export const getPostsByHashtag = async (hashtag) =>
   api.get(`/hashtags/${hashtag}`);
+
+export const getUserById = async (id) => api.get(`/user/${id}`);
