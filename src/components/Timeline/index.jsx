@@ -1,13 +1,11 @@
 import React from "react";
 import Post from "./postcard";
-import PostInput from "./make-a-post";
 
-export function WithContent({ userData, posts }) {
+export function WithContent({ posts }) {
   return (
     <>
-      <PostInput props={userData} />
       {posts.map((e) => (
-        <Post props={e} />
+        <Post props={e} key={e.id} />
       ))}
     </>
   );
