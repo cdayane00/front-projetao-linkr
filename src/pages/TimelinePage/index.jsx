@@ -2,13 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
-import { WithContent } from "../../components/Timeline";
+import {
+  WithContent,
+  WithoutContent,
+  WithError,
+} from "../../components/Timeline";
 import Sidebar from "../../components/Sidebar";
 import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
-// https://back-projetao-linkr.herokuapp.com
+
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [posts, error, loading, axiosFunction] = useAxios();
@@ -60,6 +64,7 @@ export default function Timeline() {
                 <LoadingCard />
               </>
             )}
+            {!loading && error && <WithError />}
             {!loading && !error && posts?.length && (
               <>
                 <PostInput userData={userData} getData={getData} />
@@ -68,6 +73,12 @@ export default function Timeline() {
                   posts={posts}
                   getData={getData}
                 />
+              </>
+            )}
+            {!loading && !error && posts.length === 0 && (
+              <>
+                <PostInput userData={userData} getData={getData} />
+                <WithoutContent />
               </>
             )}
           </Feed>
