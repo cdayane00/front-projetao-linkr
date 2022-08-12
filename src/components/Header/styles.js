@@ -18,6 +18,10 @@ const Navbar = styled.div`
   }
   h2 {
     font-size: 49px;
+
+    @media (max-width: 650px) {
+      font-size: 45px;
+    }
   }
 
   .user {
@@ -30,6 +34,10 @@ const Navbar = styled.div`
       background-color: var(--bg-secondary);
       outline: none;
     }
+
+    @media (max-width: 650px) {
+      width: unset;
+    }
   }
 
   .user img {
@@ -38,6 +46,11 @@ const Navbar = styled.div`
     border-radius: 26.5px;
     object-fit: contain;
     aspect-ratio: 1/1;
+
+    @media (max-width: 650px) {
+      width: 41px;
+      height: 41px;
+    }
   }
 
   button {
@@ -75,6 +88,10 @@ const Outerbox = styled.div`
 const Chevron = styled(IoChevronDown)`
   font-size: 38px;
   color: var(--bg-white);
+
+  @media (max-width: 650px) {
+    font-size: 25px;
+  }
 `;
 
 const MainTitle = styled.div`
