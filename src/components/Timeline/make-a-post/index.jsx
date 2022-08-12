@@ -40,6 +40,7 @@ export default function PostInput({ userData, getData, getTrendingHashtags }) {
       },
     });
     if (error) {
+      console.log(error);
       handleError();
     } else {
       getData();

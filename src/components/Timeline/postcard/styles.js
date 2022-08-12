@@ -25,6 +25,10 @@ const LoadCard = styled.div`
   height: auto;
   border-radius: 16px;
   margin-bottom: 16px;
+  @media (max-width: 650px) {
+    width: 100%;
+    border-radius: 0;
+  }
 `;
 const CardSide = styled.div`
   width: 50px;
