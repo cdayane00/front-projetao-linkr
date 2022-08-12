@@ -54,6 +54,7 @@ const CardDetails = styled.div`
     box-sizing: border-box;
     padding: 12px;
     &:disabled {
+      background-color: var(--border);
       opacity: 0.5;
     }
   }

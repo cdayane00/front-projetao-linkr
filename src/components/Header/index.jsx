@@ -5,7 +5,6 @@ import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
 export default function Header({ props, title }) {
-  // const { userData, setUserData } = useContext(UserContext);
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 500ms ease-in-out",
