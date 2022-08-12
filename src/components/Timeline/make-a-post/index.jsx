@@ -7,7 +7,7 @@ import { useAxios } from "../../../utils/hooks";
 import axios from "../../../services/api";
 import { displayErrorNotify } from "../../../utils";
 
-export default function PostInput({ userData, getData }) {
+export default function PostInput({ userData, getData, getTrendingHashtags }) {
   const [result, error, loading, axiosFunction] = useAxios();
   const postModel = { text: "", url: "" };
   const [postData, setPostData] = useState(postModel);
@@ -43,6 +43,7 @@ export default function PostInput({ userData, getData }) {
       handleError();
     } else {
       getData();
+      getTrendingHashtags();
     }
   }
   return (
