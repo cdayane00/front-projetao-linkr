@@ -13,6 +13,11 @@ const Card = styled.div`
   border-radius: 16px;
   background-color: var(--bg-timeline-posts);
   margin-bottom: 16px;
+
+  @media (max-width: 650px) {
+    width: 100%;
+    border-radius: 0;
+  }
 `;
 
 const LoadCard = styled.div`
@@ -34,12 +39,26 @@ const CardSide = styled.div`
     border-radius: 26.5px;
     object-fit: contain;
     margin-bottom: 20px;
+
+    @media (max-width: 650px) {
+      height: 40px;
+      width: 40px;
+    }
   }
 
   p {
     margin-top: 4px;
     font-size: 11px;
     color: var(--text-primary);
+
+    @media (max-width: 650px) {
+      text-align: center;
+      line-height: 1.2em;
+    }
+  }
+
+  @media (max-width: 650px) {
+    margin-right: 20px;
   }
 `;
 
@@ -49,8 +68,17 @@ const CardDetails = styled.div`
   flex-direction: column;
   gap: 7px;
 
+  @media (max-width: 650px) {
+    width: 100%;
+    min-width: 100px;
+  }
+
   a {
     text-decoration: none;
+
+    @media (max-width: 650px) {
+      max-height: fit-content;
+    }
   }
 
   .user-wrapper {
@@ -65,6 +93,10 @@ const CardDetails = styled.div`
     white-space: nowrap;
     color: var(--text-primary);
     font-size: 19px;
+
+    @media (max-width: 650px) {
+      font-size: 17px;
+    }
   }
 
   .edit {
@@ -82,6 +114,15 @@ const CardDetails = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    margin-bottom: 15px;
+
+    @media (max-width: 650px) {
+      font-size: 15px;
+      line-height: 1.2em;
+
+      margin-bottom: 10px;
+    }
   }
 
   .meta-data {
@@ -91,10 +132,17 @@ const CardDetails = styled.div`
     border-radius: 12px;
     display: flex;
     align-items: center;
+
     :hover {
       text-decoration: underline;
       text-decoration-color: var(--link-secondary);
       offset: 3px;
+    }
+
+    @media (max-width: 650px) {
+      width: unset;
+      height: 115px;
+      justify-content: space-between;
     }
   }
 
@@ -106,6 +154,16 @@ const CardDetails = styled.div`
     justify-content: space-between;
     box-sizing: border-box;
     padding: 20px 20px;
+
+    overflow: hidden;
+
+    @media (max-width: 650px) {
+      min-width: 100px;
+      width: 100%;
+      height: 100%;
+
+      padding: 15px 20px;
+    }
   }
 
   .meta-title {
@@ -117,6 +175,10 @@ const CardDetails = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 650px) {
+      font-size: 12px;
+    }
   }
 
   .meta-text {
@@ -128,6 +190,10 @@ const CardDetails = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 650px) {
+      font-size: 9px;
+    }
   }
 
   .meta-link {
@@ -139,6 +205,10 @@ const CardDetails = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 650px) {
+      font-size: 9px;
+    }
   }
 
   img {
@@ -147,6 +217,11 @@ const CardDetails = styled.div`
     background-color: var(--border);
     border-radius: 0 12px 12px 0;
     object-fit: scale-down;
+
+    @media (max-width: 650px) {
+      width: 95px;
+      height: 115px;
+    }
   }
 `;
 const Heart = styled(IoHeartOutline)`
