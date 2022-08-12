@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { IoHeartOutline } from "react-icons/io5";
+import { BiTrashAlt } from "react-icons/bi";
+import { TiPencil } from "react-icons/ti";
 
 const Card = styled.div`
   width: 611px;
@@ -50,12 +52,24 @@ const CardDetails = styled.div`
   a {
     text-decoration: none;
   }
+
+  .user-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .user {
     width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--text-primary);
     font-size: 19px;
+  }
+
+  .edit {
+    display: flex;
+    gap: 10px;
   }
 
   .description {
@@ -130,8 +144,9 @@ const CardDetails = styled.div`
   img {
     width: 155px;
     height: 155px;
+    background-color: var(--border);
     border-radius: 0 12px 12px 0;
-    object-fit: contain;
+    object-fit: scale-down;
   }
 `;
 const Heart = styled(IoHeartOutline)`
@@ -139,4 +154,13 @@ const Heart = styled(IoHeartOutline)`
   color: var(--text-primary);
 `;
 
-export { Card, LoadCard, CardSide, CardDetails, Heart };
+const Trash = styled(BiTrashAlt)`
+  font-size: 20px;
+  color: var(--text-primary);
+`;
+
+const Pencil = styled(TiPencil)`
+  font-size: 20px;
+  color: var(--text-primary);
+`;
+export { Card, LoadCard, CardSide, CardDetails, Heart, Trash, Pencil };
