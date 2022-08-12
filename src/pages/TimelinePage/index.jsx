@@ -76,11 +76,7 @@ export default function Timeline() {
                   getData={getData}
                   getTrendingHashtags={getTrendingHashtags}
                 />
-                <WithContent
-                  userData={userData}
-                  posts={posts}
-                  getData={getData}
-                />
+                <WithContent userId={userData.userId} posts={posts} />
               </>
             )}
             {!loading && !error && posts.length === 0 && (
