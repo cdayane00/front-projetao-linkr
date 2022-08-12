@@ -75,6 +75,10 @@ const CardDetails = styled.div`
 
   a {
     text-decoration: none;
+
+    @media (max-width: 650px) {
+      max-height: fit-content;
+    }
   }
 
   .user-wrapper {
@@ -111,9 +115,13 @@ const CardDetails = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
 
+    margin-bottom: 15px;
+
     @media (max-width: 650px) {
       font-size: 15px;
       line-height: 1.2em;
+
+      margin-bottom: 10px;
     }
   }
 
@@ -134,7 +142,6 @@ const CardDetails = styled.div`
     @media (max-width: 650px) {
       width: unset;
       height: 115px;
-
       justify-content: space-between;
     }
   }
@@ -148,12 +155,14 @@ const CardDetails = styled.div`
     box-sizing: border-box;
     padding: 20px 20px;
 
+    overflow: hidden;
+
     @media (max-width: 650px) {
       min-width: 100px;
-      height: fit-content;
-      gap: 20px;
+      width: 100%;
+      height: 100%;
 
-      padding: 0 20px;
+      padding: 15px 20px;
     }
   }
 
@@ -168,7 +177,7 @@ const CardDetails = styled.div`
     text-overflow: ellipsis;
 
     @media (max-width: 650px) {
-      font-size: 11px;
+      font-size: 12px;
     }
   }
 
@@ -212,7 +221,6 @@ const CardDetails = styled.div`
     @media (max-width: 650px) {
       width: 95px;
       height: 115px;
-      flex-shrink: 0;
     }
   }
 `;
