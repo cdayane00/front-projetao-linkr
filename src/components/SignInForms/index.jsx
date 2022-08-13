@@ -38,8 +38,6 @@ export default function SignInForms() {
       const promise = await loginUser(signInData);
       setResponse(promise.data);
 
-      callToast("success", "Redirecting to timeline");
-
       setTimeout(() => {
         navigate("/timeline");
       }, 1500);
