@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
@@ -10,9 +10,12 @@ import { FeedHashtag, HashtagMain, PageContent } from "./styles";
 import { callToast } from "../../utils";
 import { useLocalStorage } from "../../utils/hooks";
 import { getPostsByHashtag, listHashtags } from "../../services/api";
+import LoadingCard from "../../components/Timeline/loading";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function HashtagPage() {
   const { hashtag } = useParams();
+  const { refresh } = useContext(HandlerContext);
   const [userData] = useLocalStorage("linkrUserData", "");
   const navigate = useNavigate();
 
@@ -45,7 +48,7 @@ export default function HashtagPage() {
       callToast("error", error?.response?.data?.error);
     }
 
-    setIsGetting(false);
+    setTimeout(() => setIsGetting(false), 1500);
   }
 
   useEffect(() => {
@@ -57,9 +60,14 @@ export default function HashtagPage() {
     } else {
       getPageInfo();
     }
-  }, [hashtag]);
+  }, [hashtag, refresh]);
 
-  console.log("renderizei");
+  const skeletonLoading = isGetting && <LoadingCard />;
+  const posts =
+    !isGetting &&
+    pageData?.posts.hashtagPosts.map((post) => (
+      <Post userId={post.userId} key={post.postId} props={post} />
+    ));
 
   return (
     <>
@@ -67,10 +75,8 @@ export default function HashtagPage() {
       <HashtagMain as={Main}>
         <PageContent as={Content}>
           <FeedHashtag as={Feed}>
-            {!isGetting &&
-              pageData?.posts.hashtagPosts.map((post) => (
-                <Post userId={post.userId} key={post.postId} props={post} />
-              ))}
+            {skeletonLoading}
+            {posts}
           </FeedHashtag>
           <Sidebar hashtags={pageData?.trendingHashtags} />
         </PageContent>
