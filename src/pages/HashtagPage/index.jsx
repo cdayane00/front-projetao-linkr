@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import Header from "../../components/Header";
 import Post from "../../components/Timeline/postcard";
 import Sidebar from "../../components/Sidebar";
@@ -8,43 +8,66 @@ import Sidebar from "../../components/Sidebar";
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
 import { callToast } from "../../utils";
-import { api } from "../../services/api";
-import { useAxios, useLocalStorage } from "../../utils/hooks";
+import { useLocalStorage } from "../../utils/hooks";
+import { getPostsByHashtag, listHashtags } from "../../services/api";
+import LoadingCard from "../../components/Timeline/loading";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function HashtagPage() {
   const { hashtag } = useParams();
+  const { refresh } = useContext(HandlerContext);
   const [userData] = useLocalStorage("linkrUserData", "");
-  const [
-    trendingTags,
-    trendingTagsError,
-    trendingTagsIsLoading,
-    axiosGetTrendingTags,
-  ] = useAxios();
-  const [posts, postsError, postsIsLoading, axiosGetPosts] = useAxios();
+  const navigate = useNavigate();
 
-  const axiosFunctionConstructor = (axiosInstance, url) => ({
-    axiosInstance,
-    method: "GET",
-    url,
-    requestConfig: {
+  const [pageData, setPageData] = useState(null);
+  const [isGetting, setIsGetting] = useState(false);
+
+  async function getPageInfo() {
+    setIsGetting(true);
+
+    const config = {
       headers: {
-        authorization: `Bearer ${userData.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
-    },
-  });
+    };
+
+    const promisePosts = getPostsByHashtag(hashtag, config);
+    const promiseTrendingTags = listHashtags(config);
+
+    try {
+      const [postsResponse, trendingHashtagsResponse] = await Promise.all([
+        promisePosts,
+        promiseTrendingTags,
+      ]);
+
+      setPageData({
+        posts: postsResponse.data,
+        trendingHashtags: trendingHashtagsResponse.data,
+      });
+    } catch (error) {
+      callToast("error", error?.response?.data?.error);
+    }
+
+    setTimeout(() => setIsGetting(false), 1500);
+  }
 
   useEffect(() => {
-    axiosGetTrendingTags(axiosFunctionConstructor(api, "/hashtags"));
-    axiosGetPosts(axiosFunctionConstructor(api, `/hashtags/${hashtag}`));
-  }, [hashtag]);
+    if (!userData.token) {
+      callToast("error", "Log in to have access to this page");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } else {
+      getPageInfo();
+    }
+  }, [hashtag, refresh]);
 
-  if (
-    !postsIsLoading &&
-    !trendingTagsIsLoading &&
-    (trendingTagsError.length > 0 || postsError.length > 0)
-  ) {
-    callToast("error", postsError || trendingTagsError);
-  }
+  const skeletonLoading = isGetting && <LoadingCard />;
+  const posts =
+    !isGetting &&
+    pageData?.posts.hashtagPosts.map((post) => (
+      <Post userId={post.userId} key={post.postId} props={post} />
+    ));
 
   return (
     <>
@@ -52,12 +75,10 @@ export default function HashtagPage() {
       <HashtagMain as={Main}>
         <PageContent as={Content}>
           <FeedHashtag as={Feed}>
-            {!postsIsLoading &&
-              posts.hashtagPosts?.map((post) => (
-                <Post userId={post.userId} key={post.postId} props={post} />
-              ))}
+            {skeletonLoading}
+            {posts}
           </FeedHashtag>
-          <Sidebar hashtags={trendingTags} />
+          <Sidebar hashtags={pageData?.trendingHashtags} />
         </PageContent>
       </HashtagMain>
     </>

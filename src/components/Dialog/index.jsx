@@ -37,7 +37,7 @@ function Buttons({ loading, setLoading }) {
       }, 1000);
     } catch (err) {
       console.log(err);
-      callToast("error", err);
+      callToast("error", err?.response?.data?.error);
       setLoading(false);
     }
   }
