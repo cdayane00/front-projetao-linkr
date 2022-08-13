@@ -41,7 +41,6 @@ export default function PostInput({ getData, getTrendingHashtags }) {
       },
     });
     if (error) {
-      console.log(error);
       handleError();
     } else {
       getData();

@@ -92,6 +92,12 @@ const CardDetails = styled.div`
     align-items: center;
   }
 
+  .user-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .user {
     width: 100%;
     text-overflow: ellipsis;
@@ -105,6 +111,11 @@ const CardDetails = styled.div`
     @media (max-width: 650px) {
       font-size: 17px;
     }
+  }
+
+  .edit {
+    display: flex;
+    gap: 10px;
   }
 
   .edit {

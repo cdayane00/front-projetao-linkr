@@ -132,5 +132,30 @@ const ContentTitle = styled.div`
   @media (max-width: 1000px) {
     width: 611px;
   }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 26.5px;
+    object-fit: contain;
+    margin-right: 20px;
+    margin-left: 15px;
+
+    @media (max-width: 650px) {
+      width: 40px;
+      height: 40px;
+      border-radius: 26.5px;
+      margin-top: 20px;
+      margin-left: 15px;
+      margin-right: 0px;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
 `;
+
 export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle };
