@@ -11,7 +11,7 @@ import { callToast } from "../../utils";
 import { api } from "../../services/api";
 import { useAxios, useLocalStorage } from "../../utils/hooks";
 
-export default function Timeline() {
+export default function HashtagPage() {
   const { hashtag } = useParams();
   const [userData] = useLocalStorage("linkrUserData", "");
   const [

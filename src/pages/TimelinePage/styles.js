@@ -21,11 +21,45 @@ const Content = styled.div`
   justify-content: space-between;
   margin-top: 232px;
   position: relative;
+
+  @media (max-width: 1000px) {
+    width: unset;
+  }
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+`;
+
+const WarningContent = styled.div`
+  width: 610px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto;
+  }
+  h4 {
+    font-family: "Lato";
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--text-publish);
+  }
+
+  .ghost {
+    width: 550px;
+  }
 `;
 
 const WarningContent = styled.div`

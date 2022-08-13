@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { IoChevronDown, IoSearchOutline } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 
 const Navbar = styled.div`
   width: 100%;
@@ -18,6 +18,10 @@ const Navbar = styled.div`
   }
   h2 {
     font-size: 49px;
+
+    @media (max-width: 650px) {
+      font-size: 45px;
+    }
   }
 
   .user {
@@ -30,6 +34,10 @@ const Navbar = styled.div`
       background-color: var(--bg-secondary);
       outline: none;
     }
+
+    @media (max-width: 650px) {
+      width: unset;
+    }
   }
 
   .user img {
@@ -38,23 +46,10 @@ const Navbar = styled.div`
     border-radius: 26.5px;
     object-fit: contain;
     aspect-ratio: 1/1;
-  }
 
-  input {
-    width: 520px;
-    height: 45px;
-    background-color: var(--bg-white);
-    font-family: "Lato";
-    font-weight: 400;
-    font-size: 19px;
-    color: var(--text-search-bar);
-    box-sizing: border-box;
-    padding: 12px;
-    outline: 0;
-    border-radius: 8px 0 0 8px;
-    border: none;
-    ::placeholder {
-      color: var(--search-bar);
+    @media (max-width: 650px) {
+      width: 41px;
+      height: 41px;
     }
   }
 
@@ -67,10 +62,6 @@ const Navbar = styled.div`
     justify-content: center;
     align-items: center;
     background-color: var(--bg-white);
-  }
-
-  form {
-    display: flex;
   }
 `;
 
@@ -97,12 +88,12 @@ const Outerbox = styled.div`
 const Chevron = styled(IoChevronDown)`
   font-size: 38px;
   color: var(--bg-white);
+
+  @media (max-width: 650px) {
+    font-size: 25px;
+  }
 `;
 
-const Search = styled(IoSearchOutline)`
-  font-size: 21px;
-  color: var(--text-placeholder);
-`;
 const MainTitle = styled.div`
   width: 100vw;
   height: 158px;
@@ -117,8 +108,27 @@ const MainTitle = styled.div`
 
 const ContentTitle = styled.div`
   width: 937px;
+
   h3 {
     font-size: 43px;
+
+    @media (max-width: 1000px) {
+      display: inline-block;
+      width: 100%;
+    }
+
+    @media (max-width: 650px) {
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-left: 15px;
+
+      font-size: 33px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: 611px;
   }
   display: flex;
 `;
@@ -133,6 +143,7 @@ const TitleContainer = styled.div`
     margin-bottom: 20px;
   }
 `;
+
 export {
   Navbar,
   Chevron,
@@ -142,3 +153,4 @@ export {
   Search,
   TitleContainer,
 };
+

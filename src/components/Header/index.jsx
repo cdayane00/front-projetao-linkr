@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
+import SearchBar from "../SearchBar";
 
 export default function Header({ props, title, userPhoto }) {
+
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 300ms ease-in-out",

@@ -21,6 +21,8 @@ export const Container = styled.section`
 
     @media (max-width: 768px) {
       font-size: 17px;
+      text-align: center;
+
       text-underline-offset: 2px;
     }
   }

@@ -10,6 +10,13 @@ const Card = styled.div`
   margin-bottom: 29px;
   box-sizing: border-box;
   padding: 16px;
+
+  @media (max-width: 650px) {
+    display: unset;
+    width: unset;
+
+    border-radius: 0;
+  }
 `;
 
 const CardSide = styled.div`
@@ -22,11 +29,21 @@ const CardSide = styled.div`
     border-radius: 26.5px;
     object-fit: contain;
   }
+
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const CardDetails = styled.div`
   width: 503px;
   position: relative;
+
+  @media (max-width: 650px) {
+    width: unset;
+    width: 100%;
+  }
+
   form {
     width: 503px;
     height: 147px;
@@ -36,6 +53,11 @@ const CardDetails = styled.div`
     align-items: flex-end;
     font-family: "Lato";
     font-size: 15px;
+
+    @media (max-width: 650px) {
+      width: unset;
+      width: 100%;
+    }
   }
 
   input {
@@ -45,17 +67,28 @@ const CardDetails = styled.div`
     background-color: var(--bg-publish-input);
     font-weight: 300;
     color: var(--text-publish);
+
     ::placeholder {
       font-family: "Lato";
       color: var(--text-placeholder);
     }
+
     border: none;
     outline: 0;
     box-sizing: border-box;
     padding: 12px;
+
     &:disabled {
       background-color: var(--border);
       opacity: 0.5;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 13px;
+
+      &::placeholder {
+        font-size: 13px;
+      }
     }
   }
 
@@ -83,6 +116,13 @@ const CardDetails = styled.div`
     font-size: 20px;
     color: var(--text-publish);
     margin-bottom: 10px;
+
+    @media (max-width: 650px) {
+      text-align: center;
+      font-size: 17px;
+
+      margin-bottom: 20px;
+    }
   }
 `;
 
