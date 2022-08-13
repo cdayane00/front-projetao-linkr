@@ -1,18 +1,40 @@
 import React from "react";
 import Post from "./postcard";
-import PostInput from "./make-a-post";
+import { WarningContent } from "../../pages/TimelinePage/styles";
+import error from "../../assets/error.png";
+import ghost from "../../assets/ghost.png";
 
-export function WithContent({ userData, posts }) {
+export function WithContent({ posts, userId }) {
   return (
     <>
-      <PostInput props={userData} />
       {posts.map((e) => (
-        <Post props={e} />
+        <Post props={e} key={e.id} userId={userId} />
       ))}
     </>
   );
 }
 
-// export function WithoutContent() {
-//   return <></>;
-// }
+export function WithoutContent() {
+  return (
+    <WarningContent>
+      <img
+        className="ghost"
+        src={ghost}
+        alt="A cute ghost with his flashlight"
+      />
+      <h3>There are no posts yet.</h3>
+    </WarningContent>
+  );
+}
+
+export function WithError() {
+  return (
+    <WarningContent>
+      <img src={error} alt="A crying ghost" />
+      <h3>
+        An error occured while trying to fetch the posts, please refresh the
+        page.
+      </h3>
+    </WarningContent>
+  );
+}

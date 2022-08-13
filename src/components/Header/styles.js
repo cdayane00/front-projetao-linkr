@@ -12,6 +12,10 @@ const Navbar = styled.div`
   padding: 0 17px 0 20px;
   z-index: 2;
   background-color: var(--bg-secondary);
+
+  a {
+    text-decoration: none;
+  }
   h2 {
     font-size: 49px;
   }
@@ -116,5 +120,25 @@ const ContentTitle = styled.div`
   h3 {
     font-size: 43px;
   }
+  display: flex;
 `;
-export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle, Search };
+
+const TitleContainer = styled.div`
+  margin-right: 10px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 26.5px;
+    object-fit: contain;
+    margin-bottom: 20px;
+  }
+`;
+export {
+  Navbar,
+  Chevron,
+  Outerbox,
+  MainTitle,
+  ContentTitle,
+  Search,
+  TitleContainer,
+};

@@ -1,45 +1,78 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 
 import { Card, CardSide, CardDetails } from "./style";
+import ButtonRender from "./button";
+import { useAxios } from "../../../utils/hooks";
+import axios from "../../../services/api";
+import { displayErrorNotify } from "../../../utils";
 
-export default function PostInput({ props }) {
-  const [url, setUrl] = useState("");
-  const [text, setText] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
+export default function PostInput({ userData, getData, getTrendingHashtags }) {
+  const [result, error, loading, axiosFunction] = useAxios();
+  const postModel = { text: "", url: "" };
+  const [postData, setPostData] = useState(postModel);
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setPostData({ ...postData, [name]: value });
+  }
+  function handleError() {
+    // trocar pela versão 2.0
+    displayErrorNotify(`
+    There was an error publishing your post`);
+    setPostData(postModel);
+  }
 
-  function submitPost(event) {
-    event.preventDefault();
-    setIsDisabled(true);
-    setTimeout(() => {
-      setIsDisabled(false);
-    }, 1500);
+  async function submitPost(e) {
+    e.preventDefault();
+
+    await axiosFunction({
+      axiosInstance: axios,
+      method: "POST",
+      url: "/post",
+      requestConfig: {
+        data: {
+          postUrl: postData.url,
+          postText: postData.text,
+        },
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      },
+    });
+    if (error) {
+      handleError();
+    } else {
+      getData();
+      getTrendingHashtags();
+    }
   }
   return (
     <Card>
       <CardSide>
-        <img src={props.photo} alt="user" />
+        <img src={userData.photo} alt="user" />
       </CardSide>
       <CardDetails>
         <p>What are you going to share today?</p>
-        <form onSubmit={(event) => submitPost(event)}>
+        <form onSubmit={(e) => submitPost(e)}>
           <input
+            name="url"
             type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={postData.url}
+            onChange={(e) => handleChange(e)}
             placeholder="https://..."
             required
-            disabled={isDisabled}
+            disabled={loading}
           />
           <textarea
+            name="text"
             className="text"
             type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={postData.text}
+            onChange={(e) => handleChange(e)}
             placeholder="Awesome article about #javascript"
-            required
-            disabled={isDisabled}
+            disabled={loading}
           />
-          <button type="submit">Publish</button>
+          <ButtonRender loading={loading} />
         </form>
       </CardDetails>
     </Card>

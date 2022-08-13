@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
-import { WithContent } from "../../components/Timeline";
+import {
+  WithContent,
+  WithoutContent,
+  WithError,
+} from "../../components/Timeline";
 import Sidebar from "../../components/Sidebar";
 import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
+import PostInput from "../../components/Timeline/make-a-post";
 
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
@@ -53,9 +58,36 @@ export default function Timeline() {
       <Main>
         <Content>
           <Feed>
-            {loading && <LoadingCard />}
+            {loading && (
+              <>
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
+                <LoadingCard />
+              </>
+            )}
+            {!loading && error && <WithError />}
             {!loading && !error && posts?.length && (
-              <WithContent userData={userData} posts={posts} />
+              <>
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
+                <WithContent userId={userData.userId} posts={posts} />
+              </>
+            )}
+            {!loading && !error && posts.length === 0 && (
+              <>
+                <PostInput
+                  userData={userData}
+                  getData={getData}
+                  getTrendingHashtags={getTrendingHashtags}
+                />
+                <WithoutContent />
+              </>
             )}
           </Feed>
           <Sidebar hashtags={trendingHashtags} />

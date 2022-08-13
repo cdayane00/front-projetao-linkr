@@ -1,11 +1,11 @@
 import React from "react";
 import { Popover } from "@headlessui/react";
+import { Link } from "react-router-dom";
 import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 
-export default function Header({ props, title }) {
-  // const { userData, setUserData } = useContext(UserContext);
+export default function Header({ props, title, userPhoto }) {
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 300ms ease-in-out",
@@ -17,7 +17,9 @@ export default function Header({ props, title }) {
   return (
     <>
       <Navbar>
-        <h2>linkr</h2>
+        <Link to="/timeline">
+          <h2>linkr</h2>
+        </Link>
         <form>
           <input placeholder="Search for people" />
           <button type="submit">
@@ -37,10 +39,11 @@ export default function Header({ props, title }) {
               </>
             )}
           </Popover>
-          <img src={props.photo} alt={props.userName} />
+
+          <img src={props.photo} alt="user" />
         </div>
       </Navbar>
-      <PageTitle title={title} />
+      <PageTitle title={title} userPhoto={userPhoto} />
     </>
   );
 }
