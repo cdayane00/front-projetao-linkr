@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 // API
 import { loginUser } from "../../services/api";
 // Utils
-import { displayErrorNotify, displaySuccessNotify } from "../../utils";
+import { callToast } from "../../utils";
 // Components
 import AuthInput from "../AuthInput";
 import AuthSubmitButton from "../AuthSubmitButton";
@@ -13,21 +13,13 @@ import { Container, Form } from "./styles";
 import { useLocalStorage } from "../../utils/hooks";
 
 export default function SignInForms() {
-  const [response, setResponse] = useLocalStorage("linkrUserData", "");
   const signInModel = { email: "", password: "" };
+
+  const [response, setResponse] = useLocalStorage("linkrUserData", "");
   const [signInData, setSignInData] = useState(signInModel);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (response.token) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        navigate("/timeline");
-        setIsSubmitting(false);
-      }, 1500);
-    }
-  }, []);
   function handleChange(e) {
     const { name, value } = e.target;
     setSignInData({ ...signInData, [name]: value });
@@ -35,7 +27,7 @@ export default function SignInForms() {
 
   function handleError(error) {
     console.log(error);
-    displayErrorNotify(error?.response.status);
+    callToast("error", error.response?.data?.error);
     setSignInData(signInModel);
   }
 
@@ -45,15 +37,26 @@ export default function SignInForms() {
     try {
       const promise = await loginUser(signInData);
       setResponse(promise.data);
-      displaySuccessNotify(promise.status);
+
+      callToast("success", "Redirecting to timeline");
+
       setTimeout(() => {
         navigate("/timeline");
       }, 1500);
     } catch (error) {
       handleError(error);
     }
+
     setIsSubmitting(false);
   }
+
+  useEffect(() => {
+    if (response.token) {
+      setTimeout(() => {
+        navigate("/timeline");
+      }, 1500);
+    }
+  }, []);
 
   return (
     <Container>
@@ -64,7 +67,7 @@ export default function SignInForms() {
           placeholder="e-mail"
           value={signInData.email || ""}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || response.token}
         />
         <AuthInput
           name="password"
@@ -72,9 +75,12 @@ export default function SignInForms() {
           placeholder="password"
           value={signInData.password}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || response.token}
         />
-        <AuthSubmitButton text="Sign In" isLoading={isSubmitting} />
+        <AuthSubmitButton
+          text="Sign In"
+          isLoading={isSubmitting || response.token}
+        />
       </Form>
       <Link to="/sign-up">First time? Create an account!</Link>
     </Container>
