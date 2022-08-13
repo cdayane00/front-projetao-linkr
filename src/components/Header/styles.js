@@ -158,14 +158,4 @@ const ContentTitle = styled.div`
   }
 `;
 
-const TitleContainer = styled.div`
-  margin-right: 10px;
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 26.5px;
-    object-fit: contain;
-    margin-bottom: 20px;
-  }
-`;
-export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle, TitleContainer };
+export { Navbar, Chevron, Outerbox, MainTitle, ContentTitle };
