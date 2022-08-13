@@ -68,15 +68,15 @@ const CardDetails = styled.div`
     font-weight: 300;
     color: var(--text-publish);
 
-    ::placeholder {
-      font-family: "Lato";
-      color: var(--text-placeholder);
-    }
-
     border: none;
     outline: 0;
     box-sizing: border-box;
     padding: 12px;
+
+    ::placeholder {
+      font-family: "Lato";
+      color: var(--text-placeholder);
+    }
 
     &:disabled {
       background-color: var(--border);
@@ -99,16 +99,21 @@ const CardDetails = styled.div`
     background-color: var(--bg-publish-input);
     font-weight: 300;
     color: var(--text-publish);
-    ::placeholder {
-      font-family: "Lato";
-      color: var(--text-placeholder);
-    }
     border: none;
     outline: 0;
     box-sizing: border-box;
     padding: 12px;
     line-height: 18px;
     resize: none;
+
+    ::placeholder {
+      font-family: "Lato";
+      color: var(--text-placeholder);
+    }
+    &:disabled {
+      background-color: var(--border);
+      opacity: 0.5;
+    }
   }
 
   p {

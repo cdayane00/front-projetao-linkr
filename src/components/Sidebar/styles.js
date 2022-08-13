@@ -50,6 +50,9 @@ const Content = styled.div`
     text-decoration: none;
 
     width: fit-content;
+    :hover {
+      color: #c6c6c6;
+    }
   }
 `;
 
