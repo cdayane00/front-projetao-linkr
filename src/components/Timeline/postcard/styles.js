@@ -104,6 +104,11 @@ const CardDetails = styled.div`
     gap: 10px;
   }
 
+  .edit {
+    display: flex;
+    gap: 10px;
+  }
+
   .description {
     width: 100%;
     height: auto;
@@ -217,7 +222,6 @@ const CardDetails = styled.div`
     background-color: var(--border);
     border-radius: 0 12px 12px 0;
     object-fit: scale-down;
-
     @media (max-width: 650px) {
       width: 95px;
       height: 115px;

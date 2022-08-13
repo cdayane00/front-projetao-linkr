@@ -1,15 +1,16 @@
 import React from "react";
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { Navbar, Chevron } from "./styles";
+import { Navbar, Chevron, Search } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
 import SearchBar from "../SearchBar";
 
-export default function Header({ props, title }) {
+export default function Header({ props, title, userPhoto }) {
+
   const rotate = {
     transform: "rotate(180deg)",
-    transition: "transform 500ms ease-in-out",
+    transition: "transform 300ms ease-in-out",
   };
   const urotate = {
     transition: "transform 300ms ease-in-out",
@@ -21,8 +22,12 @@ export default function Header({ props, title }) {
         <Link to="/timeline">
           <h2>linkr</h2>
         </Link>
-
-        <SearchBar isMobile={false} />
+        <form>
+          <input placeholder="Search for people" />
+          <button type="submit">
+            <Search />
+          </button>
+        </form>
         <div className="user">
           <Popover>
             {({ open }) => (
@@ -40,7 +45,7 @@ export default function Header({ props, title }) {
           <img src={props.photo} alt="user" />
         </div>
       </Navbar>
-      <PageTitle title={title} />
+      <PageTitle title={title} userPhoto={userPhoto} />
     </>
   );
 }

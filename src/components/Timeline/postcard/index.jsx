@@ -16,7 +16,11 @@ export default function Post({ props, userId }) {
   };
 
   return (
-    <Card>
+    <Card
+      onClick={() => {
+        navigate(`/user/${userId}`);
+      }}
+    >
       <CardSide>
         <img src={props.photo} alt={props.username} />
         <Heart />
