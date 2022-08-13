@@ -21,11 +21,23 @@ const Content = styled.div`
   justify-content: space-between;
   margin-top: 232px;
   position: relative;
+
+  @media (max-width: 1000px) {
+    width: unset;
+  }
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 const WarningContent = styled.div`

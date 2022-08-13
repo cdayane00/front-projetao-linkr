@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
-export default function Post({ props, userId }) {
+export default function Post({ props, userId, setIsOpen }) {
   const navigate = useNavigate();
   const tagifyProps = {
     tagStyle: {
@@ -16,11 +16,7 @@ export default function Post({ props, userId }) {
   };
 
   return (
-    <Card
-      onClick={() => {
-        navigate(`/user/${userId}`);
-      }}
-    >
+    <Card>
       <CardSide>
         <img src={props.photo} alt={props.username} />
         <Heart />
@@ -28,13 +24,23 @@ export default function Post({ props, userId }) {
       </CardSide>
       <CardDetails>
         <div className="user-wrapper">
-          <div className="user">
-            <p>{props.username}</p>
-          </div>
+          <Link to={`/user/${props.userId}`}>
+            <div className="user">
+              <p>{props.username}</p>
+            </div>
+          </Link>
           {userId === props.userId && (
             <div className="edit">
-              <Pencil />
-              <Trash />
+              <Pencil
+                onClick={() => {
+                  console.log("edit");
+                }}
+              />
+              <Trash
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              />
             </div>
           )}
         </div>

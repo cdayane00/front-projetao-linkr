@@ -1,9 +1,10 @@
 import React from "react";
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { Navbar, Chevron, Search } from "./styles";
+import { Navbar, Chevron } from "./styles";
 import UserToggle from "./userLogout";
 import PageTitle from "./title";
+import SearchBar from "../SearchBar";
 
 export default function Header({ props, title, userPhoto }) {
   const rotate = {
@@ -20,12 +21,8 @@ export default function Header({ props, title, userPhoto }) {
         <Link to="/timeline">
           <h2>linkr</h2>
         </Link>
-        <form>
-          <input placeholder="Search for people" />
-          <button type="submit">
-            <Search />
-          </button>
-        </form>
+
+        <SearchBar isMobile={false} />
         <div className="user">
           <Popover>
             {({ open }) => (
