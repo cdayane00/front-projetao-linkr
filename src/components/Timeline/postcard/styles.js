@@ -76,7 +76,6 @@ const CardDetails = styled.div`
     width: 100%;
     min-width: 100px;
   }
-
   a {
     text-decoration: none;
 
@@ -92,17 +91,20 @@ const CardDetails = styled.div`
   }
 
   .user {
-    width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--text-primary);
     font-size: 19px;
-
     @media (max-width: 650px) {
       font-size: 17px;
     }
   }
-
+  .username {
+    :hover {
+      cursor: pointer;
+      color: #c6c6c6;
+    }
+  }
   .edit {
     display: flex;
     gap: 10px;
@@ -236,10 +238,18 @@ const Heart = styled(IoHeartOutline)`
 const Trash = styled(BiTrashAlt)`
   font-size: 20px;
   color: var(--text-primary);
+  :hover {
+    cursor: pointer;
+    color: #c6c6c6;
+  }
 `;
 
 const Pencil = styled(TiPencil)`
   font-size: 20px;
   color: var(--text-primary);
+  :hover {
+    cursor: pointer;
+    color: #c6c6c6;
+  }
 `;
 export { Card, LoadCard, CardSide, CardDetails, Heart, Trash, Pencil };

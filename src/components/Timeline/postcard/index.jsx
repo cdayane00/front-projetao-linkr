@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
@@ -24,9 +24,11 @@ export default function Post({ props, userId, setIsOpen }) {
       </CardSide>
       <CardDetails>
         <div className="user-wrapper">
-          <div className="user">
-            <p>{props.username}</p>
-          </div>
+          <Link to={`/user/${props.userId}`}>
+            <div className="user">
+              <p className="username">{props.username}</p>
+            </div>
+          </Link>
           {userId === props.userId && (
             <div className="edit">
               <Pencil />
