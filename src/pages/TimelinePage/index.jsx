@@ -12,8 +12,10 @@ import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
+import MyDialog from "../../components/Timeline/dialog";
 
 export default function Timeline() {
+  const [isOpen, setIsOpen] = useState(false);
   const [userData] = useLocalStorage("linkrUserData", "");
   const [posts, error, loading, axiosFunction] = useAxios();
   const [
@@ -54,7 +56,7 @@ export default function Timeline() {
   return (
     <>
       <Header props={userData} title="timeline" />
-
+      <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       <Main>
         <Content>
           <Feed>
@@ -76,7 +78,11 @@ export default function Timeline() {
                   getData={getData}
                   getTrendingHashtags={getTrendingHashtags}
                 />
-                <WithContent userId={userData.userId} posts={posts} />
+                <WithContent
+                  userId={userData.userId}
+                  posts={posts}
+                  setIsOpen={setIsOpen}
+                />
               </>
             )}
             {!loading && !error && posts.length === 0 && (

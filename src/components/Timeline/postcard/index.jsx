@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
-export default function Post({ props, userId }) {
+export default function Post({ props, userId, setIsOpen }) {
   const navigate = useNavigate();
   const tagifyProps = {
     tagStyle: {
@@ -30,7 +30,11 @@ export default function Post({ props, userId }) {
           {userId === props.userId && (
             <div className="edit">
               <Pencil />
-              <Trash />
+              <Trash
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              />
             </div>
           )}
         </div>
