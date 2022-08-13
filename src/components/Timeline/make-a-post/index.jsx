@@ -3,11 +3,12 @@ import React, { useState } from "react";
 
 import { Card, CardSide, CardDetails } from "./style";
 import ButtonRender from "./button";
-import { useAxios } from "../../../utils/hooks";
+import { useAxios, useLocalStorage } from "../../../utils/hooks";
 import axios from "../../../services/api";
 import { displayErrorNotify } from "../../../utils";
 
-export default function PostInput({ userData, getData, getTrendingHashtags }) {
+export default function PostInput({ getData, getTrendingHashtags }) {
+  const [userData] = useLocalStorage("linkrUserData", "");
   const [result, error, loading, axiosFunction] = useAxios();
   const postModel = { text: "", url: "" };
   const [postData, setPostData] = useState(postModel);

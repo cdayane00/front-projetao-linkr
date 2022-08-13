@@ -48,8 +48,10 @@ function useAxios() {
   const axiosFunction = async (configObj) => {
     const { axiosInstance, method, url, requestConfig = {} } = configObj;
     if (requestConfig.data) {
+      setResponse([]);
       const { data, headers } = requestConfig;
       try {
+        setError("");
         setLoading(true);
         const ctrl = new AbortController();
         setController(ctrl);
@@ -58,13 +60,15 @@ function useAxios() {
         });
         setResponse(res.data);
       } catch (err) {
-        setError(err.response.data.error);
+        setError(err.response.data);
       } finally {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
       }
     } else {
+      setError("");
+      setResponse([]);
       try {
         setLoading(true);
         const ctrl = new AbortController();

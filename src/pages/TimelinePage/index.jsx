@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
 import {
@@ -12,9 +12,11 @@ import { useLocalStorage, useAxios } from "../../utils/hooks";
 import axios from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
+  const { refresh } = useContext(HandlerContext);
   const [posts, error, loading, axiosFunction] = useAxios();
   const [
     trendingHashtags,
@@ -50,18 +52,16 @@ export default function Timeline() {
   useEffect(() => {
     getData();
     getTrendingHashtags();
-  }, []);
+  }, [refresh]);
   return (
     <>
       <Header props={userData} title="timeline" />
-
       <Main>
         <Content>
           <Feed>
             {loading && (
               <>
                 <PostInput
-                  userData={userData}
                   getData={getData}
                   getTrendingHashtags={getTrendingHashtags}
                 />
@@ -72,7 +72,6 @@ export default function Timeline() {
             {!loading && !error && posts?.length && (
               <>
                 <PostInput
-                  userData={userData}
                   getData={getData}
                   getTrendingHashtags={getTrendingHashtags}
                 />
@@ -82,7 +81,6 @@ export default function Timeline() {
             {!loading && !error && posts.length === 0 && (
               <>
                 <PostInput
-                  userData={userData}
                   getData={getData}
                   getTrendingHashtags={getTrendingHashtags}
                 />
