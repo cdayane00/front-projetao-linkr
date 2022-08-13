@@ -4,11 +4,11 @@ import { WarningContent } from "../../pages/TimelinePage/styles";
 import error from "../../assets/error.png";
 import ghost from "../../assets/ghost.png";
 
-export function WithContent({ posts, userId }) {
+export function WithContent({ posts, userId, setIsOpen }) {
   return (
     <>
       {posts.map((e) => (
-        <Post props={e} key={e.id} userId={userId} />
+        <Post props={e} key={e.id} userId={userId} setIsOpen={setIsOpen} />
       ))}
     </>
   );
