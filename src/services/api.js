@@ -17,3 +17,8 @@ export const listHashtags = async (config) => api.get("/hashtags", config);
 export const getUserById = async (id) => api.get(`/user/${id}`);
 export const getPostsByHashtag = async (hashtag, config) =>
   api.get(`/hashtags/${hashtag}`, config);
+
+export const deletePost = async (id, config) =>
+  api.delete(`post?id=${id}`, config);
+
+export const getPosts = async (config) => api.get("/post", config);

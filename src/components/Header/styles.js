@@ -18,7 +18,9 @@ const Navbar = styled.div`
   }
   h2 {
     font-size: 49px;
-
+    :hover {
+      color: #c6c6c6;
+    }
     @media (max-width: 650px) {
       font-size: 45px;
     }

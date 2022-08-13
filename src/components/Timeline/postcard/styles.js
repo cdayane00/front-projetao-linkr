@@ -25,6 +25,7 @@ const LoadCard = styled.div`
   height: auto;
   border-radius: 16px;
   margin-bottom: 16px;
+  z-index: 0;
   @media (max-width: 650px) {
     width: 100%;
     border-radius: 0;
@@ -103,7 +104,10 @@ const CardDetails = styled.div`
     white-space: nowrap;
     color: var(--text-primary);
     font-size: 19px;
-
+    :hover {
+      cursor: pointer;
+      color: #c6c6c6;
+    }
     @media (max-width: 650px) {
       font-size: 17px;
     }
@@ -247,10 +251,18 @@ const Heart = styled(IoHeartOutline)`
 const Trash = styled(BiTrashAlt)`
   font-size: 20px;
   color: var(--text-primary);
+  :hover {
+    cursor: pointer;
+    color: #c6c6c6;
+  }
 `;
 
 const Pencil = styled(TiPencil)`
   font-size: 20px;
   color: var(--text-primary);
+  :hover {
+    cursor: pointer;
+    color: #c6c6c6;
+  }
 `;
 export { Card, LoadCard, CardSide, CardDetails, Heart, Trash, Pencil };

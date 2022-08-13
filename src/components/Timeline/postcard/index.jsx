@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
+import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
-export default function Post({ props, userId, setIsOpen }) {
+export default function Post({ props, userId }) {
   const navigate = useNavigate();
+  const { setIsOpen, setPostId } = useContext(HandlerContext);
   const tagifyProps = {
     tagStyle: {
       color: "#FFFFFF",
@@ -38,6 +40,7 @@ export default function Post({ props, userId, setIsOpen }) {
               />
               <Trash
                 onClick={() => {
+                  setPostId(props.id);
                   setIsOpen(true);
                 }}
               />
