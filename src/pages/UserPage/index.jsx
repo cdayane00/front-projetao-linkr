@@ -28,7 +28,7 @@ export default function UserPage() {
       <Header
         props={userData}
         userPhoto={userDataAPI?.user?.photo}
-        title={`${userDataAPI?.user?.name} posts`}
+        title={`${userDataAPI?.user?.name}'s posts`}
       />
       <UserMain>
         <UserContent>

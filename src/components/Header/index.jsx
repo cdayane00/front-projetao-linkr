@@ -7,7 +7,6 @@ import PageTitle from "./title";
 import SearchBar from "../SearchBar";
 
 export default function Header({ props, title, userPhoto }) {
-
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 300ms ease-in-out",
@@ -22,12 +21,15 @@ export default function Header({ props, title, userPhoto }) {
         <Link to="/timeline">
           <h2>linkr</h2>
         </Link>
-        <form>
-          <input placeholder="Search for people" />
-          <button type="submit">
-            <Search />
-          </button>
-        </form>
+        <SearchBar>
+          <form>
+            <input placeholder="Search for people" />
+            <button type="submit">
+              <Search />
+            </button>
+          </form>
+        </SearchBar>
+
         <div className="user">
           <Popover>
             {({ open }) => (
