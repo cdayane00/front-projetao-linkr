@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// API
 import { createUser } from "../../services/api";
-// Utils
-import { displayErrorNotify, displaySuccessNotify } from "../../utils";
-// Components
+
+import { callToast } from "../../utils";
+import { useLocalStorage } from "../../utils/hooks";
+
 import AuthInput from "../AuthInput";
 import AuthSubmitButton from "../AuthSubmitButton";
-// Styles
+
 import { Container, Form } from "./styles";
 
 export default function SignUpForms() {
   const signUpModel = { email: "", password: "", name: "", imageUrl: "" };
 
+  const [userData] = useLocalStorage("linkrUserData", "");
   const [signUpData, setSignUpData] = useState(signUpModel);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function SignUpForms() {
 
   function handleError(error) {
     console.log(error);
-    displayErrorNotify(error?.response.status);
+    callToast("error", error?.response?.data?.error);
     setSignUpData(signUpModel);
   }
 
@@ -33,14 +34,20 @@ export default function SignUpForms() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const promise = await createUser(signUpData);
-      displaySuccessNotify(promise.status);
+      await createUser(signUpData);
+      callToast("success", "User created successfully");
       navigate("/");
     } catch (error) {
       handleError(error);
     }
     setIsSubmitting(false);
   }
+
+  useEffect(() => {
+    if (userData.token) {
+      setTimeout(() => navigate("/timeline"), 1500);
+    }
+  }, []);
 
   return (
     <Container>
@@ -51,7 +58,7 @@ export default function SignUpForms() {
           placeholder="e-mail"
           value={signUpData.email || ""}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || userData.token}
         />
         <AuthInput
           name="password"
@@ -59,7 +66,7 @@ export default function SignUpForms() {
           placeholder="password"
           value={signUpData.password}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || userData.token}
         />
         <AuthInput
           name="name"
@@ -68,7 +75,7 @@ export default function SignUpForms() {
           placeholder="username"
           value={signUpData.name}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || userData.token}
         />
         <AuthInput
           name="imageUrl"
@@ -76,9 +83,12 @@ export default function SignUpForms() {
           placeholder="picture url"
           value={signUpData.imageUrl}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting}
+          disabled={isSubmitting || userData.token}
         />
-        <AuthSubmitButton text="Sign Up" isLoading={isSubmitting} />
+        <AuthSubmitButton
+          text="Sign Up"
+          isLoading={isSubmitting || userData.token}
+        />
       </Form>
       <Link to="/">Switch back to log in</Link>
     </Container>

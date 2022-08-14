@@ -1,3 +1,4 @@
+import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -10,6 +11,12 @@ const Wrapper = styled.div`
   @media (max-width: 1000px) {
     display: none;
   }
+`;
+
+const SidebarSkeleton = styled(Skeleton)`
+  width: 100%;
+  height: 406px;
+  border-radius: 16px;
 `;
 
 const Title = styled.div`
@@ -56,4 +63,4 @@ const Content = styled.div`
   }
 `;
 
-export { Wrapper, Title, Content };
+export { Wrapper, SidebarSkeleton, Title, Content };

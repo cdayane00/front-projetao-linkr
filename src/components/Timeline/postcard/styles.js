@@ -118,11 +118,6 @@ const CardDetails = styled.div`
     gap: 10px;
   }
 
-  .edit {
-    display: flex;
-    gap: 10px;
-  }
-
   .description {
     width: 100%;
     height: auto;
@@ -136,6 +131,30 @@ const CardDetails = styled.div`
 
     margin-bottom: 15px;
 
+    @media (max-width: 650px) {
+      font-size: 15px;
+      line-height: 1.2em;
+
+      margin-bottom: 10px;
+    }
+  }
+
+  .edit-description {
+    width: 100%;
+    min-height: 70px;
+    color: var(--text-edit);
+    font-family: "Lato";
+    font-size: 17px;
+    display: -webkit-box;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+
+    &:disabled {
+      background-color: #c6c6c6;
+      opacity: 0.8;
+    }
     @media (max-width: 650px) {
       font-size: 15px;
       line-height: 1.2em;

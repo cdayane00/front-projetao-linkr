@@ -88,7 +88,10 @@ export default function Timeline() {
               </>
             )}
           </Feed>
-          <Sidebar hashtags={trendingHashtags} />
+          <Sidebar
+            isLoading={loading}
+            hashtags={trendingHashtags.length && trendingHashtags}
+          />
         </Content>
       </Main>
     </>
