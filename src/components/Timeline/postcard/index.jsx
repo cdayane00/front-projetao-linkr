@@ -5,6 +5,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
+import { useLocalStorage } from "../../../utils/hooks";
+import { editPost } from "../../../services/api";
+import { callToast } from "../../../utils";
 
 export default function Post({ props, userId }) {
   return (
@@ -117,6 +120,7 @@ function PostSettings({ props, userId }) {
           toggleEditing={toggleEditing}
           initialText={initialText}
           setInitialText={setInitialText}
+          id={props.id}
         />
       )}
     </>
@@ -130,21 +134,32 @@ function EditArea({
   toggleEditing,
   initialText,
   setInitialText,
+  id,
 }) {
+  const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
-
-  const handleKeyPress = (e) => {
+  const handleKeyPress = async (e) => {
     if (e.key === "Escape") {
       setEditText(initialText);
       toggleEditing();
     }
     if (e.key === "Enter") {
       setDisabled(true);
-      setInitialText(editText);
-      setTimeout(() => {
+      try {
+        await editPost(
+          id,
+          { postText: editText },
+          { headers: { Authorization: `Bearer ${userData.token}` } }
+        );
+        setInitialText(editText);
+        setTimeout(() => {
+          setDisabled(false);
+          toggleEditing();
+        }, 1000);
+      } catch (err) {
+        callToast("error", err?.response?.data?.error);
         setDisabled(false);
-        toggleEditing();
-      }, 1000);
+      }
     }
   };
 
