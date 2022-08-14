@@ -64,7 +64,7 @@ export default function HashtagPage() {
   const skeletonLoading = isGetting && <LoadingCard />;
   const posts =
     !isGetting &&
-    pageData?.posts.hashtagPosts.map((post) => (
+    pageData?.posts.map((post) => (
       <Post userId={post.userId} key={post.postId} props={post} />
     ));
 
