@@ -3,10 +3,11 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
-import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
+import { Card, CardSide, CardDetails, Trash, Pencil } from "./styles";
 import { useLocalStorage } from "../../../utils/hooks";
 import { editPost } from "../../../services/api";
 import { callToast } from "../../../utils";
+import LikeContainer from "../../LikeContainer";
 
 export default function Post({ props, userId }) {
   const [isExtended, setExtended] = useState(false);
@@ -14,8 +15,11 @@ export default function Post({ props, userId }) {
     <Card>
       <CardSide>
         <img src={props.photo} alt={props.username} />
-        <Heart />
-        <p>{props.likeCount} likes</p>
+        <LikeContainer
+          postId={props.postId}
+          postLikesData={props.postLikesData}
+          likeCount={props.likeCount}
+        />
       </CardSide>
       <CardDetails isExtended={isExtended}>
         <PostSettings

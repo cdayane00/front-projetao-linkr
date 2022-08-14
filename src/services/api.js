@@ -28,5 +28,11 @@ export const getUsersByName = async (name) => api.get(`/users?name=${name}`);
 export const editPost = async (id, data, config) =>
   api.patch(`post?id=${id}`, data, config);
 
+export const likePost = async (postId, config) =>
+  api.post(`/post/${postId}/like`, {}, config);
+
+export const dislikePost = async (postId, config) =>
+  api.post(`/post/${postId}/dislike`, {}, config);
+
 export const createPost = async (data, config) =>
   api.post("/post", data, config);
