@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { IoHeartOutline } from "react-icons/io5";
 import { BiTrashAlt } from "react-icons/bi";
 import { TiPencil } from "react-icons/ti";
 
@@ -262,10 +261,6 @@ const CardDetails = styled.div`
     }
   }
 `;
-const Heart = styled(IoHeartOutline)`
-  font-size: 20px;
-  color: var(--text-primary);
-`;
 
 const Trash = styled(BiTrashAlt)`
   font-size: 20px;
@@ -284,4 +279,4 @@ const Pencil = styled(TiPencil)`
     color: #c6c6c6;
   }
 `;
-export { Card, LoadCard, CardSide, CardDetails, Heart, Trash, Pencil };
+export { Card, LoadCard, CardSide, CardDetails, Trash, Pencil };
