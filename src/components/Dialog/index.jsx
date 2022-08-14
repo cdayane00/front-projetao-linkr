@@ -36,7 +36,6 @@ function Buttons({ loading, setLoading }) {
         setRefresh(!refresh);
       }, 1000);
     } catch (err) {
-      console.log(err);
       callToast("error", err?.response?.data?.error);
       setLoading(false);
     }
@@ -63,7 +62,6 @@ function Buttons({ loading, setLoading }) {
         type="submit"
         className="confirm"
         onClick={() => {
-          setIsOpen(false);
           handleDelete(postId);
         }}
       >

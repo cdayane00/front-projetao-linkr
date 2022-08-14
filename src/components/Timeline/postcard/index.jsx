@@ -1,22 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
+import { useLocalStorage } from "../../../utils/hooks";
+import { editPost } from "../../../services/api";
+import { callToast } from "../../../utils";
 
 export default function Post({ props, userId }) {
-  const navigate = useNavigate();
-  const { setIsOpen, setPostId } = useContext(HandlerContext);
-  const tagifyProps = {
-    tagStyle: {
-      color: "#FFFFFF",
-      fontWeight: "700",
-      cursor: "pointer",
-    },
-    tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
-  };
-
   return (
     <Card>
       <CardSide>
@@ -25,33 +18,7 @@ export default function Post({ props, userId }) {
         <p>{props.likeCount} likes</p>
       </CardSide>
       <CardDetails>
-        <div className="user-wrapper">
-          <Link to={`/user/${props.userId}`}>
-            <div className="user">
-              <p>{props.username}</p>
-            </div>
-          </Link>
-          {userId === props.userId && (
-            <div className="edit">
-              <Pencil
-                onClick={() => {
-                  console.log("edit");
-                }}
-              />
-              <Trash
-                onClick={() => {
-                  setPostId(props.id || props.postId);
-                  setIsOpen(true);
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div className="description">
-          <ReactTagify {...tagifyProps}>
-            <p>{props.postText}</p>
-          </ReactTagify>
-        </div>
+        <PostSettings props={props} userId={userId} />
         <a href={props.metaUrl} target="_blank" rel="noopener noreferrer">
           <div className="meta-data">
             <div className="info-wrapper">
@@ -70,5 +37,146 @@ export default function Post({ props, userId }) {
         </a>
       </CardDetails>
     </Card>
+  );
+}
+
+function PostSettings({ props, userId }) {
+  const navigate = useNavigate();
+  const { setIsOpen, setPostId } = useContext(HandlerContext);
+  const [initialText, setInitialText] = useState(props.postText);
+  const [editText, setEditText] = useState(initialText);
+  const [isEditing, setEditing] = useState(false);
+  const inputRef = useRef();
+  const tagifyProps = {
+    tagStyle: {
+      color: "#FFFFFF",
+      fontWeight: "700",
+      cursor: "pointer",
+    },
+    tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
+  };
+
+  const toggleEditing = () => {
+    setEditing(!isEditing);
+  };
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+  return (
+    <>
+      <div className="user-wrapper">
+        <Link to={`/user/${props.userId}`}>
+          <div className="user">
+            <p>{props.username}</p>
+          </div>
+        </Link>
+        {userId === props.userId && !isEditing && (
+          <div className="edit">
+            <Pencil
+              onClick={() => {
+                toggleEditing();
+              }}
+            />
+            <Trash
+              onClick={() => {
+                setPostId(props.id);
+                setIsOpen(true);
+              }}
+            />
+          </div>
+        )}
+        {userId === props.userId && isEditing && (
+          <div className="edit">
+            <Pencil
+              onClick={() => {
+                setEditText(initialText);
+                toggleEditing();
+              }}
+            />
+            <Trash
+              onClick={() => {
+                setPostId(props.id);
+                setIsOpen(true);
+              }}
+            />
+          </div>
+        )}
+      </div>
+      {!isEditing && (
+        <div className="description">
+          <ReactTagify {...tagifyProps}>
+            <p>{editText}</p>
+          </ReactTagify>
+        </div>
+      )}
+      {isEditing && (
+        <EditArea
+          editText={editText}
+          setEditText={setEditText}
+          inputRef={inputRef}
+          toggleEditing={toggleEditing}
+          initialText={initialText}
+          setInitialText={setInitialText}
+          id={props.id}
+        />
+      )}
+    </>
+  );
+}
+
+function EditArea({
+  editText,
+  setEditText,
+  inputRef,
+  toggleEditing,
+  initialText,
+  setInitialText,
+  id,
+}) {
+  const [userData] = useLocalStorage("linkrUserData", "");
+  const [isDisabled, setDisabled] = useState(false);
+  const handleKeyPress = async (e) => {
+    if (e.key === "Escape") {
+      setEditText(initialText);
+      toggleEditing();
+    }
+    if (e.key === "Enter") {
+      setDisabled(true);
+      try {
+        await editPost(
+          id,
+          { postText: editText },
+          { headers: { Authorization: `Bearer ${userData.token}` } }
+        );
+        setInitialText(editText);
+        setTimeout(() => {
+          setDisabled(false);
+          toggleEditing();
+        }, 1000);
+      } catch (err) {
+        callToast("error", err?.response?.data?.error);
+        setDisabled(false);
+      }
+    }
+  };
+
+  return (
+    <textarea
+      className="edit-description"
+      ref={inputRef}
+      onFocus={(e) =>
+        e.currentTarget.setSelectionRange(
+          e.currentTarget.value.length,
+          e.currentTarget.value.length
+        )
+      }
+      value={editText}
+      onChange={(e) => setEditText(e.target.value)}
+      onKeyDown={(e) => handleKeyPress(e)}
+      disabled={isDisabled}
+    />
   );
 }
