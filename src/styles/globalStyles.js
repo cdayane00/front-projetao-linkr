@@ -50,7 +50,7 @@ export const GlobalStyles = createGlobalStyle`
         --text-blue: #1877F2;
         --text-tooltip: #505050;
         --text-search-bar: #515151;
-        
+        --text-edit: #4c4c4c;
         --text-post: #B7B7B7;
         --link-primary: #CECECE;
         --link-secondary: #9B9595;

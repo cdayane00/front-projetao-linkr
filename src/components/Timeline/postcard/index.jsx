@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
@@ -39,7 +40,10 @@ export default function Post({ props, userId }) {
 function PostSettings({ props, userId }) {
   const navigate = useNavigate();
   const { setIsOpen, setPostId } = useContext(HandlerContext);
-  const [editable, setEditable] = useState(false);
+  const [initialText, setInitialText] = useState(props.postText);
+  const [editText, setEditText] = useState(initialText);
+  const [isEditing, setEditing] = useState(false);
+  const inputRef = useRef();
   const tagifyProps = {
     tagStyle: {
       color: "#FFFFFF",
@@ -49,39 +53,15 @@ function PostSettings({ props, userId }) {
     tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
   };
 
-  if (editable) {
-    return (
-      <>
-        <div className="user-wrapper">
-          <Link to={`/user/${props.userId}`}>
-            <div className="user">
-              <p>{props.username}</p>
-            </div>
-          </Link>
-          {userId === props.userId && (
-            <div className="edit">
-              <Pencil
-                onClick={() => {
-                  setEditable(false);
-                }}
-              />
-              <Trash
-                onClick={() => {
-                  setPostId(props.id || props.postId);
-                  setIsOpen(true);
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div className="description">
-          <ReactTagify {...tagifyProps}>
-            <p>isso vai me editar</p>
-          </ReactTagify>
-        </div>
-      </>
-    );
-  }
+  const toggleEditing = () => {
+    setEditing(!isEditing);
+  };
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
   return (
     <>
       <div className="user-wrapper">
@@ -90,11 +70,27 @@ function PostSettings({ props, userId }) {
             <p>{props.username}</p>
           </div>
         </Link>
-        {userId === props.userId && (
+        {userId === props.userId && !isEditing && (
           <div className="edit">
             <Pencil
               onClick={() => {
-                setEditable(true);
+                toggleEditing();
+              }}
+            />
+            <Trash
+              onClick={() => {
+                setPostId(props.id);
+                setIsOpen(true);
+              }}
+            />
+          </div>
+        )}
+        {userId === props.userId && isEditing && (
+          <div className="edit">
+            <Pencil
+              onClick={() => {
+                setEditText(initialText);
+                toggleEditing();
               }}
             />
             <Trash
@@ -106,11 +102,66 @@ function PostSettings({ props, userId }) {
           </div>
         )}
       </div>
-      <div className="description">
-        <ReactTagify {...tagifyProps}>
-          <p>{props.postText}</p>
-        </ReactTagify>
-      </div>
+      {!isEditing && (
+        <div className="description">
+          <ReactTagify {...tagifyProps}>
+            <p>{editText}</p>
+          </ReactTagify>
+        </div>
+      )}
+      {isEditing && (
+        <EditArea
+          editText={editText}
+          setEditText={setEditText}
+          inputRef={inputRef}
+          toggleEditing={toggleEditing}
+          initialText={initialText}
+          setInitialText={setInitialText}
+        />
+      )}
     </>
+  );
+}
+
+function EditArea({
+  editText,
+  setEditText,
+  inputRef,
+  toggleEditing,
+  initialText,
+  setInitialText,
+}) {
+  const [isDisabled, setDisabled] = useState(false);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Escape") {
+      setEditText(initialText);
+      toggleEditing();
+    }
+    if (e.key === "Enter") {
+      setDisabled(true);
+      setInitialText(editText);
+      setTimeout(() => {
+        setDisabled(false);
+        toggleEditing();
+      }, 1000);
+    }
+  };
+
+  return (
+    <textarea
+      className="edit-description"
+      ref={inputRef}
+      onFocus={(e) =>
+        e.currentTarget.setSelectionRange(
+          e.currentTarget.value.length,
+          e.currentTarget.value.length
+        )
+      }
+      value={editText}
+      onChange={(e) => setEditText(e.target.value)}
+      onKeyDown={(e) => handleKeyPress(e)}
+      disabled={isDisabled}
+    />
   );
 }
