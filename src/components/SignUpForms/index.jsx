@@ -26,7 +26,7 @@ export default function SignUpForms() {
 
   function handleError(error) {
     console.log(error);
-    callToast("error", error.response?.data?.error);
+    callToast("error", error?.response?.data?.error);
     setSignUpData(signUpModel);
   }
 
