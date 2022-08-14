@@ -1,22 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails, Heart, Trash, Pencil } from "./styles";
 
 export default function Post({ props, userId }) {
-  const navigate = useNavigate();
-  const { setIsOpen, setPostId } = useContext(HandlerContext);
-  const tagifyProps = {
-    tagStyle: {
-      color: "#FFFFFF",
-      fontWeight: "700",
-      cursor: "pointer",
-    },
-    tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
-  };
-
   return (
     <Card>
       <CardSide>
@@ -25,33 +14,7 @@ export default function Post({ props, userId }) {
         <p>{props.likeCount} likes</p>
       </CardSide>
       <CardDetails>
-        <div className="user-wrapper">
-          <Link to={`/user/${props.userId}`}>
-            <div className="user">
-              <p>{props.username}</p>
-            </div>
-          </Link>
-          {userId === props.userId && (
-            <div className="edit">
-              <Pencil
-                onClick={() => {
-                  console.log("edit");
-                }}
-              />
-              <Trash
-                onClick={() => {
-                  setPostId(props.id);
-                  setIsOpen(true);
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div className="description">
-          <ReactTagify {...tagifyProps}>
-            <p>{props.postText}</p>
-          </ReactTagify>
-        </div>
+        <PostSettings props={props} userId={userId} />
         <a href={props.metaUrl} target="_blank" rel="noopener noreferrer">
           <div className="meta-data">
             <div className="info-wrapper">
@@ -70,5 +33,84 @@ export default function Post({ props, userId }) {
         </a>
       </CardDetails>
     </Card>
+  );
+}
+
+function PostSettings({ props, userId }) {
+  const navigate = useNavigate();
+  const { setIsOpen, setPostId } = useContext(HandlerContext);
+  const [editable, setEditable] = useState(false);
+  const tagifyProps = {
+    tagStyle: {
+      color: "#FFFFFF",
+      fontWeight: "700",
+      cursor: "pointer",
+    },
+    tagClicked: (tag) => navigate(`/hashtags/${tag.replace("#", "")}`),
+  };
+
+  if (editable) {
+    return (
+      <>
+        <div className="user-wrapper">
+          <Link to={`/user/${props.userId}`}>
+            <div className="user">
+              <p>{props.username}</p>
+            </div>
+          </Link>
+          {userId === props.userId && (
+            <div className="edit">
+              <Pencil
+                onClick={() => {
+                  setEditable(false);
+                }}
+              />
+              <Trash
+                onClick={() => {
+                  setPostId(props.id);
+                  setIsOpen(true);
+                }}
+              />
+            </div>
+          )}
+        </div>
+        <div className="description">
+          <ReactTagify {...tagifyProps}>
+            <p>isso vai me editar</p>
+          </ReactTagify>
+        </div>
+      </>
+    );
+  }
+  return (
+    <>
+      <div className="user-wrapper">
+        <Link to={`/user/${props.userId}`}>
+          <div className="user">
+            <p>{props.username}</p>
+          </div>
+        </Link>
+        {userId === props.userId && (
+          <div className="edit">
+            <Pencil
+              onClick={() => {
+                setEditable(true);
+              }}
+            />
+            <Trash
+              onClick={() => {
+                setPostId(props.id);
+                setIsOpen(true);
+              }}
+            />
+          </div>
+        )}
+      </div>
+      <div className="description">
+        <ReactTagify {...tagifyProps}>
+          <p>{props.postText}</p>
+        </ReactTagify>
+      </div>
+    </>
   );
 }
