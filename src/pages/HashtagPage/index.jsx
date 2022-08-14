@@ -18,7 +18,6 @@ export default function HashtagPage() {
   const { refresh } = useContext(HandlerContext);
   const [userData] = useLocalStorage("linkrUserData", "");
   const navigate = useNavigate();
-
   const [pageData, setPageData] = useState(null);
   const [isGetting, setIsGetting] = useState(false);
 
@@ -60,12 +59,11 @@ export default function HashtagPage() {
       getPageInfo();
     }
   }, [hashtag, refresh]);
-
   const skeletonLoading = isGetting && <LoadingCard />;
   const posts =
     !isGetting &&
     pageData?.posts.map((post) => (
-      <Post userId={post.userId} key={post.postId} props={post} />
+      <Post userId={userData.userId} key={post.postId} props={post} />
     ));
 
   return (
