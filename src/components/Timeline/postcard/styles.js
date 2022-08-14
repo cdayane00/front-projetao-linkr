@@ -123,18 +123,32 @@ const CardDetails = styled.div`
     color: var(--text-post);
     font-size: 17px;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    margin-bottom: 15px;
 
     @media (max-width: 650px) {
       font-size: 15px;
       line-height: 1.2em;
+    }
+  }
 
-      margin-bottom: 10px;
+  .big-description {
+    width: 100%;
+    height: ${(props) => (props.isExtended ? "100px" : "51px")};
+    color: var(--text-post);
+    font-size: 17px;
+    display: -webkit-box;
+    -webkit-line-clamp: ${(props) => (props.isExtended ? "none" : "3")};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    :hover {
+      cursor: pointer;
+      color: #c6c6c6;
+    }
+    transition: 0.2s;
+    @media (max-width: 650px) {
+      font-size: 15px;
+      line-height: 1.2em;
     }
   }
 

@@ -22,7 +22,7 @@ export const getPostsByHashtag = async (hashtag, config) =>
 export const deletePost = async (id, config) =>
   api.delete(`post?id=${id}`, config);
 
-export const getPosts = async (config) => api.get("/post", config);
+export const getPosts = async (config) => api.get("/timeline", config);
 
 export const editPost = async (id, data, config) =>
   api.patch(`post?id=${id}`, data, config);
@@ -32,3 +32,6 @@ export const likePost = async (postId, config) =>
 
 export const dislikePost = async (postId, config) =>
   api.post(`/post/${postId}/dislike`, {}, config);
+
+export const createPost = async (data, config) =>
+  api.post("/post", data, config);

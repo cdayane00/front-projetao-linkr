@@ -12,31 +12,21 @@ import LoadingCard from "../../components/Timeline/loading";
 export default function UserPage() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const { id } = useParams();
-  const [userDataAPI, setUserDataAPI] = useState(null);
-  const [trendingTags, setTrendingTags] = useState(null);
+  const [pageData, setPageData] = useState();
   const [isLoading, setLoading] = useState(true);
-  async function getHastgs(token) {
-    try {
-      const promise = await listHashtags(token);
-      setTrendingTags(promise.data);
-    } catch (error) {
-      callToast("error", error?.response?.data?.error);
-    }
-  }
-
-  async function getPostsById(userId) {
-    try {
-      const promisePost = await getUserById(userId);
-      setUserDataAPI(promisePost.data);
-    } catch (error) {
-      callToast("error", error?.response?.data?.error);
-    }
-  }
 
   async function getPageData(config) {
+    const promiseHashtags = listHashtags(config);
+    const promisePostById = getUserById(id);
     try {
-      await getHastgs(config);
-      await getPostsById(id);
+      const [responseHashtags, responsePostById] = await Promise.all([
+        promiseHashtags,
+        promisePostById,
+      ]);
+      setPageData({
+        hashtags: responseHashtags.data,
+        data: responsePostById.data,
+      });
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -44,8 +34,8 @@ export default function UserPage() {
       callToast("error", error?.response?.data?.error);
     }
   }
-
   useEffect(() => {
+    setLoading(true);
     const config = {
       headers: {
         authorization: `Bearer ${userData.token}`,
@@ -53,31 +43,28 @@ export default function UserPage() {
     };
     getPageData(config);
   }, [id]);
-
   return (
     <>
       <Header
         props={userData}
-        userPhoto={userDataAPI?.user?.photo}
-        title={`${userDataAPI?.user?.name}'s posts`}
+        userPhoto={pageData?.data?.user?.photo}
+        title={`${pageData?.data?.user?.name}'s posts`}
         loading={isLoading}
       />
       <Main>
         <Content>
           <Feed>
-            {isLoading && <LoadingCard />}
+            {isLoading && (
+              <>
+                <LoadingCard />{" "}
+              </>
+            )}
             {!isLoading &&
-              userDataAPI?.posts?.map((post) => (
-                <Post
-                  userId={userDataAPI?.user?.id}
-                  key={post.postId}
-                  username={post.usermame}
-                  photo={post.photo}
-                  props={post}
-                />
+              pageData.data.posts.map((post) => (
+                <Post userId={userData.userId} key={post.postId} props={post} />
               ))}
+            <Sidebar hashtags={pageData?.hashtags} isLoading={isLoading} />
           </Feed>
-          <Sidebar hashtags={trendingTags} isLoading={isLoading} />
         </Content>
       </Main>
     </>

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
 import {
@@ -8,51 +8,50 @@ import {
   WithError,
 } from "../../components/Timeline";
 import Sidebar from "../../components/Sidebar";
-import { useLocalStorage, useAxios } from "../../utils/hooks";
-import axios from "../../services/api";
+import { useLocalStorage } from "../../utils/hooks";
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
 import { HandlerContext } from "../../contexts/handlerContext";
+import { getPosts, listHashtags } from "../../services/api";
+import { callToast } from "../../utils";
 
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [pageData, setPageData] = useState(null);
   const { refresh } = useContext(HandlerContext);
-  const [posts, error, loading, axiosFunction] = useAxios();
-  const [
-    trendingHashtags,
-    trendingHashtagsError,
-    trendingHashtagsLoading,
-    axiosSecFunction,
-  ] = useAxios();
-  const getData = () => {
-    axiosFunction({
-      axiosInstance: axios,
-      method: "GET",
-      url: "/timeline",
-      requestConfig: {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      },
-    });
-  };
-  const getTrendingHashtags = () => {
-    axiosSecFunction({
-      axiosInstance: axios,
-      method: "GET",
-      url: "/hashtags",
-      requestConfig: {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      },
-    });
-  };
 
+  async function getPageData() {
+    setLoading(true);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    const promisePosts = getPosts(config);
+    const promiseTrendingTags = listHashtags(config);
+    try {
+      const [postResponse, hashtagsResponse] = await Promise.all([
+        promisePosts,
+        promiseTrendingTags,
+      ]);
+      setPageData({
+        posts: postResponse.data,
+        hashtags: hashtagsResponse.data,
+      });
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    } catch (err) {
+      setError(err);
+      callToast("error", err?.response?.data?.error);
+    }
+  }
   useEffect(() => {
-    getData();
-    getTrendingHashtags();
+    getPageData();
   }, [refresh]);
+
   return (
     <>
       <Header props={userData} title="timeline" />
@@ -61,37 +60,25 @@ export default function Timeline() {
           <Feed>
             {loading && (
               <>
-                <PostInput
-                  getData={getData}
-                  getTrendingHashtags={getTrendingHashtags}
-                />
+                <PostInput />
                 <LoadingCard />
               </>
             )}
             {!loading && error && <WithError />}
-            {!loading && !error && posts?.length && (
+            {!loading && !error && pageData?.posts?.length && (
               <>
-                <PostInput
-                  getData={getData}
-                  getTrendingHashtags={getTrendingHashtags}
-                />
-                <WithContent userId={userData.userId} posts={posts} />
+                <PostInput />
+                <WithContent userId={userData.userId} posts={pageData?.posts} />
               </>
             )}
-            {!loading && !error && posts.length === 0 && (
+            {!loading && !error && pageData?.posts?.length === 0 && (
               <>
-                <PostInput
-                  getData={getData}
-                  getTrendingHashtags={getTrendingHashtags}
-                />
+                <PostInput />
                 <WithoutContent />
               </>
             )}
           </Feed>
-          <Sidebar
-            isLoading={loading}
-            hashtags={trendingHashtags.length && trendingHashtags}
-          />
+          <Sidebar isLoading={loading} hashtags={pageData?.hashtags} />
         </Content>
       </Main>
     </>
