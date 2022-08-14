@@ -9,6 +9,7 @@ import { editPost } from "../../../services/api";
 import { callToast } from "../../../utils";
 
 export default function Post({ props, userId }) {
+  const [isExtended, setExtended] = useState(false);
   return (
     <Card>
       <CardSide>
@@ -16,8 +17,13 @@ export default function Post({ props, userId }) {
         <Heart />
         <p>{props.likeCount} likes</p>
       </CardSide>
-      <CardDetails>
-        <PostSettings props={props} userId={userId} />
+      <CardDetails isExtended={isExtended}>
+        <PostSettings
+          props={props}
+          userId={userId}
+          setExtended={setExtended}
+          isExtended={isExtended}
+        />
         <a href={props.metaUrl} target="_blank" rel="noopener noreferrer">
           <div className="meta-data">
             <div className="info-wrapper">
@@ -39,7 +45,7 @@ export default function Post({ props, userId }) {
   );
 }
 
-function PostSettings({ props, userId }) {
+function PostSettings({ props, userId, setExtended, isExtended }) {
   const navigate = useNavigate();
   const { setIsOpen, setPostId } = useContext(HandlerContext);
   const [initialText, setInitialText] = useState(props.postText);
@@ -81,7 +87,7 @@ function PostSettings({ props, userId }) {
             />
             <Trash
               onClick={() => {
-                setPostId(props.id);
+                setPostId(props.postId);
                 setIsOpen(true);
               }}
             />
@@ -104,8 +110,20 @@ function PostSettings({ props, userId }) {
           </div>
         )}
       </div>
-      {!isEditing && (
+      {!isEditing && editText.length <= 159 && (
         <div className="description">
+          <ReactTagify {...tagifyProps}>
+            <p>{editText}</p>
+          </ReactTagify>
+        </div>
+      )}
+      {!isEditing && editText.length > 159 && (
+        <div
+          className="big-description"
+          onClick={() => {
+            setExtended(!isExtended);
+          }}
+        >
           <ReactTagify {...tagifyProps}>
             <p>{editText}</p>
           </ReactTagify>
@@ -119,7 +137,7 @@ function PostSettings({ props, userId }) {
           toggleEditing={toggleEditing}
           initialText={initialText}
           setInitialText={setInitialText}
-          id={props.id}
+          id={props.postId}
         />
       )}
     </>
@@ -138,6 +156,7 @@ function EditArea({
   const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
   const handleKeyPress = async (e) => {
+    console.log(userData);
     if (e.key === "Escape") {
       setEditText(initialText);
       toggleEditing();
