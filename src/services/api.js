@@ -22,3 +22,5 @@ export const deletePost = async (id, config) =>
   api.delete(`post?id=${id}`, config);
 
 export const getPosts = async (config) => api.get("/post", config);
+
+export const getUsersByName = async (name) => api.get(`/users?name=${name}`);
