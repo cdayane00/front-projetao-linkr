@@ -9,7 +9,7 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
   const arrayLikedByUsersId = postLikesData?.map((like) => like.userId);
 
   const [isLiked, setIsLiked] = useState(arrayLikedByUsersId.includes(userId));
-  const [likeValue, setLikeValue] = useState(likeCount);
+  const [likeValue, setLikeValue] = useState(parseInt(likeCount, 10));
 
   async function toggleLike() {
     setIsLiked(!isLiked);
@@ -21,10 +21,14 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
     };
 
     if (isLiked) {
+      setLikeValue((value) => value - 1);
+
       dislikePost(postId, config).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
     } else {
+      setLikeValue((value) => value + 1);
+
       likePost(postId, config).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
