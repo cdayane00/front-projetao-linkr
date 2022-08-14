@@ -61,6 +61,7 @@ export default function PostInput({ getData, getTrendingHashtags }) {
             value={postData.url}
             onChange={(e) => handleChange(e)}
             placeholder="https://..."
+            autoComplete="off"
             required
             disabled={loading}
           />
