@@ -36,7 +36,7 @@ const Title = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  height: 345px;
+  min-height: 45px;
   box-sizing: border-box;
   padding: 22px 16px;
   background: var(--bg-timeline-posts);
