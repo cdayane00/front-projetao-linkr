@@ -36,7 +36,7 @@ function Buttons({ loading, setLoading }) {
         setRefresh(!refresh);
       }, 1000);
     } catch (err) {
-      callToast("error", err?.response?.data.error);
+      callToast("error", err?.response?.data?.error);
       setLoading(false);
     }
   }
