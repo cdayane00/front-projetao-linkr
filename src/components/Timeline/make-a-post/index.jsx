@@ -1,50 +1,47 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails } from "./style";
 import ButtonRender from "./button";
-import { useAxios, useLocalStorage } from "../../../utils/hooks";
-import axios from "../../../services/api";
-import { displayErrorNotify } from "../../../utils";
+import { useLocalStorage } from "../../../utils/hooks";
+import { createPost } from "../../../services/api";
+import { callToast } from "../../../utils";
 
-export default function PostInput({ getData, getTrendingHashtags }) {
+export default function PostInput() {
   const [userData] = useLocalStorage("linkrUserData", "");
-  const [result, error, loading, axiosFunction] = useAxios();
+  const { refresh, setRefresh } = useContext(HandlerContext);
+  const [isSubmitting, setSubmit] = useState(false);
   const postModel = { text: "", url: "" };
   const [postData, setPostData] = useState(postModel);
   function handleChange(e) {
     const { name, value } = e.target;
     setPostData({ ...postData, [name]: value });
   }
-  function handleError() {
-    // trocar pela versão 2.0
-    displayErrorNotify(`
-    There was an error publishing your post`);
-    setPostData(postModel);
-  }
 
   async function submitPost(e) {
     e.preventDefault();
-
-    await axiosFunction({
-      axiosInstance: axios,
-      method: "POST",
-      url: "/post",
-      requestConfig: {
-        data: {
-          postUrl: postData.url,
-          postText: postData.text,
-        },
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
+    setSubmit(true);
+    const data = {
+      postUrl: postData.url,
+      postText: postData.text,
+    };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
       },
-    });
-    if (error) {
-      handleError();
-    } else {
-      getData();
-      getTrendingHashtags();
+    };
+    try {
+      await createPost(data, config);
+      setTimeout(() => {
+        setSubmit(false);
+        setRefresh(!refresh);
+      }, 1000);
+    } catch (error) {
+      callToast(
+        "error",
+        error?.response?.data?.error || error?.response?.error
+      );
+      setSubmit(false);
     }
   }
   return (
@@ -63,18 +60,18 @@ export default function PostInput({ getData, getTrendingHashtags }) {
             placeholder="https://..."
             autoComplete="off"
             required
-            disabled={loading}
+            disabled={isSubmitting}
           />
           <textarea
-            name="text"
+            name="textext"
             className="text"
             type="text"
             value={postData.text}
             onChange={(e) => handleChange(e)}
             placeholder="Awesome article about #javascript"
-            disabled={loading}
+            disabled={isSubmitting}
           />
-          <ButtonRender loading={loading} />
+          <ButtonRender loading={isSubmitting} />
         </form>
       </CardDetails>
     </Card>

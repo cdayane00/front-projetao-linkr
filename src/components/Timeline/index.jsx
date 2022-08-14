@@ -8,7 +8,7 @@ export function WithContent({ posts, userId, setIsOpen }) {
   return (
     <>
       {posts.map((e) => (
-        <Post props={e} key={e.id} userId={userId} setIsOpen={setIsOpen} />
+        <Post props={e} key={e.postId} userId={userId} setIsOpen={setIsOpen} />
       ))}
     </>
   );

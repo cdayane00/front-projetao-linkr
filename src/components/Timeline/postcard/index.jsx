@@ -11,7 +11,6 @@ import { callToast } from "../../../utils";
 
 export default function Post({ props, userId }) {
   const [isExtended, setExtended] = useState(false);
-  console.log(isExtended);
   return (
     <Card>
       <CardSide>
@@ -89,7 +88,7 @@ function PostSettings({ props, userId, setExtended, isExtended }) {
             />
             <Trash
               onClick={() => {
-                setPostId(props.id);
+                setPostId(props.postId);
                 setIsOpen(true);
               }}
             />
@@ -139,7 +138,7 @@ function PostSettings({ props, userId, setExtended, isExtended }) {
           toggleEditing={toggleEditing}
           initialText={initialText}
           setInitialText={setInitialText}
-          id={props.id}
+          id={props.postId}
         />
       )}
     </>
@@ -158,6 +157,7 @@ function EditArea({
   const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
   const handleKeyPress = async (e) => {
+    console.log(userData);
     if (e.key === "Escape") {
       setEditText(initialText);
       toggleEditing();
