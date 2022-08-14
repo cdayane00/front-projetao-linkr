@@ -44,11 +44,10 @@ export default function HashtagPage() {
         posts: postsResponse.data,
         trendingHashtags: trendingHashtagsResponse.data,
       });
+      setTimeout(() => setIsGetting(false), 1500);
     } catch (error) {
       callToast("error", error?.response?.data?.error);
     }
-
-    setTimeout(() => setIsGetting(false), 1500);
   }
 
   useEffect(() => {
@@ -78,7 +77,10 @@ export default function HashtagPage() {
             {skeletonLoading}
             {posts}
           </FeedHashtag>
-          <Sidebar hashtags={pageData?.trendingHashtags} />
+          <Sidebar
+            isLoading={isGetting}
+            hashtags={pageData?.trendingHashtags}
+          />
         </PageContent>
       </HashtagMain>
     </>
