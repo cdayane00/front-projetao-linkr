@@ -6,19 +6,21 @@ import { getUserById, listHashtags } from "../../services/api";
 import Post from "../../components/Timeline/postcard";
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import Sidebar from "../../components/Sidebar";
+import { callToast } from "../../utils";
+import LoadingCard from "../../components/Timeline/loading";
 
 export default function UserPage() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const { id } = useParams();
   const [userDataAPI, setUserDataAPI] = useState(null);
   const [trendingTags, setTrendingTags] = useState(null);
-
+  const [isLoading, setLoading] = useState(true);
   async function getHastgs(token) {
     try {
       const promise = await listHashtags(token);
       setTrendingTags(promise.data);
-    } catch (erro) {
-      console.log(erro);
+    } catch (error) {
+      callToast("error", error?.response?.data?.error);
     }
   }
 
@@ -26,8 +28,20 @@ export default function UserPage() {
     try {
       const promisePost = await getUserById(userId);
       setUserDataAPI(promisePost.data);
-    } catch (erro) {
-      console.log(erro);
+    } catch (error) {
+      callToast("error", error?.response?.data?.error);
+    }
+  }
+
+  async function getPageData(config) {
+    try {
+      await getHastgs(config);
+      await getPostsById(id);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      callToast("error", error?.response?.data?.error);
     }
   }
 
@@ -37,33 +51,33 @@ export default function UserPage() {
         authorization: `Bearer ${userData.token}`,
       },
     };
-
-    getHastgs(config);
-
-    getPostsById(id);
+    getPageData(config);
   }, [id]);
-  console.log(userDataAPI);
+
   return (
     <>
       <Header
         props={userData}
         userPhoto={userDataAPI?.user?.photo}
         title={`${userDataAPI?.user?.name}'s posts`}
+        loading={isLoading}
       />
       <Main>
         <Content>
           <Feed>
-            {userDataAPI?.posts?.map((post) => (
-              <Post
-                userId={userDataAPI?.user?.id}
-                key={post.postId}
-                username={post.usermame}
-                photo={post.photo}
-                props={post}
-              />
-            ))}
+            {isLoading && <LoadingCard />}
+            {!isLoading &&
+              userDataAPI?.posts?.map((post) => (
+                <Post
+                  userId={userDataAPI?.user?.id}
+                  key={post.postId}
+                  username={post.usermame}
+                  photo={post.photo}
+                  props={post}
+                />
+              ))}
           </Feed>
-          <Sidebar hashtags={trendingTags} />
+          <Sidebar hashtags={trendingTags} isLoading={isLoading} />
         </Content>
       </Main>
     </>
