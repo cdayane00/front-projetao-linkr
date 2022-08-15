@@ -24,6 +24,7 @@ export const deletePost = async (id, config) =>
 
 export const getPosts = async (config) => api.get("/timeline", config);
 
+export const getUsersByName = async (name) => api.get(`/users?name=${name}`);
 export const editPost = async (id, data, config) =>
   api.patch(`post?id=${id}`, data, config);
 

@@ -78,12 +78,15 @@ const Outerbox = styled.div`
   align-items: center;
   top: 72px;
   right: 0px;
+  display: block;
 
   p {
     font-weight: 700;
     font-size: 17px;
     color: var(--text-primary);
     cursor: pointer;
+    padding-left: 45px;
+    padding-bottom: 8px;
   }
 `;
 

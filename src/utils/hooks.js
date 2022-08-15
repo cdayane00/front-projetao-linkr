@@ -92,4 +92,5 @@ function useAxios() {
 
   return [response, error, loading, axiosFunction];
 }
+
 export { useAxios, useConsole, useLocalStorage, useOnClickOutside };

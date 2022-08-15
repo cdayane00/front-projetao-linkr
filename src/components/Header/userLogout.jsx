@@ -8,13 +8,22 @@ export default function UserToggle() {
     localStorage.removeItem("linkrUserData");
   };
   return (
-    <Outerbox
-      onClick={() => {
-        logout();
-        navigate("/");
-      }}
-    >
-      <p>Logout</p>
+    <Outerbox>
+      <div
+        onClick={() => {
+          logout();
+          navigate("/");
+        }}
+      >
+        <p>Logout</p>
+      </div>
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <p>Settings</p>
+      </div>
     </Outerbox>
   );
 }

@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useState, useRef, useEffect } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";

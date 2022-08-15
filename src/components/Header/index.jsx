@@ -36,10 +36,12 @@ export default function Header({ props, title, userPhoto, loading }) {
               </>
             )}
           </Popover>
-
-          <img src={props.photo} alt="user" />
+          <Link to={`/user/${props.userId}`}>
+            <img src={props.photo} alt="user" />
+          </Link>
         </div>
       </Navbar>
+
       <PageTitle title={title} userPhoto={userPhoto} loading={loading} />
     </>
   );
