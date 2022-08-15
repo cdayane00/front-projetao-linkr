@@ -32,7 +32,7 @@ export const Tooltip = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  display: ${(props) => (props.display ? "flex" : "none")};
+  display: ${(props) => (props.prop ? "flex" : "none")};
   margin-top: 2px;
   .arrow-up {
     width: 0;

@@ -110,7 +110,7 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
         {likeValue} likes
       </LikeCounter>
 
-      <Tooltip display={isVisible}>
+      <Tooltip prop={isVisible}>
         <div className="arrow-up" />
         <div className="content">
           <p>{tooltipText}</p>

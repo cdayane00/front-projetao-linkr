@@ -56,8 +56,8 @@ export default function Timeline() {
     if (!userData.token) {
       setError(401);
       callToast("error", "Log in to have access to this page");
+      logout();
       setTimeout(() => {
-        logout();
         navigate("/");
       }, 3000);
     } else {

@@ -14,7 +14,8 @@ export default function SearchBar({ isMobile }) {
   const [search, setSearch] = useState(null);
   const [displayValue, setDisplayValue] = useState("");
 
-  async function getUserByname(userName) {
+  async function getUserByname(event, userName) {
+    event.preventDefault();
     try {
       const promise = await getUsersByName(userName);
       setSearch(promise.data);
@@ -27,7 +28,7 @@ export default function SearchBar({ isMobile }) {
 
   const handleChange = (event) => {
     setDisplayValue(event.target.value);
-    getUserByname(event.target.value);
+    getUserByname(event, event.target.value);
   };
 
   function renderSearchResultsContainer() {
