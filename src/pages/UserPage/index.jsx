@@ -39,6 +39,7 @@ export default function UserPage() {
         setLoading(false);
       }, 1000);
     } catch (err) {
+      setLoading(false);
       setError(err?.response?.status);
       callToast("error", err?.response?.data?.error);
     }
