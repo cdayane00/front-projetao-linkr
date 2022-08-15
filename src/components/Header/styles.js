@@ -108,6 +108,7 @@ const MainTitle = styled.div`
   position: fixed;
   margin-top: 72px;
   background-color: var(--bg);
+
   z-index: 1;
 `;
 
