@@ -26,4 +26,14 @@ export const LikeCounter = styled.span`
     text-align: center;
     line-height: 1.2em;
   }
+  /* 
+  p {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--text-primary);
+    font-family: "Lato", sans-serif;
+    @media (max-width: 650px) {
+      text-align: center;
+      line-height: 1.2em;
+    } */
 `;
