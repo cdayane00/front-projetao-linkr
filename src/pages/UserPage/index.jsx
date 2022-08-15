@@ -40,21 +40,16 @@ export default function UserPage() {
       }, 1000);
     } catch (err) {
       setLoading(false);
+      if (err?.response?.status === 401) {
+        logout();
+        setTimeout(() => navigate("/"), 3000);
+      }
       setError(err?.response?.status);
       callToast("error", err?.response?.data?.error);
     }
   }
   useEffect(() => {
-    if (!userData.token) {
-      setError(401);
-      callToast("error", "Log in to have access to this page");
-      logout();
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } else {
-      getPageData();
-    }
+    getPageData();
   }, [id]);
   return (
     <>

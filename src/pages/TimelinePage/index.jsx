@@ -47,22 +47,16 @@ export default function Timeline() {
       }, 1000);
     } catch (err) {
       setError(err?.response?.status);
+      if (err?.response?.status === 401) {
+        logout();
+        setTimeout(() => navigate("/"), 3000);
+      }
       setLoading(false);
       callToast("error", err?.response?.data?.error);
-      if (err?.response?.status === 401) setTimeout(() => navigate("/"), 3000);
     }
   }
   useEffect(() => {
-    if (!userData.token) {
-      setError(401);
-      callToast("error", "Log in to have access to this page");
-      logout();
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } else {
-      getPageData();
-    }
+    getPageData();
   }, [refresh]);
 
   return (

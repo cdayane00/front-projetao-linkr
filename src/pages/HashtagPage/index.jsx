@@ -47,22 +47,17 @@ export default function HashtagPage() {
       setTimeout(() => setIsGetting(false), 1500);
     } catch (err) {
       setIsGetting(false);
+      if (err?.response?.status === 401) {
+        logout();
+        setTimeout(() => navigate("/"), 3000);
+      }
       setError(err?.response?.status);
       callToast("error", err?.response?.data?.error);
     }
   }
 
   useEffect(() => {
-    if (!userData.token) {
-      setError(401);
-      callToast("error", "Log in to have access to this page");
-      logout();
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } else {
-      getPageInfo();
-    }
+    getPageInfo();
   }, [hashtag, refresh]);
   const skeletonLoading = isGetting && <LoadingCard />;
   const posts =
