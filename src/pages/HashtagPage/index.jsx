@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Post from "../../components/Timeline/postcard";
 import Sidebar from "../../components/Sidebar";
+import { WithError } from "../../components/Timeline";
 
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
@@ -20,7 +21,7 @@ export default function HashtagPage() {
   const navigate = useNavigate();
   const [pageData, setPageData] = useState(null);
   const [isGetting, setIsGetting] = useState(false);
-
+  const [error, setError] = useState(null);
   async function getPageInfo() {
     setIsGetting(true);
 
@@ -44,17 +45,19 @@ export default function HashtagPage() {
         trendingHashtags: trendingHashtagsResponse.data,
       });
       setTimeout(() => setIsGetting(false), 1500);
-    } catch (error) {
-      callToast("error", error?.response?.data?.error);
+    } catch (err) {
+      setError(err?.response?.status);
+      callToast("error", err?.response?.data?.error);
     }
   }
 
   useEffect(() => {
     if (!userData.token) {
+      setError(401);
       callToast("error", "Log in to have access to this page");
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 3000);
     } else {
       getPageInfo();
     }
@@ -72,6 +75,7 @@ export default function HashtagPage() {
       <HashtagMain as={Main}>
         <PageContent as={Content}>
           <FeedHashtag as={Feed}>
+            {error && <WithError error={error} />}
             {skeletonLoading}
             {posts}
           </FeedHashtag>

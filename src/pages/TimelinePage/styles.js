@@ -45,16 +45,29 @@ const WarningContent = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 1000px) {
+    width: unset;
+  }
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
   img {
     width: 350px;
     height: 350px;
-    margin: 0 auto;
   }
-  h4 {
+  h3 {
     font-family: "Lato";
     font-weight: 700;
     font-size: 22px;
     color: var(--text-publish);
+    text-align: center;
+
+    @media (max-width: 650px) {
+      font-size: 18px;
+      text-align: center;
+    }
   }
 
   .ghost {

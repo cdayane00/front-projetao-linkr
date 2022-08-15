@@ -69,24 +69,33 @@ const Navbar = styled.div`
 
 const Outerbox = styled.div`
   width: 150px;
-  height: 47px;
+  height: 80px;
   background-color: var(--bg-timeline-posts);
   position: absolute;
   border-radius: 0px 0px 0px 20px;
-  display: flex;
   justify-content: center;
   align-items: center;
   top: 72px;
   right: 0px;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 
+  .option {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+  }
   p {
     font-weight: 700;
     font-size: 17px;
     color: var(--text-primary);
     cursor: pointer;
-    padding-left: 45px;
-    padding-bottom: 8px;
+    :hover {
+      color: #c6c6c6;
   }
 `;
 

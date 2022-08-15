@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { Main, Content, Feed } from "./styles";
 import {
@@ -21,6 +22,7 @@ export default function Timeline() {
   const [error, setError] = useState(false);
   const [pageData, setPageData] = useState(null);
   const { refresh } = useContext(HandlerContext);
+  const navigate = useNavigate();
 
   async function getPageData() {
     setLoading(true);
@@ -44,12 +46,22 @@ export default function Timeline() {
         setLoading(false);
       }, 1000);
     } catch (err) {
-      setError(err);
+      setError(err?.response?.status);
+      setLoading(false);
       callToast("error", err?.response?.data?.error);
+      if (err?.response?.status === 401) setTimeout(() => navigate("/"), 3000);
     }
   }
   useEffect(() => {
-    getPageData();
+    if (!userData.token) {
+      setError(401);
+      callToast("error", "Log in to have access to this page");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } else {
+      getPageData();
+    }
   }, [refresh]);
 
   return (
@@ -64,7 +76,7 @@ export default function Timeline() {
                 <LoadingCard />
               </>
             )}
-            {!loading && error && <WithError />}
+            {!loading && error && <WithError error={error} />}
             {!loading && !error && pageData?.posts?.length && (
               <>
                 <PostInput />
