@@ -63,7 +63,7 @@ export default function PostInput() {
             disabled={isSubmitting}
           />
           <textarea
-            name="textext"
+            name="text"
             className="text"
             type="text"
             value={postData.text}

@@ -27,3 +27,37 @@ export const LikeCounter = styled.span`
     line-height: 1.2em;
   }
 `;
+
+export const Tooltip = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: ${(props) => (props.display ? "flex" : "none")};
+  margin-top: 2px;
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid white;
+  }
+
+  .content {
+    width: 169px;
+    height: 24px;
+    background-color: white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  p {
+    font-size: 11px;
+    color: var(--text-tooltip);
+    font-weight: 700;
+    font-family: "Lato", sans-serif;
+  }
+`;

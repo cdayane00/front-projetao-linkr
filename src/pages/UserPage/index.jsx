@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useLocalStorage } from "../../utils/hooks";
 import { getUserById, listHashtags } from "../../services/api";
@@ -8,14 +8,22 @@ import { Main, Content, Feed } from "../TimelinePage/styles";
 import Sidebar from "../../components/Sidebar";
 import { callToast } from "../../utils";
 import LoadingCard from "../../components/Timeline/loading";
+import { WithError } from "../../components/Timeline";
 
 export default function UserPage() {
   const [userData] = useLocalStorage("linkrUserData", "");
   const { id } = useParams();
   const [pageData, setPageData] = useState();
-  const [isLoading, setLoading] = useState(true);
-
-  async function getPageData(config) {
+  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [error, setError] = useState();
+  async function getPageData() {
+    setLoading(true);
+    const config = {
+      headers: {
+        authorization: `Bearer ${userData.token}`,
+      },
+    };
     const promiseHashtags = listHashtags(config);
     const promisePostById = getUserById(id);
     try {
@@ -30,18 +38,21 @@ export default function UserPage() {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
-    } catch (error) {
-      callToast("error", error?.response?.data?.error);
+    } catch (err) {
+      setError(err?.response?.status);
+      callToast("error", err?.response?.data?.error);
     }
   }
   useEffect(() => {
-    setLoading(true);
-    const config = {
-      headers: {
-        authorization: `Bearer ${userData.token}`,
-      },
-    };
-    getPageData(config);
+    if (!userData.token) {
+      setError(401);
+      callToast("error", "Log in to have access to this page");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } else {
+      getPageData();
+    }
   }, [id]);
   return (
     <>
@@ -59,8 +70,10 @@ export default function UserPage() {
                 <LoadingCard />{" "}
               </>
             )}
+            {!isLoading && error && <WithError error={error} />}
             {!isLoading &&
-              pageData.data.posts.map((post) => (
+              !error &&
+              pageData?.data?.posts.map((post) => (
                 <Post userId={userData.userId} key={post.postId} props={post} />
               ))}
             <Sidebar hashtags={pageData?.hashtags} isLoading={isLoading} />

@@ -10,19 +10,21 @@ export default function UserToggle() {
   return (
     <Outerbox>
       <div
+        className="option"
+        onClick={() => {
+          console.log("open a dialog pls");
+        }}
+      >
+        <p>Settings</p>
+      </div>
+      <div
+        className="option"
         onClick={() => {
           logout();
           navigate("/");
         }}
       >
         <p>Logout</p>
-      </div>
-      <div
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        <p>Settings</p>
       </div>
     </Outerbox>
   );

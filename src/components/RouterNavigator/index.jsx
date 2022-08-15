@@ -6,6 +6,7 @@ import SignInPage from "../../pages/SignInPage";
 import Timeline from "../../pages/TimelinePage";
 import HashtagPage from "../../pages/HashtagPage";
 import UserPage from "../../pages/UserPage";
+import Showcase from "../../pages/ShowcasePage";
 
 export default function RouterNavigator() {
   return (
@@ -15,6 +16,7 @@ export default function RouterNavigator() {
       <Route path="/timeline" element={<Timeline />} />
       <Route path="/hashtags/:hashtag" element={<HashtagPage />} />
       <Route path="/user/:id" element={<UserPage />} />
+      <Route path="showcase/:content" element={<Showcase />} />
     </Routes>
   );
 }

@@ -6,7 +6,7 @@ import UserToggle from "./userLogout";
 import PageTitle from "./title";
 import SearchBar from "../SearchBar";
 
-export default function Header({ props, title, userPhoto, loading }) {
+export default function Header({ props, title, userPhoto, loading, dummy }) {
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 300ms ease-in-out",
@@ -36,8 +36,8 @@ export default function Header({ props, title, userPhoto, loading }) {
               </>
             )}
           </Popover>
-          <Link to={`/user/${props.userId}`}>
-            <img src={props.photo} alt="user" />
+          <Link to={`/user/${props?.userId}`}>
+            <img src={props?.photo || dummy} alt="user" />
           </Link>
         </div>
       </Navbar>
