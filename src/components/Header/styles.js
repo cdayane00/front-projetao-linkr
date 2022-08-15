@@ -117,7 +117,10 @@ const MainTitle = styled.div`
   position: fixed;
   margin-top: 72px;
   background-color: var(--bg);
-  z-index: 1;
+
+  @media (max-width: 650px) {
+    z-index: 1;
+  }
 `;
 
 const ContentTitle = styled.div`
