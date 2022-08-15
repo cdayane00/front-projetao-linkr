@@ -2,49 +2,24 @@ import { IoSearchOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { DebounceInput } from "react-debounce-input";
 
-export const Search = styled.div`
-  height: 160px;
-  max-width: 603px;
-  width: 70%;
-  position: absolute;
-  top: 54px;
-  right: calc(var(--width-body) * 0.2775);
-
-  flex-shrink: 1;
-
-  background-color: var(--bg-white);
-  font-family: "Lato";
-  font-weight: 400;
-  font-size: 19px;
-  color: var(--text-search-bar);
-  box-sizing: border-box;
-  padding: 12px;
-  outline: 0;
-  border-radius: 0 0 8px 8px;
-  border: none;
-
-  &::placeholder {
-    color: var(--search-bar);
-  }
-
-  @media (max-width: 650px) {
-    max-width: unset;
-    width: 100%;
-
-    font-size: 17px;
-  }
-`;
-
 export const SearchForms = styled.form`
   display: ${(props) => (props.isMobile ? "none" : "flex")};
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  --size-desktop: 70%;
+  --size-mobile: calc(100% - 30px);
+
   padding: 0 30px;
+
+  position: relative;
 
   @media (max-width: 650px) {
     display: ${(props) => (props.isMobile ? "flex" : "none")};
     padding: 0 15px;
+
+    z-index: 4;
   }
 `;
 
@@ -52,7 +27,6 @@ export const SearchInput = styled(DebounceInput)`
   height: 45px;
   max-width: 560px;
   width: 70%;
-  position: relative;
 
   flex-shrink: 1;
 
@@ -127,4 +101,87 @@ export const SearchIcon = styled(IoSearchOutline)`
   color: var(--search-bar);
 
   flex-shrink: 0;
+`;
+
+export const SearchResultsContainer = styled.div`
+  height: auto;
+  max-height: 230px;
+  max-width: 603px;
+  width: var(--size-desktop);
+  padding: 15px 0 10px 0;
+
+  overflow: scroll;
+  overflow-x: hidden;
+
+  top: 38px;
+  z-index: -1;
+
+  flex-shrink: 1;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  position: absolute;
+
+  gap: 15px;
+
+  background-color: var(--bg-search-bar);
+
+  opacity: 1;
+  border-radius: 0 0 8px 8px;
+
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+
+  ::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+
+  @media (max-width: 650px) {
+    width: var(--size-mobile);
+  }
+`;
+
+export const Search = styled.div`
+  padding: 0 12px;
+
+  a {
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 19px;
+    color: var(--text-search-bar);
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+
+      object-fit: cover;
+
+      @media (max-width: 650px) {
+        width: 30px;
+        height: 30px;
+        aspect-ratio: 1/1;
+        margin: unset;
+
+        font-size: 17px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      align-items: center;
+    }
+  }
+
+  &::placeholder {
+    color: var(--search-bar);
+  }
 `;
