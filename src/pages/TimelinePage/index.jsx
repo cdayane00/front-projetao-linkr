@@ -14,7 +14,7 @@ import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
 import { HandlerContext } from "../../contexts/handlerContext";
 import { getPosts, listHashtags } from "../../services/api";
-import { callToast } from "../../utils";
+import { callToast, logout } from "../../utils";
 
 export default function Timeline() {
   const [userData] = useLocalStorage("linkrUserData", "");
@@ -57,6 +57,7 @@ export default function Timeline() {
       setError(401);
       callToast("error", "Log in to have access to this page");
       setTimeout(() => {
+        logout();
         navigate("/");
       }, 3000);
     } else {

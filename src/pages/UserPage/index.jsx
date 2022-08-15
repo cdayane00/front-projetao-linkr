@@ -6,7 +6,7 @@ import { getUserById, listHashtags } from "../../services/api";
 import Post from "../../components/Timeline/postcard";
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import Sidebar from "../../components/Sidebar";
-import { callToast } from "../../utils";
+import { callToast, logout } from "../../utils";
 import LoadingCard from "../../components/Timeline/loading";
 import { WithError } from "../../components/Timeline";
 
@@ -48,6 +48,7 @@ export default function UserPage() {
       setError(401);
       callToast("error", "Log in to have access to this page");
       setTimeout(() => {
+        logout();
         navigate("/");
       }, 3000);
     } else {

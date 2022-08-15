@@ -8,7 +8,7 @@ import { WithError } from "../../components/Timeline";
 
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
-import { callToast } from "../../utils";
+import { callToast, logout } from "../../utils";
 import { useLocalStorage } from "../../utils/hooks";
 import { getPostsByHashtag, listHashtags } from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
@@ -56,6 +56,7 @@ export default function HashtagPage() {
       setError(401);
       callToast("error", "Log in to have access to this page");
       setTimeout(() => {
+        logout();
         navigate("/");
       }, 3000);
     } else {
