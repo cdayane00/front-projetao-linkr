@@ -6,12 +6,12 @@ import {
   SearchButton,
   SearchIcon,
   Search,
+  SearchResultsContainer,
 } from "./styles";
 import { getUsersByName } from "../../services/api";
 
 export default function SearchBar({ isMobile }) {
   const [search, setSearch] = useState(null);
-
   const [displayValue, setDisplayValue] = useState("");
 
   async function getUserByname(userName) {
@@ -30,29 +30,40 @@ export default function SearchBar({ isMobile }) {
     getUserByname(event.target.value);
   };
 
+  function renderSearchResultsContainer() {
+    if (search) {
+      return (
+        <SearchResultsContainer>
+          {search &&
+            search?.user?.map((users) => (
+              <Search key={users.id}>
+                <Link to={`/user/${users.id}`}>
+                  <img src={users.photo} alt={users.name} />
+                  {users.name}
+                </Link>
+              </Search>
+            ))}
+        </SearchResultsContainer>
+      );
+    }
+    return null;
+  }
+
+  const searchResult = renderSearchResultsContainer();
+
   return (
-    <>
-      <SearchForms isMobile={isMobile}>
-        <SearchInput
-          placeholder="Search for people and friends"
-          value={displayValue}
-          minLength={3}
-          debounceTimeout={300}
-          onChange={handleChange}
-        />
-        <SearchButton type="submit">
-          <SearchIcon />
-        </SearchButton>
-      </SearchForms>
-      {search &&
-        search?.user?.map((users) => (
-          <Search>
-            <Link to={`/user/${users.id}`}>
-              <p>{users.name}</p>
-              <img src={users.photo} alt={users.name} />
-            </Link>
-          </Search>
-        ))}
-    </>
+    <SearchForms isMobile={isMobile}>
+      <SearchInput
+        placeholder="Search for people and friends"
+        value={displayValue}
+        minLength={3}
+        debounceTimeout={300}
+        onChange={handleChange}
+      />
+      <SearchButton type="submit">
+        <SearchIcon />
+      </SearchButton>
+      {searchResult}
+    </SearchForms>
   );
 }
