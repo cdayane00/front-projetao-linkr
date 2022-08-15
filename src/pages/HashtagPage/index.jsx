@@ -46,6 +46,7 @@ export default function HashtagPage() {
       });
       setTimeout(() => setIsGetting(false), 1500);
     } catch (err) {
+      setIsGetting(false);
       setError(err?.response?.status);
       callToast("error", err?.response?.data?.error);
     }
