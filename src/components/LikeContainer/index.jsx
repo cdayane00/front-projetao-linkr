@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { dislikePost, likePost } from "../../services/api";
 import { callToast } from "../../utils";
@@ -42,7 +41,7 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
   const arrayLikedByUsersId = postLikesData?.map((like) => like.userId);
   const [isLiked, setIsLiked] = useState(arrayLikedByUsersId.includes(userId));
   const [likeValue, setLikeValue] = useState(parseInt(likeCount, 10));
-  const [tooltipText, setText] = useState(
+  const [tooltipText] = useState(
     defineText(isLiked, likeCount, postLikesData, userId)
   );
   const [isVisible, setVisibility] = useState(false);
