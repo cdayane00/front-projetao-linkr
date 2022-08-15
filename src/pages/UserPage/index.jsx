@@ -61,7 +61,7 @@ export default function UserPage() {
       <Header
         props={userData}
         userPhoto={pageData?.data?.user?.photo}
-        title={`${pageData?.data?.user?.name}'s posts`}
+        title={`${pageData?.data?.user?.name || error}'s posts`}
         loading={isLoading}
       />
       <Main>
