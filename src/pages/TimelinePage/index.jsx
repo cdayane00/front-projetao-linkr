@@ -7,6 +7,7 @@ import {
   WithContent,
   WithoutContent,
   WithError,
+  WithoutFollow,
 } from "../../components/Timeline";
 import Sidebar from "../../components/Sidebar";
 import { useLocalStorage } from "../../utils/hooks";
@@ -58,7 +59,7 @@ export default function Timeline() {
   useEffect(() => {
     getPageData();
   }, [refresh]);
-
+  console.log(pageData);
   return (
     <>
       <Header props={userData} title="timeline" />
@@ -78,10 +79,19 @@ export default function Timeline() {
                 <WithContent userId={userData.userId} posts={pageData?.posts} />
               </>
             )}
-            {!loading && !error && pageData?.posts?.length === 0 && (
+            {!loading &&
+              !error &&
+              pageData?.posts?.length === 0 &&
+              typeof pageData?.posts !== "string" && (
+                <>
+                  <PostInput />
+                  <WithoutContent />
+                </>
+              )}
+            {!loading && !error && pageData?.posts === "" && (
               <>
                 <PostInput />
-                <WithoutContent />
+                <WithoutFollow />
               </>
             )}
           </Feed>
