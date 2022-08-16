@@ -123,7 +123,7 @@ const MainTitle = styled.div`
 
 const ContentTitle = styled.div`
   width: 937px;
-
+  position: relative;
   h3 {
     font-size: 43px;
 
@@ -184,6 +184,10 @@ const ContentTitle = styled.div`
     font-weight: 700;
     font-size: 14px;
     border: none;
+    @media (max-width: 650px) {
+      margin-top: 35px;
+      margin-bottom: 15px;
+    }
   }
 
   .follow {
@@ -194,6 +198,18 @@ const ContentTitle = styled.div`
   .unfollow {
     background-color: var(--bg-white);
     color: var(--text-blue);
+  }
+
+  .followers {
+    position: absolute;
+    bottom: -40px;
+    right: 0px;
+  }
+  p {
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+    letter-spacing: 0.04em;
   }
 `;
 

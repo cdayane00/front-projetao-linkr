@@ -14,6 +14,7 @@ export default function Header({
   dummy,
   prop,
   id,
+  followers,
 }) {
   const rotate = {
     transform: "rotate(180deg)",
@@ -22,7 +23,6 @@ export default function Header({
   const urotate = {
     transition: "transform 300ms ease-in-out",
   };
-
   return (
     <>
       <Navbar>
@@ -56,6 +56,7 @@ export default function Header({
         loading={loading}
         prop={prop}
         id={id}
+        followers={followers}
       />
     </>
   );

@@ -5,10 +5,23 @@ import { followThisUser, unfollowThisUser } from "../../services/api";
 import { useLocalStorage } from "../../utils/hooks";
 import { callToast } from "../../utils";
 
-export default function PageTitle({ title, userPhoto, loading, prop, id }) {
+async function defineInteraction(prop) {
+  if (prop) return true;
+  return false;
+}
+
+export default function PageTitle({
+  title,
+  userPhoto,
+  loading,
+  prop,
+  id,
+  followers,
+}) {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
-  const [interaction, setInteraction] = useState(prop);
+  const [interaction, setInteraction] = useState(defineInteraction(prop));
+  console.log(followers);
   async function handleSubmit(method) {
     setInteraction(!interaction);
     setDisabled(true);
@@ -53,7 +66,7 @@ export default function PageTitle({ title, userPhoto, loading, prop, id }) {
               <h3>{title}</h3>
             </div>
           )}
-          {!loading && !prop && (
+          {!loading && !interaction && id !== userData.userId.toString() && id && (
             <button
               type="submit"
               className="follow"
@@ -63,7 +76,7 @@ export default function PageTitle({ title, userPhoto, loading, prop, id }) {
               Follow
             </button>
           )}
-          {!loading && prop && (
+          {!loading && interaction && id !== userData.userId.toString() && id && (
             <button
               type="submit"
               className="unfollow"
@@ -73,6 +86,10 @@ export default function PageTitle({ title, userPhoto, loading, prop, id }) {
               Unfollow
             </button>
           )}
+        </div>
+        <div className="followers">
+          {!loading && followers === "1" && id && <p>{followers} follower</p>}
+          {!loading && followers !== "1" && id && <p>{followers} followers</p>}
         </div>
       </ContentTitle>
     </MainTitle>

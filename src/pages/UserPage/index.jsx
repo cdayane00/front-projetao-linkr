@@ -61,6 +61,7 @@ export default function UserPage() {
         loading={isLoading}
         prop={pageData?.data?.follow?.interaction}
         id={id}
+        followers={pageData?.data?.user?.followersCount}
       />
       <Main>
         <Content>
