@@ -21,11 +21,11 @@ export default function UserPage() {
     setLoading(true);
     const config = {
       headers: {
-        authorization: `Bearer ${userData.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
     const promiseHashtags = listHashtags(config);
-    const promisePostById = getUserById(id);
+    const promisePostById = getUserById(id, config);
     try {
       const [responseHashtags, responsePostById] = await Promise.all([
         promiseHashtags,
@@ -51,6 +51,7 @@ export default function UserPage() {
   useEffect(() => {
     getPageData();
   }, [id]);
+  console.log(pageData);
   return (
     <>
       <Header
@@ -58,6 +59,8 @@ export default function UserPage() {
         userPhoto={pageData?.data?.user?.photo}
         title={`${pageData?.data?.user?.name || error}'s posts`}
         loading={isLoading}
+        prop={pageData?.data?.follow?.interaction}
+        id={id}
       />
       <Main>
         <Content>

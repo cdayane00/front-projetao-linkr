@@ -167,7 +167,33 @@ const ContentTitle = styled.div`
   .wrapper {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     box-sizing: border-box;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    width: 112px;
+    height: 31px;
+    border-radius: 5px;
+    font-family: "Lato";
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+  }
+
+  .follow {
+    background-color: var(--bg-button);
+    color: var(--text-primary);
+  }
+
+  .unfollow {
+    background-color: var(--bg-white);
+    color: var(--text-blue);
   }
 `;
 
