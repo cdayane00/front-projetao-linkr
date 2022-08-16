@@ -6,7 +6,16 @@ import UserToggle from "./userLogout";
 import PageTitle from "./title";
 import SearchBar from "../SearchBar";
 
-export default function Header({ props, title, userPhoto, loading, dummy }) {
+export default function Header({
+  props,
+  title,
+  userPhoto,
+  loading,
+  dummy,
+  prop,
+  id,
+  followers,
+}) {
   const rotate = {
     transform: "rotate(180deg)",
     transition: "transform 300ms ease-in-out",
@@ -42,7 +51,14 @@ export default function Header({ props, title, userPhoto, loading, dummy }) {
         </div>
       </Navbar>
 
-      <PageTitle title={title} userPhoto={userPhoto} loading={loading} />
+      <PageTitle
+        title={title}
+        userPhoto={userPhoto}
+        loading={loading}
+        prop={prop}
+        id={id}
+        followers={followers}
+      />
     </>
   );
 }
