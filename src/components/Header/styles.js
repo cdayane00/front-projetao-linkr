@@ -176,7 +176,7 @@ const ContentTitle = styled.div`
     align-items: center;
   }
 
-  button {
+  .wrapper button {
     width: 112px;
     height: 31px;
     border-radius: 5px;
@@ -185,7 +185,10 @@ const ContentTitle = styled.div`
     font-size: 14px;
     border: none;
     @media (max-width: 650px) {
+      width: 90px;
+      font-size: 12px;
       margin-top: 35px;
+      margin-right: 15px;
       margin-bottom: 15px;
     }
   }
@@ -204,6 +207,9 @@ const ContentTitle = styled.div`
     position: absolute;
     bottom: -40px;
     right: 0px;
+    @media (max-width: 650px) {
+      display: none;
+    }
   }
   p {
     font-weight: 700;

@@ -39,7 +39,7 @@ export const createPost = async (data, config) =>
   api.post("/post", data, config);
 
 export const followThisUser = async (id, config) =>
-  api.post(`/user/${id}/follow`, {}, config);
+  api.post(`/user/${id}/interaction`, {}, config);
 
 export const unfollowThisUser = async (id, config) =>
-  api.post(`user/${id}/unfollow`, {}, config);
+  api.delete(`user/${id}/interaction`, config);

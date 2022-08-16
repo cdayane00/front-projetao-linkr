@@ -5,7 +5,7 @@ import { followThisUser, unfollowThisUser } from "../../services/api";
 import { useLocalStorage } from "../../utils/hooks";
 import { callToast } from "../../utils";
 
-async function defineInteraction(prop) {
+function defineInteraction(prop) {
   if (prop) return true;
   return false;
 }
@@ -21,9 +21,8 @@ export default function PageTitle({
   const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
   const [interaction, setInteraction] = useState(defineInteraction(prop));
-  console.log(followers);
   async function handleSubmit(method) {
-    setInteraction(!interaction);
+    setInteraction((prev) => !prev);
     setDisabled(true);
     const config = {
       headers: {

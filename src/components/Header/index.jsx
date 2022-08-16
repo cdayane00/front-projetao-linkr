@@ -23,6 +23,7 @@ export default function Header({
   const urotate = {
     transition: "transform 300ms ease-in-out",
   };
+
   return (
     <>
       <Navbar>

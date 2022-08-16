@@ -51,7 +51,6 @@ export default function UserPage() {
   useEffect(() => {
     getPageData();
   }, [id]);
-  console.log(pageData);
   return (
     <>
       <Header
