@@ -48,3 +48,6 @@ export const unfollowThisUser = async (id) =>
 
 export const getCommentsByPostId = async (postId) =>
   api.get(`/post/${postId}/comments`, config);
+
+export const submitNewComment = async (postId, commentText) =>
+  api.post(`/post/${postId}/comments`, { commentText }, config);

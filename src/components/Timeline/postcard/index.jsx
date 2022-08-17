@@ -32,26 +32,28 @@ export default function Post({ props, userId }) {
   const scrollToComments = () =>
     commentsRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
 
+  async function getComments() {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await getCommentsByPostId(props.postId, config);
+      setCommentsArray(data);
+
+      const SCROLL_TIMEOUT = 1 * 0.15;
+      setTimeout(scrollToComments, SCROLL_TIMEOUT);
+    } catch (error) {
+      console.log(error);
+      callToast("error", error?.response?.data?.error);
+    }
+  }
+
   async function handleClick() {
     setCommentsOpen(!isOpen);
-
     if (!isOpen) {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await getCommentsByPostId(props.postId, config);
-        setCommentsArray(data);
-
-        const SCROLL_TIMEOUT = 1 * 0.15;
-
-        setTimeout(scrollToComments, SCROLL_TIMEOUT);
-      } catch (error) {
-        console.log(error);
-        callToast("error", error?.response?.data?.error);
-      }
+      await getComments();
     }
   }
 
@@ -97,9 +99,11 @@ export default function Post({ props, userId }) {
       </Card>
 
       <CommentsSection
+        postId={props.postId}
         isOpen={isOpen}
         innerRef={commentsRef}
         commentsArray={commentsArray}
+        updateCommentsArray={() => getComments()}
       />
     </PostContainer>
   );

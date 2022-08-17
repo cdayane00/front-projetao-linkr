@@ -117,12 +117,17 @@ export const CommentInput = styled.input`
   border: none;
   outline: none;
 
-  color: var(--text-comments-input);
+  color: var(--send-comment);
   font-family: "Lato", sans-serif;
   font-size: 14px;
 
+  &:disabled {
+    opacity: 0.5;
+  }
+
   &::placeholder {
     font-style: italic;
+    color: var(--text-comments-input);
   }
 `;
 
@@ -137,6 +142,10 @@ export const CommentSubmitButton = styled.button`
   align-items: center;
   justify-content: center;
   border: none;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 export const SubmitCommentIcon = styled(IoPaperPlaneOutline)`

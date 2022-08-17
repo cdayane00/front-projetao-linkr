@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { submitNewComment } from "../../services/api";
+import { callToast } from "../../utils";
 import { useLocalStorage } from "../../utils/hooks";
 import {
   CommentContainer,
@@ -46,15 +48,43 @@ function Comment({
   );
 }
 
-function CommentsForm({ innerRef }) {
+function CommentsForm({ innerRef, postId, updateCommentsArray }) {
   const [{ photo: userProfileImage }] = useLocalStorage("linkrUserData", "");
+  const [inputValue, setInputValue] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  async function submitComment(e) {
+    setSubmitting(true);
+    e.preventDefault();
+
+    try {
+      await submitNewComment(postId, inputValue);
+      await updateCommentsArray();
+
+      setInputValue("");
+    } catch (error) {
+      console.log(error);
+      callToast("error", error?.response?.data?.error);
+    }
+
+    setSubmitting(false);
+  }
 
   return (
     <PostCommentContainer ref={innerRef}>
       <ProfileImage src={userProfileImage} alt="user" />
-      <Form>
-        <CommentInput type="text" placeholder="write a comment..." />
-        <CommentSubmitButton type="submit">
+      <Form onSubmit={(e) => submitComment(e)}>
+        <CommentInput
+          type="text"
+          name="comment"
+          value={inputValue}
+          maxLength={255}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="write a comment..."
+          disabled={isSubmitting}
+          autoComplete="off"
+        />
+        <CommentSubmitButton type="submit" disabled={isSubmitting}>
           <SubmitCommentIcon />
         </CommentSubmitButton>
       </Form>
@@ -62,7 +92,13 @@ function CommentsForm({ innerRef }) {
   );
 }
 
-export default function CommentsSection({ commentsArray, isOpen, innerRef }) {
+export default function CommentsSection({
+  postId,
+  commentsArray,
+  isOpen,
+  innerRef,
+  updateCommentsArray,
+}) {
   const comments = commentsArray?.map(
     ({
       id,
@@ -89,7 +125,11 @@ export default function CommentsSection({ commentsArray, isOpen, innerRef }) {
     <Container isOpen={isOpen}>
       <Wrapper>
         {comments}
-        <CommentsForm innerRef={innerRef} />
+        <CommentsForm
+          postId={postId}
+          innerRef={innerRef}
+          updateCommentsArray={updateCommentsArray}
+        />
       </Wrapper>
     </Container>
   );
