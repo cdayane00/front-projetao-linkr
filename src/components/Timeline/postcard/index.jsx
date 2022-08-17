@@ -3,48 +3,105 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
-import { Card, CardSide, CardDetails, Trash, Pencil } from "./styles";
-import { editPost } from "../../../services/api";
+
+import {
+  Card,
+  CardSide,
+  CardDetails,
+  Trash,
+  Pencil,
+  CommentsIcon,
+  CommentsCounter,
+  Container,
+  PostContainer,
+} from "./styles";
+import { editPost, getCommentsByPostId } from "../../../services/api";
+
 import { callToast } from "../../../utils";
 import LikeContainer from "../../LikeContainer";
+import CommentsSection from "../../CommentsSection";
 
 export default function Post({ props, userId }) {
+  const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
+  const [isOpen, setCommentsOpen] = useState(false);
+  const commentsRef = useRef();
+
+  const scrollToComments = () => {
+    commentsRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  async function getComments() {
+    try {
+      const { data } = await getCommentsByPostId(props.postId);
+      setCommentsArray(data);
+
+      const SCROLL_TIMEOUT = 1 * 0.15;
+      setTimeout(scrollToComments, SCROLL_TIMEOUT);
+    } catch (error) {
+      console.log(error);
+      callToast("error", error?.response?.data?.error);
+    }
+  }
+
+  async function handleClick() {
+    setCommentsOpen(!isOpen);
+    if (!isOpen) {
+      await getComments();
+    }
+  }
+
   return (
-    <Card>
-      <CardSide>
-        <img src={props.photo} alt={props.username} />
-        <LikeContainer
-          postId={props.postId}
-          postLikesData={props.postLikesData}
-          likeCount={props.likeCount}
-        />
-      </CardSide>
-      <CardDetails isExtended={isExtended}>
-        <PostSettings
-          props={props}
-          userId={userId}
-          setExtended={setExtended}
-          isExtended={isExtended}
-        />
-        <a href={props.metaUrl} target="_blank" rel="noopener noreferrer">
-          <div className="meta-data">
-            <div className="info-wrapper">
-              <div className="meta-title">
-                <p>{props.metaTitle}</p>
+    <PostContainer>
+      <Card>
+        <Container>
+          <CardSide>
+            <img src={props.photo} alt={props.username} />
+            <LikeContainer
+              postId={props.postId}
+              postLikesData={props.postLikesData}
+              likeCount={props.likeCount}
+            />
+            <CommentsIcon onClick={() => handleClick()} />
+            <CommentsCounter>
+              {commentsArray?.length || props.commentsCount} comments
+            </CommentsCounter>
+          </CardSide>
+          <CardDetails isExtended={isExtended}>
+            <PostSettings
+              props={props}
+              userId={userId}
+              setExtended={setExtended}
+              isExtended={isExtended}
+            />
+            <a href={props.metaUrl} target="_blank" rel="noopener noreferrer">
+              <div className="meta-data">
+                <div className="info-wrapper">
+                  <div className="meta-title">
+                    <p>{props.metaTitle}</p>
+                  </div>
+                  <div className="meta-text">
+                    <p>{props.metaText}</p>
+                  </div>
+                  <div className="meta-link">
+                    <p>{props.metaUrl}</p>
+                  </div>
+                </div>
+                <img src={props.metaImage} alt={props.metaTitle} />
               </div>
-              <div className="meta-text">
-                <p>{props.metaText}</p>
-              </div>
-              <div className="meta-link">
-                <p>{props.metaUrl}</p>
-              </div>
-            </div>
-            <img src={props.metaImage} alt={props.metaTitle} />
-          </div>
-        </a>
-      </CardDetails>
-    </Card>
+            </a>
+          </CardDetails>
+        </Container>
+      </Card>
+
+      <CommentsSection
+        postId={props.postId}
+        isOpen={isOpen}
+        innerRef={commentsRef}
+        commentsArray={commentsArray}
+        updateCommentsArray={() => getComments()}
+      />
+    </PostContainer>
   );
 }
 

@@ -69,7 +69,6 @@ export default function Timeline() {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         setTimeout(() => {
-          console.log("entrei");
           setCurrentPage((prev) => prev + 1);
         }, 1000);
       }
@@ -77,6 +76,7 @@ export default function Timeline() {
     intersectionObserver.observe(ref.current);
     return () => intersectionObserver.disconnect();
   }, []);
+
   return (
     <>
       <Header props={userData} title="timeline" />

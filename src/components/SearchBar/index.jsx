@@ -27,10 +27,7 @@ export default function SearchBar({ isMobile }) {
 
   const handleChange = (event) => {
     setDisplayValue(event.target.value);
-    console.log(displayValue);
     getUserByname(event, event.target.value);
-    console.log(displayValue.length);
-    console.log(search);
   };
   const reset = () => {
     setDisplayValue("");

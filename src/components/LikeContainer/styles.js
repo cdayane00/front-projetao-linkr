@@ -33,7 +33,15 @@ export const Tooltip = styled.div`
   flex-direction: column;
   align-items: center;
   display: ${(props) => (props.prop ? "flex" : "none")};
-  margin-top: 2px;
+  margin-top: 5px;
+
+  position: absolute;
+  top: 50%;
+
+  @media (max-width: 650px) {
+    top: 58%;
+  }
+
   .arrow-up {
     width: 0;
     height: 0;

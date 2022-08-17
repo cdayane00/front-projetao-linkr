@@ -7,12 +7,7 @@ export default function UserToggle() {
   const navigate = useNavigate();
   return (
     <Outerbox>
-      <div
-        className="option"
-        onClick={() => {
-          console.log("open a dialog pls");
-        }}
-      >
+      <div className="option" onClick={() => {}}>
         <p>Settings</p>
       </div>
       <div
