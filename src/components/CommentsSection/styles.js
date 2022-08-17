@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoPaperPlaneOutline } from "react-icons/io5";
 
 export const Container = styled.div`
   background-color: var(--bg-comments);
@@ -27,8 +28,6 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-
   overflow: scroll;
 
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -39,6 +38,8 @@ export const Wrapper = styled.div`
   }
 
   padding: 20px 20px 25px 20px;
+
+  transition: max-height 700ms ease-in-out;
 `;
 
 export const CommentContainer = styled.div`
@@ -81,4 +82,64 @@ export const CommentText = styled.p`
   font-size: 14px;
   line-height: 1.2em;
   color: var(--text-comment);
+`;
+
+export const PostCommentContainer = styled.div`
+  width: 100%;
+  height: 70px;
+
+  display: flex;
+  gap: 14px;
+
+  padding-top: 20px;
+  padding-bottom: 10px;
+`;
+
+export const Form = styled.form`
+  width: 100%;
+
+  background-color: var(--bg-comments-forms);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 11px 15px;
+`;
+
+export const CommentInput = styled.input`
+  height: 40px;
+  width: 85%;
+
+  background-color: var(--bg-comments-forms);
+
+  border: none;
+  outline: none;
+
+  color: var(--text-comments-input);
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+
+  &::placeholder {
+    font-style: italic;
+  }
+`;
+
+export const CommentSubmitButton = styled.button`
+  background-color: var(--bg-comments-forms);
+  padding: unset;
+
+  width: 16px;
+  height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+`;
+
+export const SubmitCommentIcon = styled(IoPaperPlaneOutline)`
+  color: var(--send-comment);
+  font-size: 16px;
 `;

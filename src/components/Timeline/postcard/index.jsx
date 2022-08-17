@@ -33,6 +33,8 @@ export default function Post({ props, userId }) {
     commentsRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
 
   async function handleClick() {
+    setCommentsOpen(!isOpen);
+
     if (!isOpen) {
       try {
         const config = {
@@ -42,14 +44,15 @@ export default function Post({ props, userId }) {
         };
         const { data } = await getCommentsByPostId(props.postId, config);
         setCommentsArray(data);
+
+        const SCROLL_TIMEOUT = 1 * 0.15;
+
+        setTimeout(scrollToComments, SCROLL_TIMEOUT);
       } catch (error) {
         console.log(error);
         callToast("error", error?.response?.data?.error);
       }
-
-      scrollToComments();
     }
-    setCommentsOpen(!isOpen);
   }
 
   return (

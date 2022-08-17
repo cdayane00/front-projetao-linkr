@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocalStorage } from "../../utils/hooks";
 import {
   CommentContainer,
   Container,
@@ -7,6 +8,11 @@ import {
   TextContent,
   CommentAuthor,
   CommentText,
+  PostCommentContainer,
+  Form,
+  CommentInput,
+  CommentSubmitButton,
+  SubmitCommentIcon,
 } from "./styles";
 
 function Comment({
@@ -40,6 +46,22 @@ function Comment({
   );
 }
 
+function CommentsForm({ innerRef }) {
+  const [{ photo: userProfileImage }] = useLocalStorage("linkrUserData", "");
+
+  return (
+    <PostCommentContainer ref={innerRef}>
+      <ProfileImage src={userProfileImage} alt="user" />
+      <Form>
+        <CommentInput type="text" placeholder="write a comment..." />
+        <CommentSubmitButton type="submit">
+          <SubmitCommentIcon />
+        </CommentSubmitButton>
+      </Form>
+    </PostCommentContainer>
+  );
+}
+
 export default function CommentsSection({ commentsArray, isOpen, innerRef }) {
   const comments = commentsArray?.map(
     ({
@@ -65,7 +87,10 @@ export default function CommentsSection({ commentsArray, isOpen, innerRef }) {
 
   return (
     <Container isOpen={isOpen}>
-      <Wrapper ref={innerRef}>{comments}</Wrapper>
+      <Wrapper>
+        {comments}
+        <CommentsForm innerRef={innerRef} />
+      </Wrapper>
     </Container>
   );
 }

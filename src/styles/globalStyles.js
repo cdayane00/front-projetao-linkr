@@ -43,6 +43,7 @@ export const GlobalStyles = createGlobalStyle`
         --bg-publish-input: #EFEFEF;
         --bg-button: #1877F2;
         --bg-search-bar: #E7E7E7;
+        --bg-comments-forms: #252525;
         
         --text-primary: #FFFFFF;
         --text-on-white: #151515;
@@ -56,6 +57,7 @@ export const GlobalStyles = createGlobalStyle`
         --text-comment-author: #f3f3f3;
         --text-comment-details: #565656;
         --text-comment: #ACACAC;
+        --text-comments-input: #575757;
         --link-primary: #CECECE;
         --link-secondary: #9B9595;
 
@@ -65,6 +67,7 @@ export const GlobalStyles = createGlobalStyle`
 
         --heart: #AC0000;
         --search-bar: #C6C6C6;
+        --send-comment: #f3f3f3;
 
         --width-body: 100%
     }
