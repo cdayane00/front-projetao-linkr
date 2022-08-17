@@ -26,7 +26,7 @@ export default function PageTitle({
     setDisabled(true);
     if (method === "unfollow") {
       try {
-        await unfollowThisUser(id);
+        await unfollowThisUser(id, userData.config);
         setDisabled(false);
       } catch (error) {
         setDisabled(false);
@@ -37,7 +37,7 @@ export default function PageTitle({
       }
     } else {
       try {
-        await followThisUser(id);
+        await followThisUser(id, userData.config);
         setDisabled(false);
       } catch (error) {
         setDisabled(false);

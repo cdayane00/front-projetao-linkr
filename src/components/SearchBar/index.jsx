@@ -11,14 +11,16 @@ import {
   SearchResultsContainer,
 } from "./styles";
 import { getUsersByName } from "../../services/api";
+import { useLocalStorage } from "../../utils/hooks";
 
 export default function SearchBar({ isMobile }) {
+  const [userData] = useLocalStorage("linkrUserData", "");
   const [search, setSearch] = useState(null);
   const [displayValue, setDisplayValue] = useState("");
   const navigate = useNavigate();
   async function getUserByname(event, userName) {
     try {
-      const promise = await getUsersByName(userName);
+      const promise = await getUsersByName(userName, userData.config);
       setSearch(promise.data);
     } catch (erro) {
       console.log(erro);

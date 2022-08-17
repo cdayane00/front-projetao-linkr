@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { WithError, WithoutContent } from "../../components/Timeline";
+import {
+  WithError,
+  WithoutContent,
+  WithoutFollow,
+} from "../../components/Timeline";
 import LoadingCard from "../../components/Timeline/loading";
 
 import { Main, Content, Feed } from "../TimelinePage/styles";
@@ -13,6 +17,7 @@ export default function Showcase() {
   const error401 = content === "401" && <WithError error={content} />;
   const error404 = content === "404" && <WithError error={content} />;
   const noPost = content === "empty" && <WithoutContent />;
+  const noFollow = content === "nofollow" && <WithoutFollow />;
   const loadingFeed = content === "loading" && <LoadingCard />;
   const loadingSide = content === "loading" && <Sidebar isLoading />;
   return (
@@ -27,6 +32,7 @@ export default function Showcase() {
             {error401}
             {error404}
             {noPost}
+            {noFollow}
             {loadingFeed}
           </Feed>
           {loadingSide}

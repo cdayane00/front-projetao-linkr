@@ -8,8 +8,7 @@ import { createPost } from "../../../services/api";
 import { callToast } from "../../../utils";
 
 export default function PostInput() {
-  const [userData] = useLocalStorage("linkrUserData", "");
-  const { refresh, setRefresh } = useContext(HandlerContext);
+  const { refresh, setRefresh, userData } = useContext(HandlerContext);
   const [isSubmitting, setSubmit] = useState(false);
   const postModel = { text: "", url: "" };
   const [postData, setPostData] = useState(postModel);
@@ -26,7 +25,7 @@ export default function PostInput() {
       postText: postData.text,
     };
     try {
-      await createPost(data);
+      await createPost(data, userData.config);
       setTimeout(() => {
         setSubmit(false);
         setRefresh(!refresh);

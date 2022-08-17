@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { HandlerContext } from "../../contexts/handlerContext";
 import { submitNewComment } from "../../services/api";
 import { callToast } from "../../utils";
 import { useLocalStorage } from "../../utils/hooks";
@@ -51,6 +52,8 @@ function Comment({
 
 function CommentsForm({ innerRef, postId, updateCommentsArray }) {
   const [{ photo: userProfileImage }] = useLocalStorage("linkrUserData", "");
+  const { userData } = useContext(HandlerContext);
+  // userData.config == {headers: bla bla bla}
   const [inputValue, setInputValue] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -59,8 +62,8 @@ function CommentsForm({ innerRef, postId, updateCommentsArray }) {
     e.preventDefault();
 
     try {
-      await submitNewComment(postId, inputValue);
-      await updateCommentsArray();
+      await submitNewComment(postId, inputValue, userData.config);
+      await updateCommentsArray(userData.config);
 
       setInputValue("");
     } catch (error) {
