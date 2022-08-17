@@ -22,6 +22,7 @@ import LikeContainer from "../../LikeContainer";
 import CommentsSection from "../../CommentsSection";
 
 export default function Post({ props, userId }) {
+  const { userData } = useContext(HandlerContext);
   const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
   const [isOpen, setCommentsOpen] = useState(false);
@@ -33,7 +34,7 @@ export default function Post({ props, userId }) {
 
   async function getComments() {
     try {
-      const { data } = await getCommentsByPostId(props.postId);
+      const { data } = await getCommentsByPostId(props.postId, userData.config);
       setCommentsArray(data);
 
       const SCROLL_TIMEOUT = 1 * 0.15;
