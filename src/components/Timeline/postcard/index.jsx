@@ -15,7 +15,6 @@ import {
   Container,
   PostContainer,
 } from "./styles";
-import { useLocalStorage } from "../../../utils/hooks";
 import { editPost, getCommentsByPostId } from "../../../services/api";
 
 import { callToast } from "../../../utils";
@@ -23,23 +22,18 @@ import LikeContainer from "../../LikeContainer";
 import CommentsSection from "../../CommentsSection";
 
 export default function Post({ props, userId }) {
-  const [{ token }] = useLocalStorage("linkrUserData", "");
   const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
   const [isOpen, setCommentsOpen] = useState(false);
   const commentsRef = useRef();
 
-  const scrollToComments = () =>
+  const scrollToComments = () => {
     commentsRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   async function getComments() {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const { data } = await getCommentsByPostId(props.postId, config);
+      const { data } = await getCommentsByPostId(props.postId);
       setCommentsArray(data);
 
       const SCROLL_TIMEOUT = 1 * 0.15;
@@ -69,7 +63,9 @@ export default function Post({ props, userId }) {
               likeCount={props.likeCount}
             />
             <CommentsIcon onClick={() => handleClick()} />
-            <CommentsCounter>{props.commentsCount} comments</CommentsCounter>
+            <CommentsCounter>
+              {commentsArray?.length || props.commentsCount} comments
+            </CommentsCounter>
           </CardSide>
           <CardDetails isExtended={isExtended}>
             <PostSettings

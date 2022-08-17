@@ -99,6 +99,7 @@ export default function CommentsSection({
   commentsArray,
   isOpen,
   innerRef,
+  innerCardRef,
   updateCommentsArray,
 }) {
   const comments = commentsArray?.map(
@@ -124,7 +125,7 @@ export default function CommentsSection({
   );
 
   return (
-    <Container isOpen={isOpen}>
+    <Container isOpen={isOpen} ref={innerCardRef}>
       <Wrapper>
         {comments}
         <CommentsForm
