@@ -53,7 +53,6 @@ function Comment({
 function CommentsForm({ innerRef, postId, updateCommentsArray }) {
   const [{ photo: userProfileImage }] = useLocalStorage("linkrUserData", "");
   const { userData } = useContext(HandlerContext);
-  // userData.config == {headers: bla bla bla}
   const [inputValue, setInputValue] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
