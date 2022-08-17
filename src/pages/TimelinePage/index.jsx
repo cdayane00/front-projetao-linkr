@@ -59,7 +59,6 @@ export default function Timeline() {
   useEffect(() => {
     getPageData();
   }, [refresh]);
-  console.log(pageData);
   return (
     <>
       <Header props={userData} title="timeline" />

@@ -77,5 +77,4 @@ export function callToast(toastType, message = undefined) {
 
 export const logout = () => {
   localStorage.removeItem("linkrUserData");
-  console.log("limpei");
 };

@@ -43,3 +43,6 @@ export const followThisUser = async (id, config) =>
 
 export const unfollowThisUser = async (id, config) =>
   api.delete(`user/${id}/interaction`, config);
+
+export const getCommentsByPostId = async (postId, config) =>
+  api.get(`/post/${postId}/comments`, config);

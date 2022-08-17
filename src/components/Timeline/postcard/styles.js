@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { BiTrashAlt } from "react-icons/bi";
 import { TiPencil } from "react-icons/ti";
+import { AiOutlineComment } from "react-icons/ai";
+
+const PostContainer = styled.div`
+  margin-bottom: 26px;
+`;
 
 const Card = styled.div`
   width: 611px;
@@ -11,12 +16,24 @@ const Card = styled.div`
   justify-content: space-between;
   border-radius: 16px;
   background-color: var(--bg-timeline-posts);
-  margin-bottom: 16px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   @media (max-width: 650px) {
     width: 100%;
     border-radius: 0;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+
+  justify-content: space-between;
 `;
 
 const LoadCard = styled.div`
@@ -36,6 +53,8 @@ const CardSide = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position: relative;
 
   img {
     width: 50px;
@@ -63,6 +82,30 @@ const CardSide = styled.div`
 
   @media (max-width: 650px) {
     margin-right: 20px;
+  }
+`;
+
+const CommentsIcon = styled(AiOutlineComment)`
+  width: 20px;
+  height: 20px;
+
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  color: var(--text-primary);
+  cursor: pointer;
+`;
+
+const CommentsCounter = styled.span`
+  font-size: 11px;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+
+  color: var(--text-primary);
+
+  @media (max-width: 650px) {
+    text-align: center;
+    line-height: 1.2em;
   }
 `;
 
@@ -123,6 +166,8 @@ const CardDetails = styled.div`
     color: var(--text-post);
     font-size: 17px;
     display: -webkit-box;
+
+    margin-bottom: 5px;
 
     @media (max-width: 650px) {
       font-size: 15px;
@@ -293,4 +338,15 @@ const Pencil = styled(TiPencil)`
     color: #c6c6c6;
   }
 `;
-export { Card, LoadCard, CardSide, CardDetails, Trash, Pencil };
+export {
+  PostContainer,
+  Card,
+  Container,
+  LoadCard,
+  CardSide,
+  CommentsIcon,
+  CommentsCounter,
+  CardDetails,
+  Trash,
+  Pencil,
+};
