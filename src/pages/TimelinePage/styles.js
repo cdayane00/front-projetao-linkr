@@ -35,8 +35,26 @@ const Feed = styled.div`
   display: flex;
   flex-direction: column;
 
+  .observer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   @media (max-width: 650px) {
     width: 100%;
+  }
+  h3 {
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--text-publish);
+    text-align: center;
+    @media (max-width: 650px) {
+      font-size: 18px;
+      text-align: center;
+    }
   }
 `;
 

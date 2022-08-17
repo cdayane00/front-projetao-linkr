@@ -19,13 +19,8 @@ export default function UserPage() {
   const [error, setError] = useState();
   async function getPageData() {
     setLoading(true);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
-    const promiseHashtags = listHashtags(config);
-    const promisePostById = getUserById(id, config);
+    const promiseHashtags = listHashtags();
+    const promisePostById = getUserById(id);
     try {
       const [responseHashtags, responsePostById] = await Promise.all([
         promiseHashtags,

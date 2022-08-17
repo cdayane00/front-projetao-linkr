@@ -3,6 +3,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
+
 import {
   Card,
   CardSide,
@@ -16,6 +17,7 @@ import {
 } from "./styles";
 import { useLocalStorage } from "../../../utils/hooks";
 import { editPost, getCommentsByPostId } from "../../../services/api";
+
 import { callToast } from "../../../utils";
 import LikeContainer from "../../LikeContainer";
 import CommentsSection from "../../CommentsSection";
@@ -208,7 +210,6 @@ function EditArea({
   setInitialText,
   id,
 }) {
-  const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
   const handleKeyPress = async (e) => {
     if (e.key === "Escape") {
@@ -218,11 +219,7 @@ function EditArea({
     if (e.key === "Enter") {
       setDisabled(true);
       try {
-        await editPost(
-          id,
-          { postText: editText },
-          { headers: { Authorization: `Bearer ${userData.token}` } }
-        );
+        await editPost(id, { postText: editText });
         setInitialText(editText);
         setTimeout(() => {
           setDisabled(false);

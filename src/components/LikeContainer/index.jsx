@@ -55,7 +55,7 @@ function defineText(isLiked, likeCount, data, userId) {
 }
 
 export default function LikeContainer({ postId, postLikesData, likeCount }) {
-  const [{ userId, token }] = useLocalStorage("linkrUserData", "");
+  const [{ userId }] = useLocalStorage("linkrUserData", "");
   const arrayLikedByUsersId = postLikesData?.map((like) => like.userId);
   const [isLiked, setIsLiked] = useState(arrayLikedByUsersId.includes(userId));
   const [likeValue, setLikeValue] = useState(parseInt(likeCount, 10));
@@ -65,21 +65,15 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
   async function toggleLike() {
     setIsLiked(!isLiked);
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     if (isLiked) {
       setLikeValue((value) => value - 1);
 
-      dislikePost(postId, config).catch((err) => {
+      dislikePost(postId).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
     } else {
       setLikeValue((value) => value + 1);
-      likePost(postId, config).catch((err) => {
+      likePost(postId).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
     }
