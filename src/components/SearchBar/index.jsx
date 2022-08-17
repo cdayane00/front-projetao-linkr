@@ -9,21 +9,14 @@ import {
   SearchResultsContainer,
 } from "./styles";
 import { getUsersByName } from "../../services/api";
-import { useLocalStorage } from "../../utils/hooks";
 
 export default function SearchBar({ isMobile }) {
-  const [userData] = useLocalStorage("linkrUserData", "");
   const [search, setSearch] = useState(null);
   const [displayValue, setDisplayValue] = useState("");
 
   async function getUserByname(event, userName) {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
     try {
-      const promise = await getUsersByName(userName, config);
+      const promise = await getUsersByName(userName);
       setSearch(promise.data);
       console.log(setSearch);
       console.log(search);

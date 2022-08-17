@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 import { Card, CardSide, CardDetails, Trash, Pencil } from "./styles";
-import { useLocalStorage } from "../../../utils/hooks";
 import { editPost } from "../../../services/api";
 import { callToast } from "../../../utils";
 import LikeContainer from "../../LikeContainer";
@@ -157,10 +156,8 @@ function EditArea({
   setInitialText,
   id,
 }) {
-  const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
   const handleKeyPress = async (e) => {
-    console.log(userData);
     if (e.key === "Escape") {
       setEditText(initialText);
       toggleEditing();
@@ -168,11 +165,7 @@ function EditArea({
     if (e.key === "Enter") {
       setDisabled(true);
       try {
-        await editPost(
-          id,
-          { postText: editText },
-          { headers: { Authorization: `Bearer ${userData.token}` } }
-        );
+        await editPost(id, { postText: editText });
         setInitialText(editText);
         setTimeout(() => {
           setDisabled(false);

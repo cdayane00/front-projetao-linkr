@@ -24,15 +24,8 @@ export default function HashtagPage() {
   const [error, setError] = useState(null);
   async function getPageInfo() {
     setIsGetting(true);
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
-
-    const promisePosts = getPostsByHashtag(hashtag, config);
-    const promiseTrendingTags = listHashtags(config);
+    const promisePosts = getPostsByHashtag(hashtag);
+    const promiseTrendingTags = listHashtags();
 
     try {
       const [postsResponse, trendingHashtagsResponse] = await Promise.all([

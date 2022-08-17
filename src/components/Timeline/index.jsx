@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Post from "./postcard";
+// import Post from "./postcard";
 import { WarningContent } from "../../pages/TimelinePage/styles";
 import err401 from "../../assets/14.png";
 // import ghost from "../../assets/ghost.png";
@@ -7,15 +7,15 @@ import err404 from "../../assets/24.png";
 import looking from "../../assets/2.png";
 import zeroFollows from "../../assets/28.png";
 
-export function WithContent({ posts, userId, setIsOpen }) {
-  return (
-    <>
-      {posts.map((e) => (
-        <Post props={e} key={e.postId} userId={userId} setIsOpen={setIsOpen} />
-      ))}
-    </>
-  );
-}
+// export function WithContent({ posts, userId, setIsOpen }) {
+//   return (
+//     <>
+//       {posts.map((e) => (
+//         <Post props={e} key={e.postId} userId={userId} setIsOpen={setIsOpen} />
+//       ))}
+//     </>
+//   );
+// }
 
 export function WithError({ error }) {
   const [err] = useState(error);

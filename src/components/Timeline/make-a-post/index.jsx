@@ -25,13 +25,8 @@ export default function PostInput() {
       postUrl: postData.url,
       postText: postData.text,
     };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
     try {
-      await createPost(data, config);
+      await createPost(data);
       setTimeout(() => {
         setSubmit(false);
         setRefresh(!refresh);
