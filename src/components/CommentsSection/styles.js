@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { IoPaperPlaneOutline } from "react-icons/io5";
+import { RiLoader4Fill } from "react-icons/ri";
 
 export const Container = styled.div`
   background-color: var(--bg-comments);
@@ -151,4 +152,20 @@ export const CommentSubmitButton = styled.button`
 export const SubmitCommentIcon = styled(IoPaperPlaneOutline)`
   color: var(--send-comment);
   font-size: 16px;
+`;
+
+export const Loader = styled(RiLoader4Fill)`
+  font-size: 20px;
+  color: var(--send-comment);
+
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;

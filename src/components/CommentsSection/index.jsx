@@ -15,6 +15,7 @@ import {
   CommentInput,
   CommentSubmitButton,
   SubmitCommentIcon,
+  Loader,
 } from "./styles";
 
 function Comment({
@@ -83,9 +84,10 @@ function CommentsForm({ innerRef, postId, updateCommentsArray }) {
           placeholder="write a comment..."
           disabled={isSubmitting}
           autoComplete="off"
+          required
         />
         <CommentSubmitButton type="submit" disabled={isSubmitting}>
-          <SubmitCommentIcon />
+          {isSubmitting ? <Loader /> : <SubmitCommentIcon />}
         </CommentSubmitButton>
       </Form>
     </PostCommentContainer>
