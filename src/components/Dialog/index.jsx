@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { useLocalStorage } from "../../utils/hooks";
 import { HandlerContext } from "../../contexts/handlerContext";
 import { deletePost } from "../../services/api";
 import { Wrapper, Panel, Description, ButtonWrapper } from "./styles";
@@ -21,14 +20,12 @@ export default function DeleteDialog() {
 }
 
 function Buttons({ loading, setLoading }) {
-  const [userData] = useLocalStorage("linkrUserData", "");
   const { setIsOpen, postId, refresh, setRefresh } = useContext(HandlerContext);
 
   async function handleDelete(id) {
     setLoading(true);
-    const token = { headers: { Authorization: `Bearer ${userData.token}` } };
     try {
-      await deletePost(id, token);
+      await deletePost(id);
       setTimeout(() => {
         setLoading(false);
         callToast("success", "Post deleted");

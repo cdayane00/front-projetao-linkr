@@ -24,14 +24,9 @@ export default function PageTitle({
   async function handleSubmit(method) {
     setInteraction((prev) => !prev);
     setDisabled(true);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
     if (method === "unfollow") {
       try {
-        await unfollowThisUser(id, config);
+        await unfollowThisUser(id);
         setDisabled(false);
       } catch (error) {
         setDisabled(false);
@@ -42,7 +37,7 @@ export default function PageTitle({
       }
     } else {
       try {
-        await followThisUser(id, config);
+        await followThisUser(id);
         setDisabled(false);
       } catch (error) {
         setDisabled(false);

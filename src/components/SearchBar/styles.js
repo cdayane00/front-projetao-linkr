@@ -127,7 +127,7 @@ export const SearchResultsContainer = styled.div`
 
   gap: 15px;
 
-  background-color: var(--bg-search-bar);
+  background-color: var(--search-bar);
 
   opacity: 1;
   border-radius: 0 0 8px 8px;
