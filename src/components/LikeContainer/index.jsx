@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { HandlerContext } from "../../contexts/handlerContext";
 import { dislikePost, likePost } from "../../services/api";
 import { callToast } from "../../utils";
 import { useLocalStorage } from "../../utils/hooks";
@@ -56,6 +57,7 @@ function defineText(isLiked, likeCount, data, userId) {
 
 export default function LikeContainer({ postId, postLikesData, likeCount }) {
   const [{ userId }] = useLocalStorage("linkrUserData", "");
+  const { userData } = useContext(HandlerContext);
   const arrayLikedByUsersId = postLikesData?.map((like) => like.userId);
   const [isLiked, setIsLiked] = useState(arrayLikedByUsersId.includes(userId));
   const [likeValue, setLikeValue] = useState(parseInt(likeCount, 10));
@@ -68,12 +70,12 @@ export default function LikeContainer({ postId, postLikesData, likeCount }) {
     if (isLiked) {
       setLikeValue((value) => value - 1);
 
-      dislikePost(postId).catch((err) => {
+      dislikePost(postId, userData.config).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
     } else {
       setLikeValue((value) => value + 1);
-      likePost(postId).catch((err) => {
+      likePost(postId, userData.config).catch((err) => {
         callToast("error", err?.response?.data?.error);
       });
     }

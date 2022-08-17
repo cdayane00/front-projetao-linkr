@@ -20,12 +20,13 @@ export default function DeleteDialog() {
 }
 
 function Buttons({ loading, setLoading }) {
-  const { setIsOpen, postId, refresh, setRefresh } = useContext(HandlerContext);
+  const { setIsOpen, postId, refresh, setRefresh, userData } =
+    useContext(HandlerContext);
 
   async function handleDelete(id) {
     setLoading(true);
     try {
-      await deletePost(id);
+      await deletePost(id, userData.config);
       setTimeout(() => {
         setLoading(false);
         callToast("success", "Post deleted");

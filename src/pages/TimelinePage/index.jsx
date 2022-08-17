@@ -11,7 +11,7 @@ import {
 } from "../../components/Timeline";
 import Post from "../../components/Timeline/postcard";
 import Sidebar from "../../components/Sidebar";
-import { useLocalStorage } from "../../utils/hooks";
+
 import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
 import { HandlerContext } from "../../contexts/handlerContext";
@@ -19,12 +19,11 @@ import { getPosts, listHashtags } from "../../services/api";
 import { callToast, logout } from "../../utils";
 
 export default function Timeline() {
-  const [userData] = useLocalStorage("linkrUserData", "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [hashtagData, setHashtag] = useState(null);
   const [postData, setPostData] = useState(null);
-  const { refresh } = useContext(HandlerContext);
+  const { refresh, userData } = useContext(HandlerContext);
   const [currentPage, setCurrentPage] = useState(0);
   const [end, setEnd] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ export default function Timeline() {
   const text = `Unfortunately there are no more posts, you've seen them all`;
   async function getPageData() {
     setLoading(true);
-    const promiseTrendingTags = listHashtags();
+    const promiseTrendingTags = listHashtags(userData.config);
     try {
       const [hashtagsResponse] = await Promise.all([promiseTrendingTags]);
       setHashtag(hashtagsResponse.data);
@@ -56,7 +55,7 @@ export default function Timeline() {
 
   useEffect(() => {
     async function getPostsByPage() {
-      const promise = await getPosts(currentPage);
+      const promise = await getPosts(currentPage, userData.config);
       if (promise?.data?.length === postData?.length) {
         setEnd((prev) => !prev);
       }

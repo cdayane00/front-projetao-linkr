@@ -107,7 +107,7 @@ export default function Post({ props, userId }) {
 
 function PostSettings({ props, userId, setExtended, isExtended }) {
   const navigate = useNavigate();
-  const { setIsOpen, setPostId } = useContext(HandlerContext);
+  const { setIsOpen, setPostId, userData } = useContext(HandlerContext);
   const [initialText, setInitialText] = useState(props.postText);
   const [editText, setEditText] = useState(initialText);
   const [isEditing, setEditing] = useState(false);
@@ -198,6 +198,7 @@ function PostSettings({ props, userId, setExtended, isExtended }) {
           initialText={initialText}
           setInitialText={setInitialText}
           id={props.postId}
+          userData={userData}
         />
       )}
     </>
@@ -212,6 +213,7 @@ function EditArea({
   initialText,
   setInitialText,
   id,
+  userData,
 }) {
   const [isDisabled, setDisabled] = useState(false);
   const handleKeyPress = async (e) => {
@@ -222,7 +224,7 @@ function EditArea({
     if (e.key === "Enter") {
       setDisabled(true);
       try {
-        await editPost(id, { postText: editText });
+        await editPost(id, { postText: editText }, userData.config);
         setInitialText(editText);
         setTimeout(() => {
           setDisabled(false);

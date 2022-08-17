@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-import { useLocalStorage } from "../../utils/hooks";
 import { getUserById, listHashtags } from "../../services/api";
 import Post from "../../components/Timeline/postcard";
 import { Main, Content, Feed } from "../TimelinePage/styles";
@@ -9,9 +8,10 @@ import Sidebar from "../../components/Sidebar";
 import { callToast, logout } from "../../utils";
 import LoadingCard from "../../components/Timeline/loading";
 import { WithError } from "../../components/Timeline";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function UserPage() {
-  const [userData] = useLocalStorage("linkrUserData", "");
+  const { userData, refresh } = useContext(HandlerContext);
   const { id } = useParams();
   const [pageData, setPageData] = useState();
   const [isLoading, setLoading] = useState(false);
@@ -19,8 +19,8 @@ export default function UserPage() {
   const [error, setError] = useState();
   async function getPageData() {
     setLoading(true);
-    const promiseHashtags = listHashtags();
-    const promisePostById = getUserById(id);
+    const promiseHashtags = listHashtags(userData.config);
+    const promisePostById = getUserById(id, userData.config);
     try {
       const [responseHashtags, responsePostById] = await Promise.all([
         promiseHashtags,
@@ -45,7 +45,7 @@ export default function UserPage() {
   }
   useEffect(() => {
     getPageData();
-  }, [id]);
+  }, [id, refresh]);
   return (
     <>
       <Header

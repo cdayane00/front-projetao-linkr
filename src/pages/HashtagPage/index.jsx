@@ -9,23 +9,21 @@ import { WithError } from "../../components/Timeline";
 import { Main, Content, Feed } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
 import { callToast, logout } from "../../utils";
-import { useLocalStorage } from "../../utils/hooks";
 import { getPostsByHashtag, listHashtags } from "../../services/api";
 import LoadingCard from "../../components/Timeline/loading";
 import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function HashtagPage() {
   const { hashtag } = useParams();
-  const { refresh } = useContext(HandlerContext);
-  const [userData] = useLocalStorage("linkrUserData", "");
+  const { refresh, userData } = useContext(HandlerContext);
   const navigate = useNavigate();
   const [pageData, setPageData] = useState(null);
   const [isGetting, setIsGetting] = useState(false);
   const [error, setError] = useState(null);
   async function getPageInfo() {
     setIsGetting(true);
-    const promisePosts = getPostsByHashtag(hashtag);
-    const promiseTrendingTags = listHashtags();
+    const promisePosts = getPostsByHashtag(hashtag, userData.config);
+    const promiseTrendingTags = listHashtags(userData.config);
 
     try {
       const [postsResponse, trendingHashtagsResponse] = await Promise.all([

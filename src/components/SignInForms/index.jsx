@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 // API
 import { loginUser } from "../../services/api";
@@ -10,12 +11,10 @@ import AuthInput from "../AuthInput";
 import AuthSubmitButton from "../AuthSubmitButton";
 // Styles
 import { Container, Form } from "./styles";
-import { useLocalStorage } from "../../utils/hooks";
 
 export default function SignInForms() {
   const signInModel = { email: "", password: "" };
-
-  const [response, setResponse] = useLocalStorage("linkrUserData", "");
+  const { userData, setUserData } = useContext(HandlerContext);
   const [signInData, setSignInData] = useState(signInModel);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ export default function SignInForms() {
   }
 
   function handleError(error) {
-    console.log(error);
     callToast("error", error.response?.data?.error);
     setSignInData(signInModel);
   }
@@ -36,7 +34,7 @@ export default function SignInForms() {
     setIsSubmitting(true);
     try {
       const promise = await loginUser(signInData);
-      setResponse(promise.data);
+      setUserData(promise.data);
 
       setTimeout(() => {
         navigate("/timeline");
@@ -49,7 +47,7 @@ export default function SignInForms() {
   }
 
   useEffect(() => {
-    if (response.token) {
+    if (userData.config) {
       setTimeout(() => {
         navigate("/timeline");
       }, 1500);
@@ -65,7 +63,7 @@ export default function SignInForms() {
           placeholder="e-mail"
           value={signInData.email || ""}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting || response.token}
+          disabled={isSubmitting || userData.config}
         />
         <AuthInput
           name="password"
@@ -73,11 +71,11 @@ export default function SignInForms() {
           placeholder="password"
           value={signInData.password}
           onChange={(e) => handleChange(e)}
-          disabled={isSubmitting || response.token}
+          disabled={isSubmitting || userData.config}
         />
         <AuthSubmitButton
           text="Sign In"
-          isLoading={isSubmitting || response.token}
+          isLoading={isSubmitting || userData.config}
         />
       </Form>
       <Link to="/sign-up">First time? Create an account!</Link>
