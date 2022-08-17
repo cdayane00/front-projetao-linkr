@@ -147,7 +147,7 @@ export const SearchResultsContainer = styled.div`
 export const Search = styled.div`
   padding: 0 12px;
 
-  a {
+  .search-input {
     font-family: "Lato";
     font-weight: 400;
     font-size: 19px;
@@ -158,6 +158,15 @@ export const Search = styled.div`
     align-items: center;
 
     gap: 12px;
+
+    p {
+      font-size: 19px;
+      color: #c5c5c5;
+
+      @media (max-width: 650px) {
+        font-size: 14px;
+      }
+    }
 
     img {
       width: 40px;

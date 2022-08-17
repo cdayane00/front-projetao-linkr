@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import { Popover } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 import {
   SearchForms,
   SearchInput,
@@ -15,7 +17,7 @@ export default function SearchBar({ isMobile }) {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [search, setSearch] = useState(null);
   const [displayValue, setDisplayValue] = useState("");
-
+  const navigate = useNavigate();
   async function getUserByname(event, userName) {
     const config = {
       headers: {
@@ -25,8 +27,6 @@ export default function SearchBar({ isMobile }) {
     try {
       const promise = await getUsersByName(userName, config);
       setSearch(promise.data);
-      console.log(setSearch);
-      console.log(search);
     } catch (erro) {
       console.log(erro);
     }
@@ -34,20 +34,33 @@ export default function SearchBar({ isMobile }) {
 
   const handleChange = (event) => {
     setDisplayValue(event.target.value);
+    console.log(displayValue);
     getUserByname(event, event.target.value);
+    console.log(displayValue.length);
+    console.log(search);
+  };
+  const reset = () => {
+    setDisplayValue("");
   };
 
-  function renderSearchResultsContainer() {
-    if (search) {
+  function renderSearchResultsContainer(searchArray, inputValue) {
+    if (searchArray && inputValue.length > 0) {
       return (
         <SearchResultsContainer>
-          {search &&
-            search?.user?.map((users) => (
-              <Search key={users.id}>
-                <Link to={`/user/${users.id}`}>
+          {searchArray &&
+            searchArray?.user?.map((users) => (
+              <Search
+                key={users.id}
+                onClick={() => {
+                  reset();
+                  navigate(`/user/${users.id}`);
+                }}
+              >
+                <div className="search-input">
                   <img src={users.photo} alt={users.name} />
                   {users.name}
-                </Link>
+                  {!!users.isFollowing && <p> • following</p>}
+                </div>
               </Search>
             ))}
         </SearchResultsContainer>
@@ -56,7 +69,7 @@ export default function SearchBar({ isMobile }) {
     return null;
   }
 
-  const searchResult = renderSearchResultsContainer();
+  const searchResult = renderSearchResultsContainer(search, displayValue);
 
   return (
     <SearchForms isMobile={isMobile}>
