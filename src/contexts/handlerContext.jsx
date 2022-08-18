@@ -8,6 +8,10 @@ function HandlerProvider({ children }) {
   const [postId, setPostId] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [userData, setUserData] = useLocalStorage("linkrUserData", "");
+  const logout = () => {
+    setUserData("empty");
+    localStorage.removeItem("linkrUserData");
+  };
   return (
     <HandlerContext.Provider
       value={{
@@ -19,6 +23,7 @@ function HandlerProvider({ children }) {
         setRefresh,
         userData,
         setUserData,
+        logout,
       }}
     >
       {children}

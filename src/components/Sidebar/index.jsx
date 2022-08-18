@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { HandlerContext } from "../../contexts/handlerContext";
 import { Wrapper, SidebarSkeleton, Title, Content } from "./styles";
 
 export default function Sidebar({ hashtags, isLoading }) {
+  const { setRefresh } = useContext(HandlerContext);
   return (
     <Wrapper>
       {isLoading && (
@@ -15,7 +17,11 @@ export default function Sidebar({ hashtags, isLoading }) {
           </Title>
           <Content>
             {hashtags?.map(({ hashtagName, hashtagId }) => (
-              <Link key={hashtagId} to={`/hashtags/${hashtagName}`}>
+              <Link
+                onClick={() => setRefresh((prev) => !prev)}
+                key={hashtagId}
+                to={`/hashtags/${hashtagName}`}
+              >
                 # {hashtagName}
               </Link>
             ))}
