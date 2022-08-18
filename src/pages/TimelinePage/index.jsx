@@ -8,8 +8,8 @@ import {
   WithoutContent,
   WithError,
   WithoutFollow,
+  WithContent,
 } from "../../components/Timeline";
-import Post from "../../components/Timeline/postcard";
 import Sidebar from "../../components/Sidebar";
 
 import LoadingCard from "../../components/Timeline/loading";
@@ -33,9 +33,23 @@ export default function Timeline() {
   async function getPageData() {
     setLoading(true);
     const promiseTrendingTags = listHashtags(userData.config);
+    const promisePosts = getPosts(currentPage, userData.config);
     try {
-      const [hashtagsResponse] = await Promise.all([promiseTrendingTags]);
+      const [hashtagsResponse, postsResponse] = await Promise.all([
+        promiseTrendingTags,
+        promisePosts,
+      ]);
       setHashtag(hashtagsResponse.data);
+      if (postsResponse.statusText === "Partial Content") {
+        setRender(206);
+        return;
+      }
+      if (postsResponse.statusText === "No Content") {
+        setRender(204);
+        return;
+      }
+      setPostData(postsResponse.data);
+
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -57,22 +71,26 @@ export default function Timeline() {
   useEffect(() => {
     async function getPostsByPage() {
       const promise = await getPosts(currentPage, userData.config);
-      if (promise?.data?.length === 0 && postData?.length !== 0) {
+      if (promise?.data?.length < 10 && postData?.length > 0) {
+        setPostData((prevInsideState) => [...prevInsideState, ...promise.data]);
         setEnd((prev) => !prev);
         return;
       }
-      if (promise.statusText === "Partial Content") {
+      if (promise?.statusText === "Partial Content") {
         setRender(206);
         return;
       }
-      if (promise.statusText === "No Content") {
-        console.log("entrei aqui");
+      if (promise?.statusText === "No Content") {
         setRender(204);
         return;
       }
-      setPostData((prevState) => [...prevState, ...promise.data]);
+      if (postData?.length > 0) {
+        setPostData((prevInsideState) => [...prevInsideState, ...promise.data]);
+      }
     }
-    getPostsByPage();
+    if (currentPage > 0) {
+      getPostsByPage();
+    }
   }, [currentPage]);
 
   useEffect(() => {
@@ -83,9 +101,11 @@ export default function Timeline() {
         }, 1000);
       }
     });
-    intersectionObserver.observe(ref.current);
+    if (ref.current) {
+      intersectionObserver.observe(ref.current);
+    }
     return () => intersectionObserver.disconnect();
-  }, []);
+  }, [loading]);
 
   return (
     <>
@@ -100,18 +120,6 @@ export default function Timeline() {
               </>
             )}
             {!loading && error && <WithError error={error} />}
-            {!loading &&
-              !error &&
-              postData !== "No followers" &&
-              postData !== "No posts" &&
-              postData?.length && (
-                <>
-                  <PostInput />
-                  {postData.map((e) => (
-                    <Post props={e} key={e.postId} userId={userData.userId} />
-                  ))}
-                </>
-              )}
             {!loading && !error && emptyRender === 204 && (
               <>
                 <PostInput />
@@ -124,19 +132,23 @@ export default function Timeline() {
                 <WithoutFollow />
               </>
             )}
-            {!end && !error && !emptyRender && (
+            {!loading && !error && !emptyRender && postData?.length > 0 && (
+              <>
+                <PostInput />
+                <WithContent postData={postData} userData={userData} />
+              </>
+            )}
+            {!loading && !end && !emptyRender && postData && (
               <div className="observer">
                 <TailSpin color="#6D6D6D" width={36} />
                 <h3 ref={ref}>Loading more posts..</h3>
               </div>
             )}
-            {end &&
-              postData?.length !==
-                0(
-                  <div className="observer">
-                    <h3>{text}</h3>
-                  </div>
-                )}
+            {end && (
+              <div className="observer">
+                <h3>{text}</h3>
+              </div>
+            )}
           </Feed>
           <Sidebar isLoading={loading} hashtags={hashtagData} />
         </Content>

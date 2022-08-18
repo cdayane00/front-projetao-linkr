@@ -8,6 +8,7 @@ function HandlerProvider({ children }) {
   const [postId, setPostId] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [userData, setUserData] = useLocalStorage("linkrUserData", "");
+  const [interaction, setInteraction] = useState();
   const logout = () => {
     setUserData("empty");
     localStorage.removeItem("linkrUserData");
@@ -24,6 +25,8 @@ function HandlerProvider({ children }) {
         userData,
         setUserData,
         logout,
+        interaction,
+        setInteraction,
       }}
     >
       {children}

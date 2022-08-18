@@ -12,7 +12,6 @@ export default function Header({
   userPhoto,
   loading,
   dummy,
-  prop,
   id,
   followers,
 }) {
@@ -23,7 +22,6 @@ export default function Header({
   const urotate = {
     transition: "transform 300ms ease-in-out",
   };
-
   return (
     <>
       <Navbar>
@@ -55,7 +53,6 @@ export default function Header({
         title={title}
         userPhoto={userPhoto}
         loading={loading}
-        prop={prop}
         id={id}
         followers={followers}
       />
