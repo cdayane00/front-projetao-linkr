@@ -126,7 +126,13 @@ export default function UserPage() {
             {!isLoading &&
               !error &&
               postData?.map((post) => (
-                <Post userId={userData.userId} key={post.postId} props={post} />
+                <Post
+                  userIdParams={id}
+                  username={user?.name}
+                  userId={userData.userId}
+                  key={post.postId}
+                  props={post}
+                />
               ))}
             {!isLoading && !end && (
               <div className="observer">

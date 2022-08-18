@@ -6,8 +6,6 @@ import { HandlerContext } from "../../../contexts/handlerContext";
 
 import {
   PostContainer,
-  RepostPanel,
-  RepostedBy,
   Card,
   CardSide,
   CardDetails,
@@ -26,8 +24,9 @@ import { editPost, getCommentsByPostId } from "../../../services/api";
 import { callToast } from "../../../utils";
 import LikeContainer from "../../LikeContainer";
 import CommentsSection from "../../CommentsSection";
+import RepostPanel from "../../RepostPanel";
 
-export default function Post({ props, userId }) {
+export default function Post({ props, userId, username, userIdParams }) {
   const { userData } = useContext(HandlerContext);
   const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
@@ -60,15 +59,13 @@ export default function Post({ props, userId }) {
 
   return (
     <PostContainer>
-      {props.isReposted && (
-        <RepostPanel>
-          <RepostIcon />
-          <RepostedBy>
-            Re-posted by <strong>Fulano</strong>
-          </RepostedBy>
-        </RepostPanel>
-      )}
-
+      <RepostPanel
+        whoSharedName={props.whoSharedName}
+        postAuthorId={props.userId}
+        loggedUserId={userData.userId}
+        userPageName={username}
+        userIdParams={userIdParams}
+      />
       <Card>
         <Container>
           <CardSide>
@@ -86,7 +83,7 @@ export default function Post({ props, userId }) {
                 {commentsArray?.length || props.commentsCount} comments
               </CommentsCounter>
               <RepostIcon />
-              <RepostCounter>300 repost</RepostCounter>
+              <RepostCounter>{props.sharesCount} repost</RepostCounter>
             </ActionsWrapper>
           </CardSide>
           <CardDetails isExtended={isExtended}>
