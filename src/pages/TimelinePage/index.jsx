@@ -16,14 +16,15 @@ import LoadingCard from "../../components/Timeline/loading";
 import PostInput from "../../components/Timeline/make-a-post";
 import { HandlerContext } from "../../contexts/handlerContext";
 import { getPosts, listHashtags } from "../../services/api";
-import { callToast, logout } from "../../utils";
+import { callToast } from "../../utils";
 
 export default function Timeline() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [hashtagData, setHashtag] = useState(null);
-  const [postData, setPostData] = useState(null);
-  const { refresh, userData } = useContext(HandlerContext);
+  const [emptyRender, setRender] = useState(null);
+  const [postData, setPostData] = useState([]);
+  const { refresh, userData, logout } = useContext(HandlerContext);
   const [currentPage, setCurrentPage] = useState(0);
   const [end, setEnd] = useState(false);
   const navigate = useNavigate();
@@ -56,10 +57,20 @@ export default function Timeline() {
   useEffect(() => {
     async function getPostsByPage() {
       const promise = await getPosts(currentPage, userData.config);
-      if (promise?.data?.length === postData?.length) {
+      if (promise?.data?.length === 0 && postData?.length !== 0) {
         setEnd((prev) => !prev);
+        return;
       }
-      setPostData(() => [...promise.data]);
+      if (promise.statusText === "Partial Content") {
+        setRender(206);
+        return;
+      }
+      if (promise.statusText === "No Content") {
+        console.log("entrei aqui");
+        setRender(204);
+        return;
+      }
+      setPostData((prevState) => [...prevState, ...promise.data]);
     }
     getPostsByPage();
   }, [currentPage]);
@@ -89,41 +100,43 @@ export default function Timeline() {
               </>
             )}
             {!loading && error && <WithError error={error} />}
-            {!loading && !error && postData?.length && (
-              <>
-                <PostInput />
-                {postData.map((e) => (
-                  <Post props={e} key={e.postId} userId={userData.userId} />
-                ))}
-              </>
-            )}
             {!loading &&
               !error &&
-              postData?.length === 0 &&
-              typeof postData !== "string" &&
-              currentPage === 1 && (
+              postData !== "No followers" &&
+              postData !== "No posts" &&
+              postData?.length && (
                 <>
                   <PostInput />
-                  <WithoutContent />
+                  {postData.map((e) => (
+                    <Post props={e} key={e.postId} userId={userData.userId} />
+                  ))}
                 </>
               )}
-            {!loading && !error && postData === "" && (
+            {!loading && !error && emptyRender === 204 && (
+              <>
+                <PostInput />
+                <WithoutContent />
+              </>
+            )}
+            {!loading && !error && emptyRender === 206 && (
               <>
                 <PostInput />
                 <WithoutFollow />
               </>
             )}
-            {postData !== "" && !end && (
+            {!end && !error && !emptyRender && (
               <div className="observer">
                 <TailSpin color="#6D6D6D" width={36} />
                 <h3 ref={ref}>Loading more posts..</h3>
               </div>
             )}
-            {end && (
-              <div className="observer">
-                <h3>{text}</h3>
-              </div>
-            )}
+            {end &&
+              postData?.length !==
+                0(
+                  <div className="observer">
+                    <h3>{text}</h3>
+                  </div>
+                )}
           </Feed>
           <Sidebar isLoading={loading} hashtags={hashtagData} />
         </Content>

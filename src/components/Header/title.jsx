@@ -60,26 +60,32 @@ export default function PageTitle({
               <h3>{title}</h3>
             </div>
           )}
-          {!loading && !interaction && id !== userData.userId.toString() && id && (
-            <button
-              type="submit"
-              className="follow"
-              disabled={isDisabled}
-              onClick={() => handleSubmit("follow")}
-            >
-              Follow
-            </button>
-          )}
-          {!loading && interaction && id !== userData.userId.toString() && id && (
-            <button
-              type="submit"
-              className="unfollow"
-              disabled={isDisabled}
-              onClick={() => handleSubmit("unfollow")}
-            >
-              Unfollow
-            </button>
-          )}
+          {!loading &&
+            !interaction &&
+            id !== userData?.userId?.toString() &&
+            id && (
+              <button
+                type="submit"
+                className="follow"
+                disabled={isDisabled}
+                onClick={() => handleSubmit("follow")}
+              >
+                Follow
+              </button>
+            )}
+          {!loading &&
+            interaction &&
+            id !== userData?.userId?.toString() &&
+            id && (
+              <button
+                type="submit"
+                className="unfollow"
+                disabled={isDisabled}
+                onClick={() => handleSubmit("unfollow")}
+              >
+                Unfollow
+              </button>
+            )}
         </div>
         <div className="followers">
           {!loading && followers === "1" && id && <p>{followers} follower</p>}
