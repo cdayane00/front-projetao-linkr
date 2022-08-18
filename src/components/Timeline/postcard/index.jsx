@@ -5,6 +5,9 @@ import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 
 import {
+  PostContainer,
+  RepostPanel,
+  RepostedBy,
   Card,
   CardSide,
   CardDetails,
@@ -13,7 +16,10 @@ import {
   CommentsIcon,
   CommentsCounter,
   Container,
-  PostContainer,
+  RepostIcon,
+  RepostCounter,
+  ProfilePicContainer,
+  ActionsWrapper,
 } from "./styles";
 import { editPost, getCommentsByPostId } from "../../../services/api";
 
@@ -45,7 +51,7 @@ export default function Post({ props, userId }) {
     }
   }
 
-  async function handleClick() {
+  async function handleCommentsClick() {
     setCommentsOpen(!isOpen);
     if (!isOpen) {
       await getComments();
@@ -54,19 +60,34 @@ export default function Post({ props, userId }) {
 
   return (
     <PostContainer>
+      {props.isReposted && (
+        <RepostPanel>
+          <RepostIcon />
+          <RepostedBy>
+            Re-posted by <strong>Fulano</strong>
+          </RepostedBy>
+        </RepostPanel>
+      )}
+
       <Card>
         <Container>
           <CardSide>
-            <img src={props.photo} alt={props.username} />
-            <LikeContainer
-              postId={props.postId}
-              postLikesData={props.postLikesData}
-              likeCount={props.likeCount}
-            />
-            <CommentsIcon onClick={() => handleClick()} />
-            <CommentsCounter>
-              {commentsArray?.length || props.commentsCount} comments
-            </CommentsCounter>
+            <ProfilePicContainer>
+              <img src={props.photo} alt={props.username} />
+            </ProfilePicContainer>
+            <ActionsWrapper>
+              <LikeContainer
+                postId={props.postId}
+                postLikesData={props.postLikesData}
+                likeCount={props.likeCount}
+              />
+              <CommentsIcon onClick={() => handleCommentsClick()} />
+              <CommentsCounter>
+                {commentsArray?.length || props.commentsCount} comments
+              </CommentsCounter>
+              <RepostIcon />
+              <RepostCounter>300 repost</RepostCounter>
+            </ActionsWrapper>
           </CardSide>
           <CardDetails isExtended={isExtended}>
             <PostSettings

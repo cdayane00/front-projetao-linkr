@@ -6,6 +6,10 @@ export const Heart = styled(IoHeartOutline)`
   color: var(--text-primary);
 
   cursor: pointer;
+
+  @media (max-width: 650px) {
+    font-size: 17px;
+  }
 `;
 
 export const HeartFilled = styled(IoHeartSharp)`
@@ -13,6 +17,10 @@ export const HeartFilled = styled(IoHeartSharp)`
   fill: var(--heart);
 
   cursor: pointer;
+
+  @media (max-width: 650px) {
+    font-size: 17px;
+  }
 `;
 
 export const LikeCounter = styled.span`
@@ -23,6 +31,7 @@ export const LikeCounter = styled.span`
   font-family: "Lato", sans-serif;
 
   @media (max-width: 650px) {
+    font-size: 9px;
     text-align: center;
     line-height: 1.2em;
   }
