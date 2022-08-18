@@ -171,12 +171,7 @@ const ContentTitle = styled.div`
     box-sizing: border-box;
   }
 
-  .user {
-    display: flex;
-    align-items: center;
-  }
-
-  .wrapper button {
+  button {
     width: 112px;
     height: 31px;
     border-radius: 5px;
@@ -191,6 +186,11 @@ const ContentTitle = styled.div`
       margin-right: 15px;
       margin-bottom: 15px;
     }
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
   }
 
   .follow {
