@@ -88,6 +88,7 @@ export default function Timeline() {
         setPostData((prevInsideState) => [...prevInsideState, ...promise.data]);
       }
     }
+    console.log(currentPage);
     if (currentPage > 0) {
       getPostsByPage();
     }
@@ -96,12 +97,14 @@ export default function Timeline() {
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
+        console.log("ACHEI VOCE");
         setTimeout(() => {
           setCurrentPage((prev) => prev + 1);
         }, 1000);
       }
     });
     if (ref.current) {
+      console.log("Existe algo para observar");
       intersectionObserver.observe(ref.current);
     }
     return () => intersectionObserver.disconnect();
@@ -138,7 +141,7 @@ export default function Timeline() {
                 <WithContent postData={postData} userData={userData} />
               </>
             )}
-            {!loading && !end && !emptyRender && postData && (
+            {!loading && !end && !emptyRender && postData.length > 0 && (
               <div className="observer">
                 <TailSpin color="#6D6D6D" width={36} />
                 <h3 ref={ref}>Loading more posts..</h3>
