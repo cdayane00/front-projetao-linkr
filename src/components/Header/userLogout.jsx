@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Outerbox } from "./styles";
-import { logout } from "../../utils/index";
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function UserToggle() {
+  const { logout } = useContext(HandlerContext);
   const navigate = useNavigate();
   return (
     <Outerbox>

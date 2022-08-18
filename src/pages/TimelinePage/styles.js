@@ -40,6 +40,7 @@ const Feed = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 0 40px;
   }
 
   @media (max-width: 650px) {

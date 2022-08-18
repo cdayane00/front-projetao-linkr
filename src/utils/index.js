@@ -74,7 +74,3 @@ export function callToast(toastType, message = undefined) {
     progress: undefined,
   });
 }
-
-export const logout = () => {
-  localStorage.removeItem("linkrUserData");
-};
