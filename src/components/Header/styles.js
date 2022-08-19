@@ -169,22 +169,22 @@ const ContentTitle = styled.div`
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-  }
 
-  button {
-    width: 112px;
-    height: 31px;
-    border-radius: 5px;
-    font-family: "Lato";
-    font-weight: 700;
-    font-size: 14px;
-    border: none;
-    @media (max-width: 650px) {
-      width: 90px;
-      font-size: 12px;
-      margin-top: 35px;
-      margin-right: 15px;
-      margin-bottom: 15px;
+    button {
+      width: 112px;
+      height: 31px;
+      border-radius: 5px;
+      font-family: "Lato";
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      @media (max-width: 650px) {
+        width: 90px;
+        font-size: 12px;
+        margin-top: 35px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+      }
     }
   }
 
