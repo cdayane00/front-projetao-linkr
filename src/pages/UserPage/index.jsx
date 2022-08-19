@@ -4,7 +4,7 @@ import { TailSpin } from "react-loader-spinner";
 import Header from "../../components/Header";
 import { getPostsByUser, listHashtags } from "../../services/api";
 import Post from "../../components/Timeline/postcard";
-import { Main, Content, Feed } from "../TimelinePage/styles";
+import { Main, Content, Feed, ToTheTop } from "../TimelinePage/styles";
 import Sidebar from "../../components/Sidebar";
 import { callToast } from "../../utils";
 import LoadingCard from "../../components/Timeline/loading";
@@ -32,7 +32,7 @@ export default function UserPage() {
     setEnd(() => false);
     setLoading(true);
     const promiseHashtags = listHashtags(userData.config);
-    const promisePostById = getPostsByUser(id, 0, userData.config);
+    const promisePostById = getPostsByUser(id, 0, 10, userData.config);
     try {
       const [responseHashtags, responsePostById] = await Promise.all([
         promiseHashtags,
@@ -64,7 +64,12 @@ export default function UserPage() {
   useEffect(() => {
     async function getPostsByPage() {
       try {
-        const promise = await getPostsByUser(id, currentPage, userData.config);
+        const promise = await getPostsByUser(
+          id,
+          currentPage,
+          10,
+          userData.config
+        );
         if (promise?.data?.posts?.length < 10) {
           setPostData((prevInsideState) => [
             ...prevInsideState,
@@ -130,9 +135,26 @@ export default function UserPage() {
                 <h3 ref={ref}>Loading more posts..</h3>
               </div>
             )}
-            {end && (
+            {end && postData.length < 5 && (
               <div className="observer">
                 <h3>{text}</h3>
+              </div>
+            )}
+            {end && postData.length >= 5 && (
+              <div className="observer">
+                <h3>{text}</h3>
+                <div
+                  className="scroll"
+                  onClick={() => {
+                    top.current.scrollIntoView({
+                      block: "end",
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <h3>Scroll back to the top</h3>
+                  <ToTheTop />
+                </div>
               </div>
             )}
             <Sidebar hashtags={hashtagData} isLoading={isLoading} />

@@ -10,17 +10,17 @@ export const loginUser = async (data) => api.post("/sign-in", data);
 
 export const listHashtags = async (config) => api.get("/hashtags", config);
 
-export const getPostsByUser = async (id, page, config) =>
-  api.get(`/user/${id}?page=${page}`, config);
+export const getPostsByUser = async (id, page, quantity, config) =>
+  api.get(`/user/${id}?page=${page}&quantity=${quantity}`, config);
 
-export const getPostsByHashtag = async (hashtag, page, config) =>
-  api.get(`/hashtags/${hashtag}?page=${page}`, config);
+export const getPostsByHashtag = async (hashtag, page, quantity, config) =>
+  api.get(`/hashtags/${hashtag}?page=${page}&quantity=${quantity}`, config);
 
 export const deletePost = async (id, config) =>
   api.delete(`post?id=${id}`, config);
 
-export const getPosts = async (page, config) =>
-  api.get(`/timeline?page=${page}`, config);
+export const getPosts = async (page, quantity, config) =>
+  api.get(`/timeline?page=${page}&quantity=${quantity}`, config);
 
 export const getUsersByName = async (name, config) =>
   api.get(`/users?name=${name}`, config);
@@ -47,3 +47,6 @@ export const getCommentsByPostId = async (postId, config) =>
 
 export const submitNewComment = async (postId, commentText, config) =>
   api.post(`/post/${postId}/comments`, { commentText }, config);
+
+export const getUpdateCount = async (query, config) =>
+  api.get(`/update?${query}`, config);

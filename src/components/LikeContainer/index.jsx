@@ -13,25 +13,25 @@ function defineText(isLiked, likeCount, data, userId) {
     status = true;
   }
 
-  if (data.length === 1 && data[0].likedBy === null) {
+  if (data.length === 1 && data[0]?.likedBy === null) {
     if (isLiked) return "You liked this post";
     return "Nobody liked this post yet";
   }
   if (data.length === 1) {
     if (isLiked && !status) {
-      return `You and ${newLikes[0].likedBy} liked this post`;
+      return `You and ${newLikes[0]?.likedBy} liked this post`;
     }
     if (isLiked) return "You liked this post";
-    if (newLikes[0].likedBy === null) return "Nobody liked this post yet";
-    return `${newLikes[0].likedBy} liked this post`;
+    if (newLikes[0]?.likedBy === null) return "Nobody liked this post yet";
+    return `${newLikes[0]?.likedBy} liked this post`;
   }
   if (data.length === 2) {
     if (isLiked && !status) {
-      return `You, ${newLikes[0].likedBy} and 1 other user`;
+      return `You, ${newLikes[0]?.likedBy} and 1 other user`;
     }
-    if (isLiked) return `You and ${newLikes[0].likedBy} liked this post`;
+    if (isLiked) return `You and ${newLikes[0]?.likedBy} liked this post`;
     if (!isLiked && status) {
-      return `${newLikes[0].likedBy} liked this post`;
+      return `${newLikes[0]?.likedBy} liked this post`;
     }
 
     return `${newLikes[0]?.likedBy} and ${newLikes[1]?.likedBy} liked this post`;
@@ -39,18 +39,18 @@ function defineText(isLiked, likeCount, data, userId) {
 
   if (data.length >= 3) {
     if (isLiked && !status) {
-      return `You, ${newLikes[0].likedBy} and ${likeCount - 1} others user`;
+      return `You, ${newLikes[0]?.likedBy} and ${likeCount - 1} others user`;
     }
     if (isLiked && status) {
-      return `You, ${newLikes[0].likedBy} and ${likeCount - 2} other user`;
+      return `You, ${newLikes[0]?.likedBy} and ${likeCount - 2} other user`;
     }
     if (!isLiked && status) {
-      return `${newLikes[0].likedBy}, ${newLikes[1].likedBy} and ${
+      return `${newLikes[0]?.likedBy}, ${newLikes[1]?.likedBy} and ${
         likeCount - 3
       } other user`;
     }
   }
-  return `${newLikes[0].likedBy}, ${newLikes[1].likedBy} and ${
+  return `${newLikes[0]?.likedBy}, ${newLikes[1]?.likedBy} and ${
     likeCount - 2
   } others users`;
 }
