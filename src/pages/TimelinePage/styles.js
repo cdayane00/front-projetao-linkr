@@ -52,6 +52,7 @@ const Feed = styled.div`
       @media (max-width: 650px) {
         font-size: 18px;
         text-align: center;
+        padding: 0 15px;
       }
     }
   }
