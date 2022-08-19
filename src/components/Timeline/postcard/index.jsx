@@ -27,7 +27,7 @@ import CommentsSection from "../../CommentsSection";
 import RepostPanel from "../../RepostPanel";
 
 export default function Post({ props, userId, username, userIdParams }) {
-  const { userData } = useContext(HandlerContext);
+  const { userData, setShare, setPostId } = useContext(HandlerContext);
   const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
   const [isOpen, setCommentsOpen] = useState(false);
@@ -55,6 +55,11 @@ export default function Post({ props, userId, username, userIdParams }) {
     if (!isOpen) {
       await getComments();
     }
+  }
+
+  function handleShareClick() {
+    setShare(true);
+    setPostId(props.postId);
   }
 
   return (
@@ -86,7 +91,7 @@ export default function Post({ props, userId, username, userIdParams }) {
               <CommentsCounter>
                 {commentsArray?.length || props.commentsCount} comments
               </CommentsCounter>
-              <RepostIcon />
+              <RepostIcon onClick={() => handleShareClick()} />
               <RepostCounter>{props.sharesCount} repost</RepostCounter>
             </ActionsWrapper>
           </CardSide>
