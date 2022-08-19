@@ -96,10 +96,8 @@ export default function Timeline() {
 
   useInterval(async () => {
     const query = `timeline=1&timestamp=${postData[0]?.postsDate}`;
-    if (postData.length > 0) {
-      const promise = await getUpdateCount(query, userData.config);
-      setNewPosts(promise?.data?.coalesce);
-    }
+    const promise = await getUpdateCount(query, userData.config);
+    setNewPosts(promise?.data?.coalesce);
   }, 15000);
   useEffect(() => {
     async function getPostsByPage() {
