@@ -191,7 +191,7 @@ function PostSettings({ props, userId, setExtended, isExtended }) {
             />
             <Trash
               onClick={() => {
-                setPostId(props.id);
+                setPostId(props.postId);
                 setIsOpen(true);
               }}
             />

@@ -87,7 +87,6 @@ const Outerbox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    }
   }
   p {
     font-weight: 700;
@@ -96,6 +95,7 @@ const Outerbox = styled.div`
     cursor: pointer;
     :hover {
       color: #c6c6c6;
+    }
   }
 `;
 
@@ -139,6 +139,9 @@ const ContentTitle = styled.div`
       padding-left: 15px;
 
       font-size: 33px;
+    }
+    @media (max-width: 360px) {
+      font-size: 27px;
     }
   }
 
