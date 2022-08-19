@@ -12,21 +12,20 @@ import { WithError } from "../../components/Timeline";
 import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function UserPage() {
-  const { userData, refresh, logout } = useContext(HandlerContext);
+  const { userData, refresh, logout, setInteraction } =
+    useContext(HandlerContext);
   const { id } = useParams();
   const [currentPage, setCurrentPage] = useState(0);
   const [end, setEnd] = useState(false);
   const [hashtagData, setHashtagData] = useState(null);
   const [postData, setPostData] = useState([]);
   const [user, setUser] = useState(null);
-  const [interaction, setInteraction] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState();
   const ref = useRef();
   const top = useRef();
   const text = `Unfortunately there are no more posts, you've seen them all`;
-
   async function getPageData() {
     setCurrentPage(() => 0);
     setPostData(() => []);
@@ -42,8 +41,7 @@ export default function UserPage() {
       setHashtagData(responseHashtags?.data);
       setUser(responsePostById?.data?.user);
       setPostData(responsePostById?.data?.posts);
-      setInteraction(responsePostById?.data?.followers?.interaction);
-      console.log(responsePostById?.data);
+      setInteraction(responsePostById.data.follow.interaction);
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -63,7 +61,6 @@ export default function UserPage() {
     });
     getPageData();
   }, [id, refresh]);
-
   useEffect(() => {
     async function getPostsByPage() {
       try {
@@ -110,7 +107,6 @@ export default function UserPage() {
         userPhoto={user?.photo}
         title={`${user?.name || error}'s posts`}
         loading={isLoading}
-        prop={interaction}
         id={id}
         followers={user?.followersCount}
       />

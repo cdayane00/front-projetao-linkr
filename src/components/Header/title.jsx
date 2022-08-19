@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+/* eslint-disable react/jsx-no-bind */
+import React, { useContext, useState } from "react";
 import SearchBar from "../SearchBar";
 import { ContentTitle, MainTitle } from "./styles";
 import { followThisUser, unfollowThisUser } from "../../services/api";
 import { useLocalStorage } from "../../utils/hooks";
 import { callToast } from "../../utils";
-
-function defineInteraction(prop) {
-  if (prop) return true;
-  return false;
-}
+import { HandlerContext } from "../../contexts/handlerContext";
 
 export default function PageTitle({
   title,
   userPhoto,
   loading,
-  prop,
   id,
   followers,
 }) {
   const [userData] = useLocalStorage("linkrUserData", "");
   const [isDisabled, setDisabled] = useState(false);
-  const [interaction, setInteraction] = useState(defineInteraction(prop));
+  const { interaction, setInteraction } = useContext(HandlerContext);
   async function handleSubmit(method) {
     setInteraction((prev) => !prev);
     setDisabled(true);
@@ -60,32 +56,13 @@ export default function PageTitle({
               <h3>{title}</h3>
             </div>
           )}
-          {!loading &&
-            !interaction &&
-            id !== userData?.userId?.toString() &&
-            id && (
-              <button
-                type="submit"
-                className="follow"
-                disabled={isDisabled}
-                onClick={() => handleSubmit("follow")}
-              >
-                Follow
-              </button>
-            )}
-          {!loading &&
-            interaction &&
-            id !== userData?.userId?.toString() &&
-            id && (
-              <button
-                type="submit"
-                className="unfollow"
-                disabled={isDisabled}
-                onClick={() => handleSubmit("unfollow")}
-              >
-                Unfollow
-              </button>
-            )}
+          {!loading && id !== userData?.userId?.toString() && id && (
+            <ButtonToggle
+              interaction={interaction}
+              handleSubmit={handleSubmit}
+              isDisabled={isDisabled}
+            />
+          )}
         </div>
         <div className="followers">
           {!loading && followers === "1" && id && <p>{followers} follower</p>}
@@ -93,5 +70,31 @@ export default function PageTitle({
         </div>
       </ContentTitle>
     </MainTitle>
+  );
+}
+
+function ButtonToggle({ interaction, handleSubmit, isDisabled }) {
+  console.log(interaction);
+  if (interaction) {
+    return (
+      <button
+        type="submit"
+        className="unfollow"
+        disabled={isDisabled}
+        onClick={() => handleSubmit("unfollow")}
+      >
+        Unfollow
+      </button>
+    );
+  }
+  return (
+    <button
+      type="submit"
+      className="follow"
+      disabled={isDisabled}
+      onClick={() => handleSubmit("follow")}
+    >
+      Follow
+    </button>
   );
 }

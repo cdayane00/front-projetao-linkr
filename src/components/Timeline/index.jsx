@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import Post from "./postcard";
 import { WarningContent } from "../../pages/TimelinePage/styles";
+import Post from "./postcard";
 import err401 from "../../assets/14.png";
 // import ghost from "../../assets/ghost.png";
 import err404 from "../../assets/24.png";
@@ -70,5 +71,15 @@ export function WithoutFollow() {
       />
       <h3>{text}</h3>
     </WarningContent>
+  );
+}
+
+export function WithContent({ postData, userData }) {
+  return (
+    <>
+      {postData.map((e) => (
+        <Post props={e} key={e.postId} userId={userData.userId} />
+      ))}
+    </>
   );
 }
