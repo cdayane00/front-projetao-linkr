@@ -44,13 +44,16 @@ export default function Timeline() {
 
   async function getNewPosts() {
     const quantity = newPosts - 1;
+
     const promisePosts = await getPosts(0, quantity, userData.config);
     setPostData((prevInsideState) => [
       ...promisePosts.data,
       ...prevInsideState,
     ]);
+
     setNewPosts(0);
   }
+
   async function getPageData() {
     setLoading(true);
     const promiseTrendingTags = listHashtags(userData.config);
@@ -63,10 +66,12 @@ export default function Timeline() {
       setHashtag(hashtagsResponse.data);
       if (postsResponse.statusText === "Partial Content") {
         setRender(206);
+        setLoading(false);
         return;
       }
       if (postsResponse.statusText === "No Content") {
         setRender(204);
+        setLoading(false);
         return;
       }
       setPostData(postsResponse.data);
@@ -90,9 +95,11 @@ export default function Timeline() {
   }, [refresh]);
 
   useInterval(async () => {
-    const query = `timeline=1&timestamp=${postData[0].postsDate}`;
-    const promise = await getUpdateCount(query, userData.config);
-    setNewPosts(promise?.data?.coalesce);
+    const query = `timeline=1&timestamp=${postData[0]?.postsDate}`;
+    if (postData.length > 0) {
+      const promise = await getUpdateCount(query, userData.config);
+      setNewPosts(promise?.data?.coalesce);
+    }
   }, 15000);
   useEffect(() => {
     async function getPostsByPage() {
@@ -102,14 +109,7 @@ export default function Timeline() {
         setEnd((prev) => !prev);
         return;
       }
-      if (promise?.statusText === "Partial Content") {
-        setRender(206);
-        return;
-      }
-      if (promise?.statusText === "No Content") {
-        setRender(204);
-        return;
-      }
+
       if (postData?.length > 0) {
         setPostData((prevInsideState) => [...prevInsideState, ...promise.data]);
       }
