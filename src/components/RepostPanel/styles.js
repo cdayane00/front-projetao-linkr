@@ -20,8 +20,24 @@ export const Container = styled.div`
   }
 `;
 
+export const RepostIconPanel = styled.svg`
+  cursor: default;
+`;
+
 export const RepostedBy = styled.span`
   font-size: 11px;
   font-family: "Lato", sans-serif;
   color: var(--text-primary);
+
+  a {
+    font-size: 11px;
+    font-family: "Lato", sans-serif;
+    color: var(--text-primary);
+
+    text-decoration: none;
+
+    &:hover {
+      color: var(--link-hover);
+    }
+  }
 `;

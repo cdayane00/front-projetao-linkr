@@ -59,13 +59,17 @@ export default function Post({ props, userId, username, userIdParams }) {
 
   return (
     <PostContainer>
-      <RepostPanel
-        whoSharedName={props.whoSharedName}
-        postAuthorId={props.userId}
-        loggedUserId={userData.userId}
-        userPageName={username}
-        userIdParams={userIdParams}
-      />
+      {props.whoSharedName && (
+        <RepostPanel
+          whoSharedName={props.whoSharedName}
+          whoSharedId={props.whoSharedId}
+          postAuthorId={props.userId}
+          loggedUserId={userData.userId}
+          userPageName={username}
+          userIdParams={parseInt(userIdParams, 10)}
+        />
+      )}
+
       <Card>
         <Container>
           <CardSide>

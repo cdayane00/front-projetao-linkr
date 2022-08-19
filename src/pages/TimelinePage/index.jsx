@@ -132,11 +132,11 @@ export default function Timeline() {
             )}
             {end &&
               postData?.length !==
-                0(
-                  <div className="observer">
-                    <h3>{text}</h3>
-                  </div>
-                )}
+              (
+                <div className="observer">
+                  <h3>{text}</h3>
+                </div>
+              )}
           </Feed>
           <Sidebar isLoading={loading} hashtags={hashtagData} />
         </Content>

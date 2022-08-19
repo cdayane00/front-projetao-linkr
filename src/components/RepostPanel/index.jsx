@@ -1,20 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { RepostIcon } from "../Timeline/postcard/styles";
-import { Container, RepostedBy } from "./styles";
+import { Container, RepostedBy, RepostIconPanel } from "./styles";
 
 export default function RepostPanel({
   whoSharedName,
+  whoSharedId,
   postAuthorId,
   loggedUserId,
   userPageName,
   userIdParams,
 }) {
   function setWhoShared() {
+    if (userIdParams === loggedUserId) {
+      return "You";
+    }
     if (whoSharedName) {
       return whoSharedName;
-    }
-    if (postAuthorId === loggedUserId) {
-      return "You";
     }
     if (userPageName && postAuthorId !== loggedUserId && userIdParams) {
       return userPageName;
@@ -26,9 +28,12 @@ export default function RepostPanel({
 
   return (
     <Container>
-      <RepostIcon as={RepostIcon} />
+      <RepostIconPanel as={RepostIcon} />
       <RepostedBy>
-        Re-posted by <strong>{whoShared}</strong>
+        Re-posted by{" "}
+        <strong>
+          <Link to={`/user/${whoSharedId}`}>{whoShared}</Link>
+        </strong>
       </RepostedBy>
     </Container>
   );
