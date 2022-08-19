@@ -32,6 +32,10 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Lato', sans-serif;
         font-weight: 400;
     }
+
+    strong {
+        font-weight: 600;
+    }
     
 
     :root {
@@ -39,6 +43,7 @@ export const GlobalStyles = createGlobalStyle`
         --bg-secondary: #151515;
         --bg-timeline-posts: #171717;
         --bg-comments: #1e1e1e;
+        --bg-re-post-panel: #1e1e1e;
         --bg-white: #FFFFFF;
         --bg-publish-input: #EFEFEF;
         --bg-button: #1877F2;
@@ -60,6 +65,7 @@ export const GlobalStyles = createGlobalStyle`
         --text-comments-input: #575757;
         --link-primary: #CECECE;
         --link-secondary: #9B9595;
+        --link-hover: #c6c6c6;
 
         --border: #4D4D4D;
         --stroke-comment: #353535;

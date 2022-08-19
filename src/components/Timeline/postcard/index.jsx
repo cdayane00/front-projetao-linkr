@@ -5,6 +5,7 @@ import { ReactTagify } from "react-tagify";
 import { HandlerContext } from "../../../contexts/handlerContext";
 
 import {
+  PostContainer,
   Card,
   CardSide,
   CardDetails,
@@ -13,16 +14,20 @@ import {
   CommentsIcon,
   CommentsCounter,
   Container,
-  PostContainer,
+  RepostIcon,
+  RepostCounter,
+  ProfilePicContainer,
+  ActionsWrapper,
 } from "./styles";
 import { editPost, getCommentsByPostId } from "../../../services/api";
 
 import { callToast } from "../../../utils";
 import LikeContainer from "../../LikeContainer";
 import CommentsSection from "../../CommentsSection";
+import RepostPanel from "../../RepostPanel";
 
-export default function Post({ props, userId }) {
-  const { userData } = useContext(HandlerContext);
+export default function Post({ props, userId, username, userIdParams }) {
+  const { userData, setShare, setPostId } = useContext(HandlerContext);
   const [commentsArray, setCommentsArray] = useState(null);
   const [isExtended, setExtended] = useState(false);
   const [isOpen, setCommentsOpen] = useState(false);
@@ -45,28 +50,50 @@ export default function Post({ props, userId }) {
     }
   }
 
-  async function handleClick() {
+  async function handleCommentsClick() {
     setCommentsOpen(!isOpen);
     if (!isOpen) {
       await getComments();
     }
   }
 
+  function handleShareClick() {
+    setShare(true);
+    setPostId(props.postId);
+  }
+
   return (
     <PostContainer>
+      {props.whoSharedName && (
+        <RepostPanel
+          whoSharedName={props.whoSharedName}
+          whoSharedId={props.whoSharedId}
+          postAuthorId={props.userId}
+          loggedUserId={userData.userId}
+          userPageName={username}
+          userIdParams={parseInt(userIdParams, 10)}
+        />
+      )}
+
       <Card>
         <Container>
           <CardSide>
-            <img src={props.photo} alt={props.username} />
-            <LikeContainer
-              postId={props.postId}
-              postLikesData={props.postLikesData}
-              likeCount={props.likeCount}
-            />
-            <CommentsIcon onClick={() => handleClick()} />
-            <CommentsCounter>
-              {commentsArray?.length || props.commentsCount} comments
-            </CommentsCounter>
+            <ProfilePicContainer>
+              <img src={props.photo} alt={props.username} />
+            </ProfilePicContainer>
+            <ActionsWrapper>
+              <LikeContainer
+                postId={props.postId}
+                postLikesData={props.postLikesData}
+                likeCount={props.likeCount}
+              />
+              <CommentsIcon onClick={() => handleCommentsClick()} />
+              <CommentsCounter>
+                {commentsArray?.length || props.commentsCount} comments
+              </CommentsCounter>
+              <RepostIcon onClick={() => handleShareClick()} />
+              <RepostCounter>{props.sharesCount} repost</RepostCounter>
+            </ActionsWrapper>
           </CardSide>
           <CardDetails isExtended={isExtended}>
             <PostSettings

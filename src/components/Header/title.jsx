@@ -74,7 +74,6 @@ export default function PageTitle({
 }
 
 function ButtonToggle({ interaction, handleSubmit, isDisabled }) {
-  console.log(interaction);
   if (interaction) {
     return (
       <button

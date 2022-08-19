@@ -8,6 +8,7 @@ import HandlerProvider from "./contexts/handlerContext";
 import { GlobalStyles } from "./styles/globalStyles";
 import RouterNavigator from "./components/RouterNavigator";
 import DeleteDialog from "./components/Dialog";
+import DialogShare from "./components/DialogShare";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <GlobalStyles />
         <ToastContainer />
         <DeleteDialog />
+        <DialogShare />
         <RouterNavigator />
       </BrowserRouter>
     </HandlerProvider>

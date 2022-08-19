@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { IoRepeatSharp } from "react-icons/io5";
 import { BiTrashAlt } from "react-icons/bi";
 import { TiPencil } from "react-icons/ti";
 import { AiOutlineComment } from "react-icons/ai";
@@ -61,11 +62,12 @@ const CardSide = styled.div`
     height: 50px;
     border-radius: 26.5px;
     object-fit: contain;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 
     @media (max-width: 650px) {
       height: 40px;
       width: 40px;
+      margin-bottom: 10px;
     }
   }
 
@@ -85,18 +87,38 @@ const CardSide = styled.div`
   }
 `;
 
-const CommentsIcon = styled(AiOutlineComment)`
-  width: 20px;
-  height: 20px;
+export const ProfilePicContainer = styled.div``;
+
+export const ActionsWrapper = styled.div`
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
+
+  margin-bottom: 10px;
+
+  @media (max-width: 650px) {
+    margin: unset;
+  }
+`;
+
+const iconCSS = css`
+  font-size: 20px;
 
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 
   color: var(--text-primary);
   cursor: pointer;
+
+  @media (max-width: 650px) {
+    font-size: 17px;
+  }
 `;
 
-const CommentsCounter = styled.span`
+const counterCSS = css`
   font-size: 11px;
   font-family: "Lato", sans-serif;
   text-align: center;
@@ -104,15 +126,33 @@ const CommentsCounter = styled.span`
   color: var(--text-primary);
 
   @media (max-width: 650px) {
+    font-size: 9px;
     text-align: center;
     line-height: 1.2em;
   }
+`;
+
+const CommentsIcon = styled(AiOutlineComment)`
+  ${iconCSS}
+`;
+
+const CommentsCounter = styled.span`
+  ${counterCSS}
+`;
+
+const RepostIcon = styled(IoRepeatSharp)`
+  ${iconCSS}
+`;
+
+const RepostCounter = styled.span`
+  ${counterCSS}
 `;
 
 const CardDetails = styled.div`
   width: 502px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 7px;
 
   @media (max-width: 650px) {
@@ -346,6 +386,8 @@ export {
   CardSide,
   CommentsIcon,
   CommentsCounter,
+  RepostIcon,
+  RepostCounter,
   CardDetails,
   Trash,
   Pencil,

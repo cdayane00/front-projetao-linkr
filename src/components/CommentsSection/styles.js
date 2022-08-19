@@ -23,7 +23,9 @@ export const Container = styled.div`
   }
 
   @media (max-width: 650px) {
+    min-width: 100%;
     border-radius: 0;
+    max-height: ${(props) => (props.isOpen ? "170px" : "0")};
   }
 `;
 

@@ -5,6 +5,7 @@ export const HandlerContext = createContext(null);
 
 function HandlerProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isShare, setShare] = useState(false);
   const [postId, setPostId] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [userData, setUserData] = useLocalStorage("linkrUserData", "");
@@ -27,6 +28,8 @@ function HandlerProvider({ children }) {
         logout,
         interaction,
         setInteraction,
+        isShare,
+        setShare,
       }}
     >
       {children}

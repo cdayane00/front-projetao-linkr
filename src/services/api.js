@@ -48,5 +48,8 @@ export const getCommentsByPostId = async (postId, config) =>
 export const submitNewComment = async (postId, commentText, config) =>
   api.post(`/post/${postId}/comments`, { commentText }, config);
 
+export const sharePost = async (postId, config) =>
+  api.post(`/post/${postId}/shares`, {}, config);
+
 export const getUpdateCount = async (query, config) =>
   api.get(`/update?${query}`, config);

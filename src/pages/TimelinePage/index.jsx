@@ -172,6 +172,7 @@ export default function Timeline() {
                 <h3 ref={ref}>Loading more posts..</h3>
               </div>
             )}
+
             {end && postData.length < 5 && (
               <div className="observer">
                 <h3>{text}</h3>
