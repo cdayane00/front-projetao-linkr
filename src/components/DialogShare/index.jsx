@@ -12,7 +12,7 @@ export default function DialogShare() {
   return (
     <Wrapper open={isShare} onClose={() => setShare(false)}>
       <Panel>
-        <Description>Are you sure you want to delete this post?</Description>
+        <Description>Do you want to re-post this link?</Description>
         <Buttons isLoading={isLoading} setLoading={setLoading} />
       </Panel>
     </Wrapper>
