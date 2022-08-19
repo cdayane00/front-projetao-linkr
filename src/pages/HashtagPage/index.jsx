@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import Post from "../../components/Timeline/postcard";
 import Sidebar from "../../components/Sidebar";
 import { WithError } from "../../components/Timeline";
-import { Main, Content, Feed } from "../TimelinePage/styles";
+import { Main, Content, Feed, ToTheTop } from "../TimelinePage/styles";
 import { FeedHashtag, HashtagMain, PageContent } from "./styles";
 import { callToast } from "../../utils";
 import { getPostsByHashtag, listHashtags } from "../../services/api";
@@ -32,7 +32,12 @@ export default function HashtagPage() {
     setEnd(() => false);
     setLoading(true);
     const promiseTrendingTags = listHashtags(userData.config);
-    const promisePosts = await getPostsByHashtag(hashtag, 0, userData.config);
+    const promisePosts = await getPostsByHashtag(
+      hashtag,
+      0,
+      10,
+      userData.config
+    );
     try {
       const [trendingHashtagsResponse, postsResponse] = await Promise.all([
         promiseTrendingTags,
@@ -64,6 +69,7 @@ export default function HashtagPage() {
         const promise = await getPostsByHashtag(
           hashtag,
           currentPage,
+          10,
           userData.config
         );
         if (promise?.data?.length < 10) {
@@ -121,9 +127,26 @@ export default function HashtagPage() {
                 <h3 ref={ref}>Loading more posts..</h3>
               </div>
             )}
-            {end && (
+            {end && postData.length < 5 && (
               <div className="observer">
                 <h3>{text}</h3>
+              </div>
+            )}
+            {end && postData.length >= 5 && (
+              <div className="observer">
+                <h3>{text}</h3>
+                <div
+                  className="scroll"
+                  onClick={() => {
+                    top.current.scrollIntoView({
+                      block: "end",
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <h3>Scroll back to the top</h3>
+                  <ToTheTop />
+                </div>
               </div>
             )}
           </FeedHashtag>
